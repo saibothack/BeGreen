@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+            xmlns:local="clr-namespace:BeGreen.Views;assembly=BeGreen" x:Class="BeGreen.Views.HomePage">
+    <NavigationPage Title="Cátalogo" IconImageSource="{Binding imgCatalog}">
+        <x:Arguments>
+            <local:OrchardsPage />
+        </x:Arguments>
+    </NavigationPage>
+    <NavigationPage Title="Huertos" IconImageSource="{Binding imgOrchard}">
+        <x:Arguments>
+            <local:OrchardsPage />
+        </x:Arguments>
+    </NavigationPage>
+    <NavigationPage Title="Compras" IconImageSource="{Binding imgPurchase}">
+        <x:Arguments>
+            <local:OrchardsPage />
+        </x:Arguments>
+    </NavigationPage>
+    <NavigationPage Title="Ofertas" IconImageSource="{Binding imgOffer}">
+        <x:Arguments>
+            <local:OrchardsPage />
+        </x:Arguments>
+    </NavigationPage>
+</TabbedPage>

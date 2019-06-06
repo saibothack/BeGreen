@@ -1,0 +1,77 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceAssemblyReference>true</ProduceAssemblyReference>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="4.0.0.425677" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.0.1" />
+    <PackageReference Include="CarouselView.FormsPlugin" Version="5.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\" />
+    <Folder Include="Images\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="Models\" />
+    <Folder Include="Utilities\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Images\tuto_01_0.jpg" />
+    <None Remove="Images\tuto_1.jpg" />
+    <None Remove="Images\tuto_2.jpg" />
+    <None Remove="Images\tuto_3.jpg" />
+    <None Remove="Images\tuto_4.jpg" />
+    <None Remove="Images\ic_launcher_foreground_begreen.png" />
+    <None Remove="Images\tuto_01_0.png" />
+    <None Remove="Images\tuto_01_T.png" />
+    <None Remove="Images\tuto_1.png" />
+    <None Remove="Images\tuto_2.png" />
+    <None Remove="Images\tuto_3.png" />
+    <None Remove="Images\tuto_4.png" />
+    <None Remove="Images\menu_about.png" />
+    <None Remove="Images\menu_catalogo.png" />
+    <None Remove="Images\menu_compras.png" />
+    <None Remove="Images\menu_favorites.png" />
+    <None Remove="Images\menu_historic.png" />
+    <None Remove="Images\menu_huertas.png" />
+    <None Remove="Images\menu_ofertas.png" />
+    <None Remove="Images\menu_payments.png" />
+    <None Remove="Images\menu_tutorial.png" />
+    <None Remove="Images\nav_perfil_min.png" />
+    <None Remove="Images\profile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\tuto_01_0.jpg" />
+    <EmbeddedResource Include="Images\tuto_1.jpg" />
+    <EmbeddedResource Include="Images\tuto_2.jpg" />
+    <EmbeddedResource Include="Images\tuto_3.jpg" />
+    <EmbeddedResource Include="Images\tuto_4.jpg" />
+    <EmbeddedResource Include="Images\ic_launcher_foreground_begreen.png" />
+    <EmbeddedResource Include="Images\tuto_01_0.png" />
+    <EmbeddedResource Include="Images\tuto_01_T.png" />
+    <EmbeddedResource Include="Images\tuto_1.png" />
+    <EmbeddedResource Include="Images\tuto_2.png" />
+    <EmbeddedResource Include="Images\tuto_3.png" />
+    <EmbeddedResource Include="Images\tuto_4.png" />
+    <EmbeddedResource Include="Images\menu_about.png" />
+    <EmbeddedResource Include="Images\menu_catalogo.png" />
+    <EmbeddedResource Include="Images\menu_compras.png" />
+    <EmbeddedResource Include="Images\menu_favorites.png" />
+    <EmbeddedResource Include="Images\menu_historic.png" />
+    <EmbeddedResource Include="Images\menu_huertas.png" />
+    <EmbeddedResource Include="Images\menu_ofertas.png" />
+    <EmbeddedResource Include="Images\menu_payments.png" />
+    <EmbeddedResource Include="Images\menu_tutorial.png" />
+    <EmbeddedResource Include="Images\nav_perfil_min.png" />
+    <EmbeddedResource Include="Images\profile.png" />
+  </ItemGroup>
+</Project>

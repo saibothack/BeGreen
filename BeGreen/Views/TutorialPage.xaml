@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:controls="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
+             x:Class="BeGreen.Views.TutorialPage">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="100" />
+            </Grid.RowDefinitions>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            
+            <AbsoluteLayout Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2">
+                <Image Source="{Binding imgBackground}" Aspect="AspectFill" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" />
+            </AbsoluteLayout>
+            
+            <ContentView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                <controls:CarouselViewControl ItemsSource="{Binding Slides}" ShowIndicators="True" ShowArrows="False" IndicatorsTintColor="White" 
+                                              CurrentPageIndicatorTintColor="Orange">
+                    <controls:CarouselViewControl.ItemTemplate>
+                        <DataTemplate>
+                            <ContentView Padding="60,30,60,0">
+                                <Image Source="{Binding Image}" Aspect="AspectFit" />
+                            </ContentView>
+                        </DataTemplate>
+                    </controls:CarouselViewControl.ItemTemplate>
+                </controls:CarouselViewControl>
+            </ContentView>
+            
+            <StackLayout Grid.Row="1" Grid.Column="1">
+                <Button VerticalOptions="Start" HorizontalOptions="Center" Text="Saltar" TextColor="White" FontAttributes="Bold" 
+                        FontSize="Medium" Clicked="Handle_Clicked" BackgroundColor="Transparent"/>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
