@@ -15,6 +15,9 @@
     <PackageReference Include="Xamarin.Essentials" Version="1.0.1" />
     <PackageReference Include="CarouselView.FormsPlugin" Version="5.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="Xam.Plugins.Forms.ImageCircle" Version="3.0.0.5" />
+    <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
+    <PackageReference Include="Xam.Plugin.Iconize" Version="3.5.0.129" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
@@ -23,6 +26,7 @@
     <Folder Include="Models\" />
     <Folder Include="Utilities\" />
     <Folder Include="Services\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Images\tuto_01_0.jpg" />
@@ -41,13 +45,15 @@
     <None Remove="Images\menu_catalogo.png" />
     <None Remove="Images\menu_compras.png" />
     <None Remove="Images\menu_favorites.png" />
-    <None Remove="Images\menu_historic.png" />
     <None Remove="Images\menu_huertas.png" />
     <None Remove="Images\menu_ofertas.png" />
     <None Remove="Images\menu_payments.png" />
     <None Remove="Images\menu_tutorial.png" />
     <None Remove="Images\nav_perfil_min.png" />
     <None Remove="Images\profile.png" />
+    <None Remove="Images\background_menu.png" />
+    <None Remove="Images\login_background.png" />
+    <None Remove="Images\btn_aceptar.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\tuto_01_0.jpg" />
@@ -66,12 +72,14 @@
     <EmbeddedResource Include="Images\menu_catalogo.png" />
     <EmbeddedResource Include="Images\menu_compras.png" />
     <EmbeddedResource Include="Images\menu_favorites.png" />
-    <EmbeddedResource Include="Images\menu_historic.png" />
     <EmbeddedResource Include="Images\menu_huertas.png" />
     <EmbeddedResource Include="Images\menu_ofertas.png" />
     <EmbeddedResource Include="Images\menu_payments.png" />
     <EmbeddedResource Include="Images\menu_tutorial.png" />
     <EmbeddedResource Include="Images\nav_perfil_min.png" />
     <EmbeddedResource Include="Images\profile.png" />
+    <EmbeddedResource Include="Images\background_menu.png" />
+    <EmbeddedResource Include="Images\login_background.png" />
+    <EmbeddedResource Include="Images\btn_aceptar.png" />
   </ItemGroup>
 </Project>

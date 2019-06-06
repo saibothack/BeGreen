@@ -3,7 +3,7 @@
             xmlns:local="clr-namespace:BeGreen.Views;assembly=BeGreen" x:Class="BeGreen.Views.HomePage">
     <NavigationPage Title="Cátalogo" IconImageSource="{Binding imgCatalog}">
         <x:Arguments>
-            <local:OrchardsPage />
+            <local:CategoryPage />
         </x:Arguments>
     </NavigationPage>
     <NavigationPage Title="Huertos" IconImageSource="{Binding imgOrchard}">

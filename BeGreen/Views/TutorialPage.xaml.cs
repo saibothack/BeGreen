@@ -20,7 +20,12 @@ namespace BeGreen.Views
 
         void Handle_Clicked(object sender, System.EventArgs e)
         {
-            Application.Current.MainPage = new NavigationPage(new HomePage());
+            //Application.Current.MainPage = new NavigationPage(new HomePage());
+            Application.Current.MainPage = new MasterDetailPage()
+            {
+                Master = new MasterPage() { Title = "Menú" },
+                Detail = new NavigationPage(new HomePage())
+            };
         }
     }
 }

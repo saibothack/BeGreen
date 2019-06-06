@@ -133,6 +133,15 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.2</Version>
     </PackageReference>
+    <PackageReference Include="Xam.Plugins.Forms.ImageCircle">
+      <Version>3.0.0.5</Version>
+    </PackageReference>
+    <PackageReference Include="Xam.Plugins.Settings">
+      <Version>3.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xam.Plugin.Iconize">
+      <Version>3.5.0.129</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -140,5 +149,12 @@
       <Project>{0E779902-7814-4451-9DBF-1DDACB02C2C4}</Project>
       <Name>BeGreen</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\menu_historic.png" />
+    <BundleResource Include="Resources\menu_about.png" />
+    <BundleResource Include="Resources\menu_favorites.png" />
+    <BundleResource Include="Resources\menu_payments.png" />
+    <BundleResource Include="Resources\menu_tutorial.png" />
   </ItemGroup>
 </Project>
