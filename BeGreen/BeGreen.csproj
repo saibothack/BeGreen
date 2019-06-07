@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="4.0.0.425677" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.0.1" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
     <PackageReference Include="CarouselView.FormsPlugin" Version="5.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="Xam.Plugins.Forms.ImageCircle" Version="3.0.0.5" />
@@ -29,11 +29,6 @@
     <Folder Include="Helpers\" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="Images\tuto_01_0.jpg" />
-    <None Remove="Images\tuto_1.jpg" />
-    <None Remove="Images\tuto_2.jpg" />
-    <None Remove="Images\tuto_3.jpg" />
-    <None Remove="Images\tuto_4.jpg" />
     <None Remove="Images\ic_launcher_foreground_begreen.png" />
     <None Remove="Images\tuto_01_0.png" />
     <None Remove="Images\tuto_01_T.png" />
@@ -41,26 +36,18 @@
     <None Remove="Images\tuto_2.png" />
     <None Remove="Images\tuto_3.png" />
     <None Remove="Images\tuto_4.png" />
-    <None Remove="Images\menu_about.png" />
     <None Remove="Images\menu_catalogo.png" />
     <None Remove="Images\menu_compras.png" />
-    <None Remove="Images\menu_favorites.png" />
     <None Remove="Images\menu_huertas.png" />
     <None Remove="Images\menu_ofertas.png" />
-    <None Remove="Images\menu_payments.png" />
-    <None Remove="Images\menu_tutorial.png" />
     <None Remove="Images\nav_perfil_min.png" />
     <None Remove="Images\profile.png" />
     <None Remove="Images\background_menu.png" />
     <None Remove="Images\login_background.png" />
     <None Remove="Images\btn_aceptar.png" />
+    <None Remove="Images\ic_marker.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Images\tuto_01_0.jpg" />
-    <EmbeddedResource Include="Images\tuto_1.jpg" />
-    <EmbeddedResource Include="Images\tuto_2.jpg" />
-    <EmbeddedResource Include="Images\tuto_3.jpg" />
-    <EmbeddedResource Include="Images\tuto_4.jpg" />
     <EmbeddedResource Include="Images\ic_launcher_foreground_begreen.png" />
     <EmbeddedResource Include="Images\tuto_01_0.png" />
     <EmbeddedResource Include="Images\tuto_01_T.png" />
@@ -68,18 +55,20 @@
     <EmbeddedResource Include="Images\tuto_2.png" />
     <EmbeddedResource Include="Images\tuto_3.png" />
     <EmbeddedResource Include="Images\tuto_4.png" />
-    <EmbeddedResource Include="Images\menu_about.png" />
     <EmbeddedResource Include="Images\menu_catalogo.png" />
     <EmbeddedResource Include="Images\menu_compras.png" />
-    <EmbeddedResource Include="Images\menu_favorites.png" />
     <EmbeddedResource Include="Images\menu_huertas.png" />
     <EmbeddedResource Include="Images\menu_ofertas.png" />
-    <EmbeddedResource Include="Images\menu_payments.png" />
-    <EmbeddedResource Include="Images\menu_tutorial.png" />
     <EmbeddedResource Include="Images\nav_perfil_min.png" />
     <EmbeddedResource Include="Images\profile.png" />
     <EmbeddedResource Include="Images\background_menu.png" />
     <EmbeddedResource Include="Images\login_background.png" />
     <EmbeddedResource Include="Images\btn_aceptar.png" />
+    <EmbeddedResource Include="Images\ic_marker.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Android">
+      <HintPath>..\..\..\..\..\..\..\Library\Frameworks\Xamarin.Android.framework\Versions\9.2.3-0\lib\xamarin.android\xbuild-frameworks\MonoAndroid\v8.1\Mono.Android.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

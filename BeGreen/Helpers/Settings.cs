@@ -19,6 +19,9 @@ namespace BeGreen.Helpers
         private const string SettingsKey = "settings_key";
         private static readonly string SettingsDefault = string.Empty;
 
+        private const string SettingsShowIntroKey = "SettingsShowIntroKey";
+        private static readonly bool SettingsShowIntroDefault = false;
+
         #endregion
 
 
@@ -31,6 +34,18 @@ namespace BeGreen.Helpers
             set
             {
                 AppSettings.AddOrUpdateValue(SettingsKey, value);
+            }
+        }
+
+        public static bool isShowIntro
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault(SettingsShowIntroKey, SettingsShowIntroDefault);
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue(SettingsShowIntroKey, value);
             }
         }
 

@@ -1,5 +1,64 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="BeGreen.Views.LoginPage">
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="BeGreen.Views.LoginPage"
+             NavigationPage.HasNavigationBar="false">
     <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="125" />
+                <RowDefinition Height="125" />
+                <RowDefinition Height="100" />
+                <RowDefinition Height="100" />
+                <RowDefinition Height="100" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            
+            <Image Grid.Row="0" Grid.RowSpan="6" Grid.Column="0" Source="{Binding imgBackground}" Aspect="AspectFill"/>
+            
+            <StackLayout Grid.Row="1" Orientation="Vertical" Margin="50, 0, 50, 0">
+                <StackLayout>
+                    <Label Text="Be" FontSize="Large" TextColor="White" FontAttributes="Bold" />
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="Green" FontSize="Large" TextColor="White" FontAttributes="Bold" />
+                </StackLayout>
+            </StackLayout>
+            
+            <StackLayout Grid.Row="2" Orientation="Vertical" Margin="50, 0, 50, 0" >
+                <StackLayout>
+                    <Entry x:Name="txtEmail" Keyboard="Email" Placeholder="Usuario / Correo" HeightRequest="40"
+                           ReturnCommand="{Binding ReturnCommandEntry}" ReturnCommandParameter="{x:Reference  txtPassword}"/>
+                    <Label Text="{Binding sEmailError}" IsVisible="{Binding bEmailError}" TextColor="White" />
+                </StackLayout>
+                <StackLayout>
+                    <Entry x:Name="txtPassword" IsPassword="true" Keyboard="Text" Placeholder="Contraseña" HeightRequest="40" />
+                    <Label Text="{Binding sPasswordError}" IsVisible="{Binding bPasswordError}" TextColor="White" />
+                </StackLayout>
+            </StackLayout>
+            
+            <StackLayout Grid.Row="3" Margin="50,0,50,0">
+                <Button Text="Entrar" TextColor="White" BorderWidth="2" BorderColor="White" BorderRadius="25" BackgroundColor="Transparent" 
+                        WidthRequest="150" HorizontalOptions="EndAndExpand" FontSize="Large" FontAttributes="Bold" Clicked="Handle_Clicked_Entrar"/>
+            </StackLayout>
+            
+            <StackLayout Grid.Row="5" Margin="50,0,50,0">
+                    <Button Text="Suscribirse" TextColor="White" BorderRadius="25" BackgroundColor="Orange"
+                            WidthRequest="200" HorizontalOptions="Center" FontSize="Large" FontAttributes="Bold" Command="{Binding CommandRegister}"/>
+                
+            </StackLayout>
+            
+            <StackLayout Grid.Row="6" Margin="50">
+                <Button Text="Cancelar" TextColor="Gray" BackgroundColor="Transparent" FontSize="Large" FontAttributes="Bold" Command="{Binding CommandCancel}" />
+            </StackLayout>
+            
+            <StackLayout Grid.Row="0" Grid.Column="0" IsVisible="{Binding IsBusy}" 
+                             HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" 
+                                       HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                                       Color="Blue"></ActivityIndicator>
+                </StackLayout>
+            
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

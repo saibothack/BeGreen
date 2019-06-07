@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BeGreen.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using BeGreen.Helpers;
 
 namespace BeGreen.Views
 {
@@ -20,6 +21,8 @@ namespace BeGreen.Views
 
         void Handle_Clicked(object sender, System.EventArgs e)
         {
+            Settings.isShowIntro = true;
+
             //Application.Current.MainPage = new NavigationPage(new HomePage());
             Application.Current.MainPage = new MasterDetailPage()
             {

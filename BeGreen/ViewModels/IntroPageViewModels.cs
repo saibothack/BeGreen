@@ -9,7 +9,7 @@ namespace BeGreen.ViewModels
     public class IntroPageViewModels : ViewModelBase
     {
         public INavigation Navigation { get; internal set; }
-        public ImageSource imgLogo { get; set; }    
+        public ImageSource imgLogo { get; set; }
 
         public IntroPageViewModels()
         {

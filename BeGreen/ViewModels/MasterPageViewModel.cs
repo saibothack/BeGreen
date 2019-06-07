@@ -12,11 +12,17 @@ namespace BeGreen.ViewModels
         public bool IsUsuarioVisible { get; set; }
         public ImageSource imageProfiler { get; set; }
         public ImageSource imageBackground { get; set; }
+        public Command CommandRegister { get; set; }
 
         public MasterPageViewModel()
         {
             imageBackground = ImageSource.FromResource("BeGreen.Images.background_menu.png");
             imageProfiler = ImageSource.FromResource("BeGreen.Images.profile.png");
+            CommandRegister = new Command(goToLogin);
+        }
+
+        public void goToLogin() {
+            Application.Current.MainPage = new NavigationPage(new LoginPage());
         }
 
         public ICommand NavigationCommand
@@ -51,7 +57,7 @@ namespace BeGreen.ViewModels
                             break;
 
                         case "4":
-                            //navPage.PushAsync(new ProfilerPage());
+                            Application.Current.MainPage = new NavigationPage(new TutorialPage());
                             break;
 
                         case "5":

@@ -34,5 +34,9 @@
 	<string>BeGreen</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>La aplicación necesita obtener su ubicación</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Esta aplicación necesita ubicación de acceso cuando está abierta.</string>
 </dict>
 </plist>
