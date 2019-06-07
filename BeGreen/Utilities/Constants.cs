@@ -3,6 +3,6 @@ namespace BeGreen.Utilities
 {
     public class Constants
     {
-        public static string urlApi = "http://www.be-green.mx/";
+        public static string urlApi = "https://www.be-green.mx/";
     }
 }

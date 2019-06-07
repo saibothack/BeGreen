@@ -1,10 +1,10 @@
-﻿using System;
+﻿using BeGreen.Utilities;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
-using BeGreen.Utilities;
 using BeGreen.Views;
 using Xamarin.Forms;
 using System.Linq;
+using BeGreen.Services.Logic;
 
 namespace BeGreen.ViewModels
 {
@@ -176,7 +176,7 @@ namespace BeGreen.ViewModels
 
         public RegisterPageViewModels()
         {
-            loadingBackground = Color.FromHsla(0, 0, 0, 0.2);
+            loadingBackground = Color.FromHsla(0, 0, 0, 0.1);
             imgBackground = ImageSource.FromResource("BeGreen.Images.login_background.png");
             imgMarker = ImageSource.FromResource("BeGreen.Images.ic_marker.png");
 
@@ -232,6 +232,8 @@ namespace BeGreen.ViewModels
                 {
                     IsBusy = true;
 
+                    ServicesUser servicesUser = new ServicesUser();
+                    await servicesUser.RegisterAsync(sName, sAddress, sEmail, sPassword);
                 }
             }
             finally
@@ -270,13 +272,23 @@ namespace BeGreen.ViewModels
 
             if (string.IsNullOrEmpty(sEmail))
             {
+                sEmailError = "Ingrese su correo";
                 success = false;
                 bEmailError = true;
 
             }
             else
             {
-                bEmailError = false;
+                if (!Util.IsEmail(sEmail))
+                {
+                    sEmailError = "El formato de correo no es correcto";
+                    success = false;
+                    bEmailError = true;
+                }
+                else
+                {
+                    bEmailError = false;
+                }
             }
 
             if (string.IsNullOrEmpty(sPassword))

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using BeGreen.Services.Logic;
 using BeGreen.Utilities;
 using BeGreen.Views;
 using Xamarin.Forms;
@@ -14,6 +15,8 @@ namespace BeGreen.ViewModels
         public Command CommandRegister { get; set; }
         public Command ReturnCommandEntry { get; set; }
         public Command CommandCancel { get; set; }
+
+        public Color loadingBackground { get; set; }
 
 
         #region "Properties"
@@ -82,9 +85,10 @@ namespace BeGreen.ViewModels
 
         public LoginPageViewModels()
         {
+            loadingBackground = Color.FromHsla(0, 0, 0, 0.1);
             imgBackground = ImageSource.FromResource("BeGreen.Images.login_background.png");
 
-            CommandLogin = new AsyncCommand(Login, CanExecuteSubmit);
+            CommandLogin = new AsyncCommand(LoginAsync, CanExecuteSubmit);
             CommandRegister = new Command(Register);
             CommandCancel = new Command(Cancel);
 
@@ -103,13 +107,15 @@ namespace BeGreen.ViewModels
             };
         }
 
-        private async Task Login()
+        private async Task LoginAsync()
         {
             try
             {
                 if (validate()) {
                     IsBusy = true;
 
+                    ServicesUser servicesUser = new ServicesUser();
+                    await servicesUser.LoginAsync(sEmail, sPassword);
                 }
             }
             finally

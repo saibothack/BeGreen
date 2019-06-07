@@ -14,15 +14,33 @@ namespace BeGreen.ViewModels
         public ImageSource imageBackground { get; set; }
         public Command CommandRegister { get; set; }
 
+        public bool PanelRegister { get; set; }
+        public bool PanelUser { get; set; }
+        public string sName { get; set; }
+
         public MasterPageViewModel()
         {
             imageBackground = ImageSource.FromResource("BeGreen.Images.background_menu.png");
             imageProfiler = ImageSource.FromResource("BeGreen.Images.profile.png");
             CommandRegister = new Command(goToLogin);
+
+            if (Settings.isLogin) {
+                PanelRegister = false;
+                PanelUser = true;
+                sName = Settings.UserName;
+            } else {
+                PanelRegister = true;
+                PanelUser = false;
+            }
         }
 
         public void goToLogin() {
-            Application.Current.MainPage = new NavigationPage(new LoginPage());
+            if (Settings.isLogin)
+            {
+                Application.Current.MainPage = new NavigationPage(new RegisterPage());
+            } else {
+                Application.Current.MainPage = new NavigationPage(new LoginPage());
+            }
         }
 
         public ICommand NavigationCommand
@@ -65,7 +83,16 @@ namespace BeGreen.ViewModels
                             break;
 
                         case "6":
-                            //navPage.PushAsync(new FAQPage());
+
+                            Settings.isLogin = false;
+                            Settings.UserName = string.Empty;
+
+                            Application.Current.MainPage = new MasterDetailPage()
+                            {
+                                Master = new MasterPage() { Title = "Menú" },
+                                Detail = new NavigationPage(new HomePage())
+                            };
+
                             break;
 
                         case "7":

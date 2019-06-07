@@ -27,6 +27,8 @@
     <Folder Include="Utilities\" />
     <Folder Include="Services\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Models\User\" />
+    <Folder Include="Services\Logic\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Images\ic_launcher_foreground_begreen.png" />

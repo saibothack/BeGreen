@@ -22,6 +22,12 @@ namespace BeGreen.Helpers
         private const string SettingsShowIntroKey = "SettingsShowIntroKey";
         private static readonly bool SettingsShowIntroDefault = false;
 
+        private const string SettingsIsLoginKey = "SettingsIsLoginKey";
+        private static readonly bool SettingsIsLoginDefault = false;
+
+        private const string SettingsNameKey = "SettingsNameKey";
+        private static readonly string SettingsNameDefault = string.Empty;
+
         #endregion
 
 
@@ -49,5 +55,28 @@ namespace BeGreen.Helpers
             }
         }
 
+        public static bool isLogin
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault(SettingsIsLoginKey, SettingsIsLoginDefault);
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue(SettingsIsLoginKey, value);
+            }
+        }
+
+        public static string UserName
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault(SettingsNameKey, SettingsNameDefault);
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue(SettingsNameKey, value);
+            }
+        }
     }
 }

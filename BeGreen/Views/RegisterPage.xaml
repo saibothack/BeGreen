@@ -36,13 +36,13 @@
                     <Label Text="{Binding sEmailError}" IsVisible="{Binding bEmailError}" TextColor="White" />
                 </StackLayout>
                 <StackLayout>
-                    <Entry x:Name="txtPassword" IsPassword="true" Keyboard="Text" Placeholder="Contraseña" Text="{Binding sPassword, Mode=OneWay}"
+                    <Entry x:Name="txtPassword" IsPassword="true" Keyboard="Text" Placeholder="Contraseña" Text="{Binding sPassword}"
                            ReturnCommand="{Binding ReturnCommandEntry}" ReturnCommandParameter="{x:Reference  txtPasswordConfirm}" HeightRequest="40" />
                     <Label Text="{Binding sPasswordError}" IsVisible="{Binding bPasswordError}" TextColor="White" />
                 </StackLayout>
                 <StackLayout>
                     <Entry x:Name="txtPasswordConfirm" IsPassword="true" Keyboard="Text" Placeholder="Confirme Contraseña" HeightRequest="40" 
-                           Text="{Binding sPasswordConfirm, Mode=OneWay}"/>
+                           Text="{Binding sPasswordConfirm}"/>
                     <Label Text="{Binding sPasswordConfirmError}" IsVisible="{Binding sPasswordConfirmError}" TextColor="White" />
                 </StackLayout>
             </StackLayout>

@@ -3,7 +3,6 @@ using BeGreen.Views;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using BeGreen.Helpers;
-using Xamarin.Forms.Xaml;
 using System.Threading.Tasks;
 
 namespace BeGreen
@@ -17,16 +16,16 @@ namespace BeGreen
             InitializeComponent();
             oServiceManager = new Services.ServiceManager(new Services.RestService());
 
-            MainPage = new RegisterPage();
+            //MainPage = new RegisterPage();
 
-            /*if (Settings.isShowIntro)
+            if (Settings.isShowIntro)
                 Current.MainPage = new MasterDetailPage()
                 {
                     Master = new MasterPage() { Title = "Menú" },
                     Detail = new NavigationPage(new HomePage())
                 };
             else 
-                MainPage = new IntroPage();*/
+                MainPage = new IntroPage();
 
         }
 
@@ -76,7 +75,7 @@ namespace BeGreen
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "Aceptar");
+                await Current.MainPage.DisplayAlert("Error", ex.Message, "Aceptar");
             }
 
             return location;

@@ -9,12 +9,25 @@
                 </Grid.RowDefinitions>
                 <Grid>
                     <Image Source="{Binding imageBackground}" Aspect="AspectFit" />
-                    <StackLayout Padding="0,20,0,0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Orientation="Horizontal">
+                    <StackLayout Padding="0,20,0,0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Orientation="Horizontal" 
+                                 IsVisible="{Binding PanelRegister}">
                         <StackLayout WidthRequest="80" HeightRequest="80" HorizontalOptions="Start" VerticalOptions="Center" Margin="20">
-                            <controls:CircleImage BorderColor="White" BorderThickness="4" Source="{Binding imageProfiler}" Aspect="AspectFill" HeightRequest="80" WidthRequest="80" BackgroundColor="White" />
+                            <controls:CircleImage BorderColor="White" BorderThickness="4" Source="{Binding imageProfiler}" Aspect="AspectFill" 
+                                                  HeightRequest="80" WidthRequest="80" BackgroundColor="White" />
                         </StackLayout>
                         <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="Center">
                             <Label Text="Suscribirse" TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout Padding="0,20,0,0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Orientation="Horizontal" 
+                                 IsVisible="{Binding PanelUser}">
+                        <StackLayout WidthRequest="80" HeightRequest="80" HorizontalOptions="Start" VerticalOptions="Center" Margin="20">
+                            <controls:CircleImage BorderColor="White" BorderThickness="4" Source="{Binding imageProfiler}" Aspect="AspectFill" 
+                                                  HeightRequest="80" WidthRequest="80" BackgroundColor="White" />
+                        </StackLayout>
+                        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="Center" Orientation="Vertical">
+                            <Label Text="!Bienvenido¡" TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                            <Label Text="{Binding sName}" TextColor="White" FontSize="Large" FontAttributes="Bold" />
                         </StackLayout>
                     </StackLayout>
                     <Grid.GestureRecognizers>
@@ -36,6 +49,8 @@
                     <ContentView HeightRequest="1" BackgroundColor="Gray" />
                     <local:NavigationItem Text="Acerca de" Icon="menu_about.png" Command="{Binding NavigationCommand}" CommandParameter="5" Margin="5" />
                     <ContentView HeightRequest="1" BackgroundColor="Gray" />
+                    <local:NavigationItem Text="Cerrrar sesión" Icon="menu_about.png" Command="{Binding NavigationCommand}" CommandParameter="6" Margin="5" 
+                                          IsVisible="{Binding PanelUser}"/>
                 </StackLayout>
             </Grid>
         </ScrollView>
