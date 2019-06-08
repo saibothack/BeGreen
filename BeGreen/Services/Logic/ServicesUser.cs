@@ -27,6 +27,7 @@ namespace BeGreen.Services.Logic
             {
                 Settings.isLogin = true;
                 Settings.UserName = currentUser.data[0].customers_firstname;
+                Settings.UserEmail = currentUser.data[0].customers_email_address;
 
                 Application.Current.MainPage = new MasterDetailPage()
                 {
@@ -55,6 +56,8 @@ namespace BeGreen.Services.Logic
             {
                 Settings.isLogin = true;
                 Settings.UserName = currentUser.data[0].customers_firstname;
+                Settings.UserEmail = currentUser.data[0].customers_email_address;
+                Settings.UserAddress = sAddress;
 
                 Application.Current.MainPage = new MasterDetailPage()
                 {

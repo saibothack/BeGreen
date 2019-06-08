@@ -34,11 +34,13 @@
                         <TapGestureRecognizer Command="{Binding CommandRegister}"/>
                     </Grid.GestureRecognizers>
                 </Grid>
+                
                 <StackLayout Grid.Row="1" VerticalOptions="Start">
                     <BoxView HorizontalOptions="FillAndExpand" BackgroundColor="Gray" HeightRequest="1">
                     </BoxView>
                 </StackLayout>
-                <StackLayout Margin="20,20,20,0" Grid.Row="1" Spacing="15">
+                
+                <StackLayout Margin="20,20,20,0" Grid.Row="1" Spacing="15" >
                     <local:NavigationItem Text="Historial de pedidos" Icon="menu_historic.png" Command="{Binding NavigationCommand}" CommandParameter="1" Margin="5" />
                     <ContentView HeightRequest="1" BackgroundColor="Gray" />
                     <local:NavigationItem Text="Favoritos" Icon="menu_favorites.png" Command="{Binding NavigationCommand}" CommandParameter="2" Margin="5" />
@@ -51,7 +53,22 @@
                     <ContentView HeightRequest="1" BackgroundColor="Gray" />
                     <local:NavigationItem Text="Cerrrar sesión" Icon="menu_about.png" Command="{Binding NavigationCommand}" CommandParameter="6" Margin="5" 
                                           IsVisible="{Binding PanelUser}"/>
+                    
+                    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand" Orientation="Vertical" Margin="20">
+                        <ContentView HeightRequest="1" BackgroundColor="Gray" HorizontalOptions="FillAndExpand"/>
+                       
+                        <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Vertical" Margin="0,20,0,20">
+                            <Label Text="Terminos y condiciones" />
+                            <Label Text="Politicas de privacidad" />
+                        </StackLayout>
+                        
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CommandTerms}"/>
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
                 </StackLayout>
+                
+                
             </Grid>
         </ScrollView>
     </ContentPage.Content>

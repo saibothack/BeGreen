@@ -13,6 +13,7 @@ namespace BeGreen.ViewModels
         public ImageSource imageProfiler { get; set; }
         public ImageSource imageBackground { get; set; }
         public Command CommandRegister { get; set; }
+        public Command CommandTerms { get; set; }
 
         public bool PanelRegister { get; set; }
         public bool PanelUser { get; set; }
@@ -23,6 +24,7 @@ namespace BeGreen.ViewModels
             imageBackground = ImageSource.FromResource("BeGreen.Images.background_menu.png");
             imageProfiler = ImageSource.FromResource("BeGreen.Images.profile.png");
             CommandRegister = new Command(goToLogin);
+            CommandTerms = new Command(Terms);
 
             if (Settings.isLogin) {
                 PanelRegister = false;
@@ -32,6 +34,15 @@ namespace BeGreen.ViewModels
                 PanelRegister = true;
                 PanelUser = false;
             }
+        }
+
+        private void Terms() {
+            var mdp = (Application.Current.MainPage as MasterDetailPage);
+            var navPage = mdp.Detail as NavigationPage;
+
+            // Hide the Master page
+            mdp.IsPresented = false;
+            navPage.PushAsync(new TermsPage());
         }
 
         public void goToLogin() {
@@ -59,19 +70,15 @@ namespace BeGreen.ViewModels
                     switch (value)
                     {
                         case "1":
-                            Application.Current.MainPage = new MasterDetailPage()
-                            {
-                                Master = new MasterPage() { Title = "Menú" },
-                                Detail = new NavigationPage(new HomePage())
-                            };
+                            navPage.PushAsync(new HistoryPage());
                             break;
 
                         case "2":
-                            //navPage.PushAsync(new QRPage());
+                            navPage.PushAsync(new FavoritesPage());
                             break;
 
                         case "3":
-                            //navPage.PushAsync(new QRReadPage());
+                            navPage.PushAsync(new PaymentsPage());
                             break;
 
                         case "4":
@@ -79,30 +86,21 @@ namespace BeGreen.ViewModels
                             break;
 
                         case "5":
-                            //navPage.PushAsync(new TrackingPage());
+                            navPage.PushAsync(new AboutUsPage());
                             break;
 
                         case "6":
 
                             Settings.isLogin = false;
                             Settings.UserName = string.Empty;
+                            Settings.UserEmail = string.Empty;
+                            Settings.UserAddress = string.Empty;
 
                             Application.Current.MainPage = new MasterDetailPage()
                             {
                                 Master = new MasterPage() { Title = "Menú" },
                                 Detail = new NavigationPage(new HomePage())
                             };
-
-                            break;
-
-                        case "7":
-                            //navPage.PushAsync(new ListRemissionPage());
-                            break;
-
-                        case "100":
-
-                            //App.EndSesion();
-                            //Application.Current.MainPage = new NavigationPage(new LoginPage());
 
                             break;
                     }

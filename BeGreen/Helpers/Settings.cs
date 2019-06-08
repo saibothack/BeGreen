@@ -28,6 +28,12 @@ namespace BeGreen.Helpers
         private const string SettingsNameKey = "SettingsNameKey";
         private static readonly string SettingsNameDefault = string.Empty;
 
+        private const string SettingsEmailKey = "SettingsEmailKey";
+        private static readonly string SettingsEmailDefault = string.Empty;
+
+        private const string SettingsAddressKey = "SettingsAddressKey";
+        private static readonly string SettingsAddressDefault = string.Empty;
+
         #endregion
 
 
@@ -76,6 +82,30 @@ namespace BeGreen.Helpers
             set
             {
                 AppSettings.AddOrUpdateValue(SettingsNameKey, value);
+            }
+        }
+
+        public static string UserEmail
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault(SettingsEmailKey, SettingsEmailDefault);
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue(SettingsEmailKey, value);
+            }
+        }
+
+        public static string UserAddress
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault(SettingsAddressKey, SettingsAddressDefault);
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue(SettingsAddressKey, value);
             }
         }
     }

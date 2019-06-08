@@ -13,7 +13,7 @@
             <Image Grid.Row="0" Grid.RowSpan="4" Grid.Column="0" Source="{Binding imgBackground}" Aspect="AspectFill" />
             
             <StackLayout Grid.Row="1" Orientation="Vertical" Margin="50, 0, 50, 0">
-                <Label Text="Crear perfil" FontSize="Large" TextColor="White" FontAttributes="Bold" />
+                <Label Text="{Binding sTitle}" FontSize="Large" TextColor="White" FontAttributes="Bold" />
             </StackLayout>
             
             <StackLayout Grid.Row="2" Orientation="Vertical" Margin="50, 0, 50, 0" >
@@ -35,12 +35,12 @@
                            ReturnCommand="{Binding ReturnCommandEntry}" ReturnCommandParameter="{x:Reference  txtPassword}" />
                     <Label Text="{Binding sEmailError}" IsVisible="{Binding bEmailError}" TextColor="White" />
                 </StackLayout>
-                <StackLayout>
+                <StackLayout IsVisible="{Binding isPassword}">
                     <Entry x:Name="txtPassword" IsPassword="true" Keyboard="Text" Placeholder="Contraseña" Text="{Binding sPassword}"
                            ReturnCommand="{Binding ReturnCommandEntry}" ReturnCommandParameter="{x:Reference  txtPasswordConfirm}" HeightRequest="40" />
                     <Label Text="{Binding sPasswordError}" IsVisible="{Binding bPasswordError}" TextColor="White" />
                 </StackLayout>
-                <StackLayout>
+                <StackLayout IsVisible="{Binding isPassword}">
                     <Entry x:Name="txtPasswordConfirm" IsPassword="true" Keyboard="Text" Placeholder="Confirme Contraseña" HeightRequest="40" 
                            Text="{Binding sPasswordConfirm}"/>
                     <Label Text="{Binding sPasswordConfirmError}" IsVisible="{Binding sPasswordConfirmError}" TextColor="White" />

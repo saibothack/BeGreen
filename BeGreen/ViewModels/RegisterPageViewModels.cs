@@ -5,6 +5,7 @@ using BeGreen.Views;
 using Xamarin.Forms;
 using System.Linq;
 using BeGreen.Services.Logic;
+using BeGreen.Helpers;
 
 namespace BeGreen.ViewModels
 {
@@ -17,6 +18,8 @@ namespace BeGreen.ViewModels
         public IAsyncCommand CommandAddress { get; set; }
         public Command CommandCancel { get; set; }
         public Command ReturnCommandEntry { get; set; }
+        public string sTitle { get; set; }
+        public bool isPassword { get; set; }
 
         public Color loadingBackground { get; set; }
 
@@ -184,6 +187,17 @@ namespace BeGreen.ViewModels
             CommandRegister = new AsyncCommand(Register, CanExecuteSubmit);
             CommandCancel = new Command(Cancel);
 
+            sTitle = "Crear perfil";
+            isPassword = true;
+
+            if (Settings.isLogin) {
+                sTitle = "Mi perfil";
+                isPassword = false;
+                sName = Settings.UserName;
+                sEmail = Settings.UserEmail;
+                sAddress = Settings.UserAddress;
+            }
+
             ReturnCommandEntry = new Command<View>((view) =>
             {
                 view?.Focus();
@@ -232,8 +246,21 @@ namespace BeGreen.ViewModels
                 {
                     IsBusy = true;
 
-                    ServicesUser servicesUser = new ServicesUser();
-                    await servicesUser.RegisterAsync(sName, sAddress, sEmail, sPassword);
+                    if (Settings.isLogin) {
+                        Settings.UserName = sName;
+                        Settings.UserEmail = sEmail;
+                        Settings.UserAddress = sAddress;
+
+                        Application.Current.MainPage = new MasterDetailPage()
+                        {
+                            Master = new MasterPage() { Title = "Menú" },
+                            Detail = new NavigationPage(new HomePage())
+                        };
+
+                    } else {
+                        ServicesUser servicesUser = new ServicesUser();
+                        await servicesUser.RegisterAsync(sName, sAddress, sEmail, sPassword);
+                    }
                 }
             }
             finally
@@ -291,31 +318,36 @@ namespace BeGreen.ViewModels
                 }
             }
 
-            if (string.IsNullOrEmpty(sPassword))
-            {
-                success = false;
-                bPasswordError = true;
+            if (!Settings.isLogin) {
+                if (string.IsNullOrEmpty(sPassword))
+                {
+                    success = false;
+                    bPasswordError = true;
 
-            }
-            else
-            {
-                bPasswordError = false;
-            }
+                }
+                else
+                {
+                    bPasswordError = false;
+                }
 
-            if (string.IsNullOrEmpty(sPasswordConfirm))
-            {
-                success = false;
-                bPasswordConfirmError = true;
-
-            }
-            else
-            {
-                if (!sPassword.Equals(sPasswordConfirm)) {
+                if (string.IsNullOrEmpty(sPasswordConfirm))
+                {
                     success = false;
                     bPasswordConfirmError = true;
-                    sPasswordConfirmError = "Sus contraseñas no son iguales";
-                } else {
-                    bPasswordConfirmError = false;
+
+                }
+                else
+                {
+                    if (!sPassword.Equals(sPasswordConfirm))
+                    {
+                        success = false;
+                        bPasswordConfirmError = true;
+                        sPasswordConfirmError = "Sus contraseñas no son iguales";
+                    }
+                    else
+                    {
+                        bPasswordConfirmError = false;
+                    }
                 }
             }
 
@@ -324,7 +356,16 @@ namespace BeGreen.ViewModels
 
         void Cancel() {
             IsBusy = true;
-            Application.Current.MainPage = new NavigationPage(new LoginPage());
+
+            if (Settings.isLogin) {
+                Application.Current.MainPage = new MasterDetailPage()
+                {
+                    Master = new MasterPage() { Title = "Menú" },
+                    Detail = new NavigationPage(new HomePage())
+                };
+            } else {
+                Application.Current.MainPage = new NavigationPage(new LoginPage());
+            }
         }
     }
 }
