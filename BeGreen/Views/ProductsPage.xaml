@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="BeGreen.Views.ProductsPage"
+             NavigationPage.HasNavigationBar="false">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            
+            <Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" Aspect="AspectFill" Source="{Binding imgProducBackground}" />
+            
+            <StackLayout Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+                <StackLayout WidthRequest="50" HeightRequest="30" VerticalOptions="End" Margin="0,0,0,5">
+                    <ImageButton Source="{Binding imgBackButton}" Command="{Binding CommandBack}" HeightRequest="30"/>
+                </StackLayout>
+                <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="End">
+                    <Entry Placeholder="Ingrese busqueda" Text="{Binding txtSearch}" TextChanged="Handle_TextChanged" HeightRequest="40" VerticalOptions="End" Margin="10,0,50,0"/>
+                </StackLayout>
+            </StackLayout>
+            
+            <StackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                <CollectionView ItemsSource="{Binding dataProducts}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" SelectedItem="ProductSelected" 
+                                SelectionChangedCommand="{Binding CommandSelected}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="2" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="130" />
+                                    <RowDefinition Height="20" />
+                                </Grid.RowDefinitions>
+                                
+                                <StackLayout Grid.Row="0" Grid.Column="0">
+                                    <Image Source="{Binding products_image}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                                            HeightRequest="110" Margin="10"/>
+                                </StackLayout>
+                                <StackLayout Grid.Row="1" Grid.Column="0">
+                                    <Label Text="{Binding products_name}" FontAttributes="Bold" LineBreakMode="TailTruncation" HorizontalOptions="Center"/>
+                                </StackLayout>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+            
+            <AbsoluteLayout Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2" IsVisible="{Binding isBackVisible}">
+                <StackLayout HeightRequest="400" WidthRequest="400" AbsoluteLayout.LayoutBounds=".5,.5,.5,.5" AbsoluteLayout.LayoutFlags="All">
+                    <Label Text="No hay registros para mostrar" FontSize="25" TextColor="Gray" HorizontalTextAlignment="Center" FontAttributes="Bold" />
+                    <Image Source="{Binding imgBackground}" VerticalOptions="Center" HorizontalOptions="Center" Margin="20"/>
+                </StackLayout>    
+            </AbsoluteLayout>
+            
+            <StackLayout Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2" IsVisible="{Binding IsBusy}" HorizontalOptions="FillAndExpand" 
+                         VerticalOptions="FillAndExpand" BackgroundColor="{Binding loadingBackground}">
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Color="Blue">
+                </ActivityIndicator>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

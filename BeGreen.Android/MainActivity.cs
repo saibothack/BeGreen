@@ -7,6 +7,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using CarouselView.FormsPlugin.Android;
+using Xamarin.Forms;
 
 namespace BeGreen.Droid
 {
@@ -20,7 +21,7 @@ namespace BeGreen.Droid
 
             base.OnCreate(savedInstanceState);
             CarouselViewRenderer.Init();
-
+            Forms.SetFlags("CollectionView_Experimental");
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());

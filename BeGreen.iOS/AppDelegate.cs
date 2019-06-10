@@ -4,6 +4,7 @@ using System.Linq;
 using CarouselView.FormsPlugin.iOS;
 using Foundation;
 using UIKit;
+using Xamarin.Forms;
 
 namespace BeGreen.iOS
 {
@@ -24,6 +25,7 @@ namespace BeGreen.iOS
         {
             Xamarin.Calabash.Start();
             CarouselViewRenderer.Init();
+            Forms.SetFlags("CollectionView_Experimental");
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 

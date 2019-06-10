@@ -1,16 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-
-namespace BeGreen.Models
+namespace BeGreen.Models.Category
 {
-    public class AllCategory
-    {
-        public string success { get; set; }
-        public string message { get; set; }
-        public int categories { get; set; }
-        public List<Category> data { get; set; }
-    }
-
     public class Category
     {
         public string id { get; set; }

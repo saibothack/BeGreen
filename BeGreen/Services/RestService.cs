@@ -4,6 +4,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using BeGreen.Models;
+using BeGreen.Models.Category;
+using BeGreen.Models.Product;
 using BeGreen.Models.User;
 using BeGreen.Utilities;
 using Newtonsoft.Json;
@@ -81,19 +83,21 @@ namespace BeGreen.Services
 
         #endregion
 
-        public async Task<AllCategory> getAllCategories()
+        #region "Products"
+
+        public async Task<CategoryData> getAllCategories(int languajeId)
         {
             var uri = new Uri(Constants.urlApi + "allCategories");
 
-            AllCategory allCategory = new AllCategory();
+            CategoryData allCategory = new CategoryData();
 
             if (App.CurrentConetion())
-            {
+            {   
                 try
                 {
                     var dataPost = JsonConvert.SerializeObject(new
                     {
-                        language_id = 1
+                        language_id = languajeId
                     });
 
                     var content = new StringContent(dataPost, Encoding.UTF8, "application/json");
@@ -102,7 +106,7 @@ namespace BeGreen.Services
                     response = await client.PostAsync(uri, content);
 
                     var request = await response.Content.ReadAsStringAsync();
-                    allCategory = JsonConvert.DeserializeObject<AllCategory>(request);
+                    allCategory = JsonConvert.DeserializeObject<CategoryData>(request);
                 }
                 catch (Exception ex)
                 {
@@ -112,5 +116,36 @@ namespace BeGreen.Services
 
             return allCategory;
         }
+
+        public async Task<ProductData> getAllProducts(GetProducts getProducts)
+        {
+            var uri = new Uri(Constants.urlApi + "getAllProducts");
+
+            ProductData allProducts = new ProductData();
+
+            if (App.CurrentConetion())
+            {
+                try
+                {
+                    var dataPost = JsonConvert.SerializeObject(getProducts);
+
+                    var content = new StringContent(dataPost, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = null;
+                    response = await client.PostAsync(uri, content);
+
+                    var request = await response.Content.ReadAsStringAsync();
+                    allProducts = JsonConvert.DeserializeObject<ProductData>(request);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(@"ERROR {0}", ex.Message);
+                }
+            }
+
+            return allProducts;
+        }
+        #endregion
+
     }
 }

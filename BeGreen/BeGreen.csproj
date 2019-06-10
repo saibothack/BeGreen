@@ -29,6 +29,8 @@
     <Folder Include="Helpers\" />
     <Folder Include="Models\User\" />
     <Folder Include="Services\Logic\" />
+    <Folder Include="Models\Category\" />
+    <Folder Include="Models\Product\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Images\ic_launcher_foreground_begreen.png" />
@@ -46,8 +48,10 @@
     <None Remove="Images\profile.png" />
     <None Remove="Images\background_menu.png" />
     <None Remove="Images\login_background.png" />
-    <None Remove="Images\btn_aceptar.png" />
     <None Remove="Images\ic_marker.png" />
+    <None Remove="Images\catalog.png" />
+    <None Remove="Images\left-arrow.png" />
+    <None Remove="Images\producto_fondo.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\ic_launcher_foreground_begreen.png" />
@@ -65,8 +69,10 @@
     <EmbeddedResource Include="Images\profile.png" />
     <EmbeddedResource Include="Images\background_menu.png" />
     <EmbeddedResource Include="Images\login_background.png" />
-    <EmbeddedResource Include="Images\btn_aceptar.png" />
     <EmbeddedResource Include="Images\ic_marker.png" />
+    <EmbeddedResource Include="Images\catalog.png" />
+    <EmbeddedResource Include="Images\left-arrow.png" />
+    <EmbeddedResource Include="Images\producto_fondo.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Android">

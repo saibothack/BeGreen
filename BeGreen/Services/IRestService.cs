@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using BeGreen.Models;
+using BeGreen.Models.Category;
+using BeGreen.Models.Product;
 using BeGreen.Models.User;
 
 namespace BeGreen.Services
@@ -14,6 +16,12 @@ namespace BeGreen.Services
 
         #endregion
 
-        Task<AllCategory> getAllCategories();
+        #region "Products"
+
+        Task<CategoryData> getAllCategories(int languajeId);
+        Task<ProductData> getAllProducts(GetProducts getProducts);
+
+        #endregion
+
     }
 }

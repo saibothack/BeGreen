@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using BeGreen.Utilities;
 using BeGreen.ViewModels;
 using Xamarin.Forms;
@@ -21,6 +20,12 @@ namespace BeGreen.Views
 
             IErrorHandler errorHandler = null;
             viewModel.CommandInit.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
+        }
+
+        void Handle_ItemTapped(object sender, Xamarin.Forms.ItemTappedEventArgs e)
+        {
+            IErrorHandler errorHandler = null;
+            viewModel.ItemTapped.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
         }
     }
 }

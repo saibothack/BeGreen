@@ -4,6 +4,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using BeGreen.Helpers;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace BeGreen
 {
@@ -47,12 +48,18 @@ namespace BeGreen
         public static bool CurrentConetion()
         {
             bool success = true;
-            var current = Connectivity.NetworkAccess;
 
-            if (current == NetworkAccess.None || current == NetworkAccess.Unknown)
+            try {
+                var current = Connectivity.NetworkAccess;
+
+                if (current == NetworkAccess.None || current == NetworkAccess.Unknown)
+                {
+                    success = false;
+                    Current.MainPage.DisplayAlert("Notificación", "No se cuenta con conexion a internet.", "Aceptar");
+                }
+            } catch(Exception ex)
             {
-                success = false;
-                Current.MainPage.DisplayAlert("Notificación", "No se cuenta con conexion a internet.", "Aceptar");
+                Debug.WriteLine(@"ERROR {0}", ex.Message);
             }
 
             return success;
