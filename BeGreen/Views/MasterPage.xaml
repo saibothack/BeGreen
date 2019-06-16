@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin" 
              xmlns:local="clr-namespace:BeGreen.Views" NavigationPage.HasNavigationBar="false" x:Class="BeGreen.Views.MasterPage">
@@ -15,7 +15,7 @@
                                  IsVisible="{Binding PanelRegister}">
                         <StackLayout WidthRequest="80" HeightRequest="80" HorizontalOptions="Start" VerticalOptions="Center" Margin="20">
                             <controls:CircleImage BorderColor="White" BorderThickness="4" Source="{Binding imageProfiler}" Aspect="AspectFill" 
-                                                  HeightRequest="80" WidthRequest="80" BackgroundColor="White" />
+                                                  HeightRequest="80" WidthRequest="80" BackgroundColor="White"/>
                         </StackLayout>
                         <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="Center">
                             <Label Text="Suscribirse" TextColor="White" FontSize="Large" FontAttributes="Bold" />

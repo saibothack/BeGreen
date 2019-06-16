@@ -31,6 +31,7 @@
     <Folder Include="Services\Logic\" />
     <Folder Include="Models\Category\" />
     <Folder Include="Models\Product\" />
+    <Folder Include="Models\Orchard\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Images\ic_launcher_foreground_begreen.png" />
@@ -52,6 +53,8 @@
     <None Remove="Images\catalog.png" />
     <None Remove="Images\left-arrow.png" />
     <None Remove="Images\producto_fondo.png" />
+    <None Remove="Images\favorite.png" />
+    <None Remove="Images\like.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\ic_launcher_foreground_begreen.png" />
@@ -73,6 +76,8 @@
     <EmbeddedResource Include="Images\catalog.png" />
     <EmbeddedResource Include="Images\left-arrow.png" />
     <EmbeddedResource Include="Images\producto_fondo.png" />
+    <EmbeddedResource Include="Images\favorite.png" />
+    <EmbeddedResource Include="Images\like.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Android">

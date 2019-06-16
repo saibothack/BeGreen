@@ -34,6 +34,9 @@ namespace BeGreen.Helpers
         private const string SettingsAddressKey = "SettingsAddressKey";
         private static readonly string SettingsAddressDefault = string.Empty;
 
+        private const string SettingsIdCustomerKey = "SettingsIdCustomerKey";
+        private static readonly string SettingsIdCustomerDefault = string.Empty;
+
         #endregion
 
 
@@ -106,6 +109,18 @@ namespace BeGreen.Helpers
             set
             {
                 AppSettings.AddOrUpdateValue(SettingsAddressKey, value);
+            }
+        }
+
+        public static string IdCustomer
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault(SettingsIdCustomerKey, SettingsIdCustomerDefault);
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue(SettingsIdCustomerKey, value);
             }
         }
     }

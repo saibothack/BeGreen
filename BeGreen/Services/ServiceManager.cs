@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using BeGreen.Models;
 using BeGreen.Models.Category;
+using BeGreen.Models.Orchard;
 using BeGreen.Models.Product;
 using BeGreen.Models.User;
 
@@ -40,6 +41,25 @@ namespace BeGreen.Services
         public Task<ProductData> getAllProducts(GetProducts getProducts)
         {
             return restService.getAllProducts(getProducts);
+        }
+
+        public Task<object> setLikeProducts(int idProduct, string idCustomer)
+        {
+            return restService.setLikeProducts(idProduct, idCustomer);
+        }
+
+        public Task<object> setUnLikeProducts(int idProduct, string idCustomer)
+        {
+            return restService.setUnLikeProducts(idProduct, idCustomer);
+        }
+
+        #endregion
+
+        #region "Products"
+
+        public Task<OrchardData> getAllOrchards(int idLanguaje, int numberPage)
+        {
+            return restService.getAllOrchards(idLanguaje, numberPage);
         }
 
         #endregion

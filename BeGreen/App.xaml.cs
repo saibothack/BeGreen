@@ -5,12 +5,15 @@ using Xamarin.Forms;
 using BeGreen.Helpers;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using BeGreen.Models.Orchard;
 
 namespace BeGreen
 {
     public partial class App : Application
     {
         public static Services.ServiceManager oServiceManager { get; private set; }
+        public static Orchard ItemSelectedOrchard { get; set; }
+        public static string TxtComment { get; set; }
 
         public App()
         {

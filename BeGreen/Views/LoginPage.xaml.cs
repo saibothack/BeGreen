@@ -12,12 +12,13 @@ namespace BeGreen.Views
     {
         private LoginPageViewModels viewModel;
 
-        public LoginPage()
+        public LoginPage(bool ndPop = false)
         {
             InitializeComponent();
 
             BindingContext = viewModel = new LoginPageViewModels();
             viewModel.Navigation = this.Navigation;
+            viewModel.isNeedPop = ndPop;
         }
 
         void Handle_Clicked_Entrar(object sender, System.EventArgs e)

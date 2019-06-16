@@ -9,7 +9,7 @@ namespace BeGreen.Services.Logic
 {
     public class ServicesUser
     {
-        public async Task LoginAsync(string sUser, string sPassword)
+        public async Task LoginAsync(string sUser, string sPassword, bool isNeedPop)
         {
             User user = new User
             {
@@ -26,14 +26,24 @@ namespace BeGreen.Services.Logic
             else
             {
                 Settings.isLogin = true;
+                Settings.IdCustomer = currentUser.data[0].customers_id;
                 Settings.UserName = currentUser.data[0].customers_firstname;
                 Settings.UserEmail = currentUser.data[0].customers_email_address;
 
-                Application.Current.MainPage = new MasterDetailPage()
+                if (isNeedPop)
                 {
-                    Master = new MasterPage() { Title = "Menú" },
-                    Detail = new NavigationPage(new HomePage())
-                };
+                    var mdp = (Application.Current.MainPage as MasterDetailPage);
+                    var navPage = mdp.Detail as NavigationPage;
+                    await navPage.PopAsync();
+                }
+                else
+                {
+                    Application.Current.MainPage = new MasterDetailPage()
+                    {
+                        Master = new MasterPage() { Title = "Menú" },
+                        Detail = new NavigationPage(new HomePage())
+                    };
+                }
             }
         }
 

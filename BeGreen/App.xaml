@@ -5,6 +5,7 @@
             <Color x:Key="colorPrimary">#00c853</Color>
             <Color x:Key="colorPrimaryDark">#009624</Color>
             <Color x:Key="colorAccent">#5efc82</Color>
+            <Color x:Key="colorButtonGrey">#8bc540</Color>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

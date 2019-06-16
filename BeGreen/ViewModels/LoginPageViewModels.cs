@@ -15,6 +15,7 @@ namespace BeGreen.ViewModels
         public Command CommandRegister { get; set; }
         public Command ReturnCommandEntry { get; set; }
         public Command CommandCancel { get; set; }
+        public bool isNeedPop { get; set; }
 
         public Color loadingBackground { get; set; }
 
@@ -98,13 +99,19 @@ namespace BeGreen.ViewModels
             });
         }
 
-        void Cancel()
+        async void Cancel()
         {
-            Application.Current.MainPage = new MasterDetailPage()
-            {
-                Master = new MasterPage() { Title = "Menú" },
-                Detail = new NavigationPage(new HomePage())
-            };
+            if (isNeedPop) {
+                var mdp = (Application.Current.MainPage as MasterDetailPage);
+                var navPage = mdp.Detail as NavigationPage;
+                await navPage.PopAsync();
+            } else {
+                Application.Current.MainPage = new MasterDetailPage()
+                {
+                    Master = new MasterPage() { Title = "Menú" },
+                    Detail = new NavigationPage(new HomePage())
+                };
+            }
         }
 
         private async Task LoginAsync()
@@ -115,7 +122,7 @@ namespace BeGreen.ViewModels
                     IsBusy = true;
 
                     ServicesUser servicesUser = new ServicesUser();
-                    await servicesUser.LoginAsync(sEmail, sPassword);
+                    await servicesUser.LoginAsync(sEmail, sPassword, isNeedPop);
                 }
             }
             finally

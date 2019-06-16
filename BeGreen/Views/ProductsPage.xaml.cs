@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BeGreen.Models.Category;
+using BeGreen.Models.Product;
 using BeGreen.Utilities;
 using BeGreen.ViewModels;
 using Xamarin.Forms;
@@ -16,6 +17,9 @@ namespace BeGreen.Views
         {
             InitializeComponent();
 
+            App.ItemSelectedOrchard = null;
+            App.TxtComment = string.Empty;
+
             BindingContext = viewModel = new ProductsPageViewModels();
             viewModel.Navigation = this.Navigation;
             viewModel.SubCategories = SubCategories;
@@ -28,6 +32,26 @@ namespace BeGreen.Views
         {
             IErrorHandler errorHandler = null;
             viewModel.CommandSearch.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
+        }
+
+        private void SelectableItemsView_OnSelectionChanged(CollectionView sender, SelectionChangedEventArgs e)
+        {
+            if (sender.SelectedItem != null)
+            {
+                viewModel.ProductSelected = (Product)sender.SelectedItem;
+                IErrorHandler errorHandler = null;
+                viewModel.CommandSelected.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
+            }
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            viewModel.ProductSelected = null;
+            CVProducts.SelectedItem = null;
+            CVProducts.SelectionMode = SelectionMode.None;
+            CVProducts.SelectionMode = SelectionMode.Single;
+
         }
     }
 }

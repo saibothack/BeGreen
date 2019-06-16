@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BeGreen.Models;
 using BeGreen.Models.Category;
+using BeGreen.Models.Orchard;
 using BeGreen.Models.Product;
 using BeGreen.Models.User;
 using BeGreen.Utilities;
@@ -145,6 +146,121 @@ namespace BeGreen.Services
 
             return allProducts;
         }
+
+        public async Task<object> setLikeProducts(int idProduct, string idCustomer)
+        {
+            var uri = new Uri(Constants.urlApi + "likeProduct");
+
+            var likeParams = new
+            {
+                liked_products_id = idProduct,
+                liked_customers_id = idCustomer
+            };
+
+            var postBody = new object();
+
+            //ProductData allProducts = new ProductData();
+
+            if (App.CurrentConetion())
+            {
+                try
+                {
+                    var dataPost = JsonConvert.SerializeObject(likeParams);
+
+                    var content = new StringContent(dataPost, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = null;
+                    response = await client.PostAsync(uri, content);
+
+                    var request = await response.Content.ReadAsStringAsync();
+                    postBody = JsonConvert.DeserializeObject<object>(request);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(@"ERROR {0}", ex.Message);
+                }
+            }
+
+            return postBody;
+        }
+
+        public async Task<object> setUnLikeProducts(int idProduct, string idCustomer)
+        {
+            var uri = new Uri(Constants.urlApi + "unlikeProduct");
+
+            var likeParams = new
+            {
+                liked_products_id = idProduct,
+                liked_customers_id = idCustomer
+            };
+
+            var postBody = new object();
+
+            //ProductData allProducts = new ProductData();
+
+            if (App.CurrentConetion())
+            {
+                try
+                {
+                    var dataPost = JsonConvert.SerializeObject(likeParams);
+
+                    var content = new StringContent(dataPost, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = null;
+                    response = await client.PostAsync(uri, content);
+
+                    var request = await response.Content.ReadAsStringAsync();
+                    postBody = JsonConvert.DeserializeObject<object>(request);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(@"ERROR {0}", ex.Message);
+                }
+            }
+
+            return postBody;
+        }
+
+        #endregion
+
+        #region "Orchards"
+
+        public async Task<OrchardData> getAllOrchards(int idLanguaje, int numberPage)
+        {
+            var uri = new Uri(Constants.urlApi + "getAllNews");
+
+            var allOrchards = new
+            {
+                language_id = 1,
+                page_number = 0,
+                is_feature = 0
+            };
+
+            OrchardData allOrchardsReq = new OrchardData();
+
+            if (App.CurrentConetion())
+            {
+                try
+                {
+                    var dataPost = JsonConvert.SerializeObject(allOrchards);
+
+                    var content = new StringContent(dataPost, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = null;
+                    response = await client.PostAsync(uri, content);
+
+                    var request = await response.Content.ReadAsStringAsync();
+                    allOrchardsReq = JsonConvert.DeserializeObject<OrchardData>(request);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(@"ERROR {0}", ex.Message);
+                }
+            }
+
+            return allOrchardsReq;
+        }
+
         #endregion
 
     }

@@ -18,11 +18,11 @@ namespace BeGreen.ViewModels
         public List<Category> SubCategories { get; internal set; }
         public AsyncCommand CommandInit { get; internal set; }
         public AsyncCommand CommandSearch { get; internal set; }
+        public AsyncCommand CommandSelected { get; internal set; }
         public ImageSource imgProducBackground { get; set; }
         public ImageSource imgBackground { get; set; }
         public ImageSource imgBackButton { get; set; }
         public Command CommandBack { get; internal set; }
-        public Command CommandSelected { get; internal set; }
         public Color loadingBackground { get; set; }
         public List<Product> AllProducts { get; set; }
         public bool isSearch { get; set; }
@@ -76,18 +76,18 @@ namespace BeGreen.ViewModels
             loadingBackground = Color.FromHsla(0, 0, 0, 0.1);
             CommandInit = new AsyncCommand(InitializeAsync, CanExecuteSubmit);
             CommandSearch = new AsyncCommand(SeachText, CanExecuteSubmit);
+            CommandSelected = new AsyncCommand(ItemSelected, CanExecuteSubmit);
 
             imgBackground = ImageSource.FromResource("BeGreen.Images.catalog.png");
             imgBackButton = ImageSource.FromResource("BeGreen.Images.left-arrow.png");
             imgProducBackground = ImageSource.FromResource("BeGreen.Images.producto_fondo.png");
 
             CommandBack = new Command(back);
-            CommandSelected = new Command(ItemSelected);
 
             isBackVisible = true;
         }
 
-        async void ItemSelected() {
+        private async Task ItemSelected() {
 
             var mdp = (Application.Current.MainPage as MasterDetailPage);
             var navPage = mdp.Detail as NavigationPage;
