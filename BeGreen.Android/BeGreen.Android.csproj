@@ -81,6 +81,9 @@
     <PackageReference Include="Xamarin.Android.VerticalViewPager">
       <Version>1.0.1</Version>
     </PackageReference>
+    <PackageReference Include="sqlite-net-pcl">
+      <Version>1.5.231</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />

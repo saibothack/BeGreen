@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BeGreen.Models;
 using BeGreen.Models.Category;
@@ -60,6 +61,15 @@ namespace BeGreen.Services
         public Task<OrchardData> getAllOrchards(int idLanguaje, int numberPage)
         {
             return restService.getAllOrchards(idLanguaje, numberPage);
+        }
+
+        #endregion
+
+        #region "Coupons"
+
+        public Task<List<Coupon>> getAllCoupons()
+        {
+            return restService.getAllCoupons();
         }
 
         #endregion

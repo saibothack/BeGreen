@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BeGreen.Models.Orchard;
 using BeGreen.Utilities;
 using BeGreen.ViewModels;
 using Xamarin.Forms;
@@ -8,27 +7,29 @@ using Xamarin.Forms.Xaml;
 namespace BeGreen.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CommentaryPage : ContentPage
+    public partial class OrchardDetailPage : ContentPage
     {
-        private CommentaryPageViewModels viewModel;
+        private OrchardDetailPageViewModels viewModel;
 
-        public CommentaryPage()
+        public OrchardDetailPage(Orchard orchard)
         {
             InitializeComponent();
-            BindingContext = viewModel = new CommentaryPageViewModels();
+
+            BindingContext = viewModel = new OrchardDetailPageViewModels();
             viewModel.Navigation = this.Navigation;
+            viewModel.ItemSelectedOrchard = orchard;
         }
 
         void Handle_Clicked(object sender, System.EventArgs e)
         {
             IErrorHandler errorHandler = null;
-            viewModel.CommandBack.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
+            viewModel.CommandNavigation.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
         }
 
         void Handle_Clicked_1(object sender, System.EventArgs e)
         {
             IErrorHandler errorHandler = null;
-            viewModel.CommandSave.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
+            viewModel.CommandLike.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
         }
     }
 }

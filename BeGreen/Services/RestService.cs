@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
@@ -259,6 +260,35 @@ namespace BeGreen.Services
             }
 
             return allOrchardsReq;
+        }
+
+        #endregion
+
+        #region "Coupons"
+
+        public async Task<List<Coupon>> getAllCoupons()
+        {
+            var uri = new Uri(Constants.urlApi + "getAllCoupon");
+
+            List<Coupon> allCoupons = new List<Coupon>();
+
+            if (App.CurrentConetion())
+            {
+                try
+                {
+                    HttpResponseMessage response = null;
+                    response = await client.GetAsync(uri);
+
+                    var request = await response.Content.ReadAsStringAsync();
+                    allCoupons = JsonConvert.DeserializeObject<List<Coupon>>(request);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(@"ERROR {0}", ex.Message);
+                }
+            }
+
+            return allCoupons;
         }
 
         #endregion

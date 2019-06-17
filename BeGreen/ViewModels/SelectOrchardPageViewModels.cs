@@ -75,10 +75,9 @@ namespace BeGreen.ViewModels
 
                 var getDataOrchards = await App.oServiceManager.getAllOrchards(1, 0);
 
-                getDataOrchards.news_data.ForEach(x => x.news_image = (Constants.urlApi + x.news_image));
-
                 foreach (var item in getDataOrchards.news_data)
                 {
+                    item.news_image = (Constants.urlApi + item.news_image);
                     dataOrchards.Add(item);
                 }
             }

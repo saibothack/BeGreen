@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BeGreen.Models;
 using BeGreen.Models.Category;
@@ -29,6 +30,12 @@ namespace BeGreen.Services
         #region "Orchards"
 
         Task<OrchardData> getAllOrchards(int idLanguaje, int numberPage);
+
+        #endregion
+
+        #region "Coupons"
+
+        Task<List<Coupon>> getAllCoupons();
 
         #endregion
 

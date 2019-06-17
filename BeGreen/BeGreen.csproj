@@ -18,6 +18,7 @@
     <PackageReference Include="Xam.Plugins.Forms.ImageCircle" Version="3.0.0.5" />
     <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
     <PackageReference Include="Xam.Plugin.Iconize" Version="3.5.0.129" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.5.231" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
@@ -55,6 +56,9 @@
     <None Remove="Images\producto_fondo.png" />
     <None Remove="Images\favorite.png" />
     <None Remove="Images\like.png" />
+    <None Remove="Images\huertas_boton_prod.png" />
+    <None Remove="Images\huertas_home.png" />
+    <None Remove="Images\map_default.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\ic_launcher_foreground_begreen.png" />
@@ -78,6 +82,9 @@
     <EmbeddedResource Include="Images\producto_fondo.png" />
     <EmbeddedResource Include="Images\favorite.png" />
     <EmbeddedResource Include="Images\like.png" />
+    <EmbeddedResource Include="Images\huertas_boton_prod.png" />
+    <EmbeddedResource Include="Images\huertas_home.png" />
+    <EmbeddedResource Include="Images\map_default.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Android">
