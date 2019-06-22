@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.0.0.425677" />
+    <PackageReference Include="Xamarin.Forms" Version="4.0.0.497661" />
     <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
     <PackageReference Include="CarouselView.FormsPlugin" Version="5.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
@@ -33,6 +33,10 @@
     <Folder Include="Models\Category\" />
     <Folder Include="Models\Product\" />
     <Folder Include="Models\Orchard\" />
+    <Folder Include="Models\Coupon\" />
+    <Folder Include="Models\Terms\" />
+    <Folder Include="Models\Settings\" />
+    <Folder Include="Dabase\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Images\ic_launcher_foreground_begreen.png" />
@@ -59,6 +63,8 @@
     <None Remove="Images\huertas_boton_prod.png" />
     <None Remove="Images\huertas_home.png" />
     <None Remove="Images\map_default.png" />
+    <None Remove="Images\clock.png" />
+    <None Remove="Images\star.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\ic_launcher_foreground_begreen.png" />
@@ -90,5 +96,9 @@
     <Reference Include="Mono.Android">
       <HintPath>..\..\..\..\..\..\..\Library\Frameworks\Xamarin.Android.framework\Versions\9.2.3-0\lib\xamarin.android\xbuild-frameworks\MonoAndroid\v8.1\Mono.Android.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\clock.png" />
+    <EmbeddedResource Include="Images\star.png" />
   </ItemGroup>
 </Project>

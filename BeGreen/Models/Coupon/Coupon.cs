@@ -1,5 +1,4 @@
-﻿using System;
-namespace BeGreen.Models
+﻿namespace BeGreen.Models.Coupon
 {
     public class Coupon
     {

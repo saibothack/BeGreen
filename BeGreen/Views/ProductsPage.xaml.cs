@@ -34,16 +34,6 @@ namespace BeGreen.Views
             viewModel.CommandSearch.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
         }
 
-        private void SelectableItemsView_OnSelectionChanged(CollectionView sender, SelectionChangedEventArgs e)
-        {
-            if (sender.SelectedItem != null)
-            {
-                viewModel.ProductSelected = (Product)sender.SelectedItem;
-                IErrorHandler errorHandler = null;
-                viewModel.CommandSelected.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
-            }
-        }
-
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -52,6 +42,16 @@ namespace BeGreen.Views
             CVProducts.SelectionMode = SelectionMode.None;
             CVProducts.SelectionMode = SelectionMode.Single;
 
+        }
+
+        void Handle_SelectionChanged(CollectionView sender, Xamarin.Forms.SelectionChangedEventArgs e)
+        {
+            if (sender.SelectedItem != null)
+            {
+                viewModel.ProductSelected = (Product)sender.SelectedItem;
+                IErrorHandler errorHandler = null;
+                viewModel.CommandSelected.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
+            }
         }
     }
 }

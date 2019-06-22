@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using BeGreen.Models;
 using BeGreen.Models.Category;
+using BeGreen.Models.Coupon;
 using BeGreen.Models.Orchard;
 using BeGreen.Models.Product;
+using BeGreen.Models.Settings;
+using BeGreen.Models.Terms;
 using BeGreen.Models.User;
 
 namespace BeGreen.Services
@@ -36,6 +37,13 @@ namespace BeGreen.Services
         #region "Coupons"
 
         Task<List<Coupon>> getAllCoupons();
+
+        #endregion
+
+        #region "Configuration"
+
+        Task<TermsData> getAllTerms(int languajeId);
+        Task<SettingsData> getSettings();
 
         #endregion
 

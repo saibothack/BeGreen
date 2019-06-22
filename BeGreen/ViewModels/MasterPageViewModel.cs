@@ -86,7 +86,7 @@ namespace BeGreen.ViewModels
                             break;
 
                         case "5":
-                            navPage.PushAsync(new AboutUsPage());
+                            navPage.PushAsync(new AboutUsPage() { Title = "" });
                             break;
 
                         case "6":
@@ -98,7 +98,7 @@ namespace BeGreen.ViewModels
 
                             Application.Current.MainPage = new MasterDetailPage()
                             {
-                                Master = new MasterPage() { Title = "Menú" },
+                                Master = new MasterPage() { Title = "" },
                                 Detail = new NavigationPage(new HomePage())
                             };
 

@@ -9,6 +9,7 @@ namespace BeGreen.ViewModels
     public class OrchardDetailPageViewModels : ViewModelBase
     {
         public INavigation Navigation { get; internal set; }
+        public AsyncCommand CommandInitialize { get; internal set; }
         public AsyncCommand CommandNavigation { get; internal set; }
         public AsyncCommand CommandLike { get; internal set; }
 
@@ -19,12 +20,23 @@ namespace BeGreen.ViewModels
 
         public ImageSource imgBackground { get; set; }
         public ImageSource imgNavigation { get; set; }
-        public ImageSource imgFavorite { get; set; }
         public ImageSource imgBackgroundHome { get; set; }
         public ImageSource imgHome { get; set; }
         public ImageSource imgMapLocation { get; set; }
 
+        public bool isFavorite { get; set; }
+
         #region "Properties"
+
+        private ImageSource _imgFavorite;
+        public ImageSource imgFavorite
+        {
+            get { return _imgFavorite; }
+            set
+            {
+                SetProperty(ref _imgFavorite, value);
+            }
+        }
 
         private Orchard _ItemSelectedOrchard;
         public Orchard ItemSelectedOrchard
@@ -79,6 +91,7 @@ namespace BeGreen.ViewModels
 
             CommandNavigation = new AsyncCommand(EventBackAsync, CanExecuteSubmit);
             CommandLike = new AsyncCommand(EventLikeAsync, CanExecuteSubmit);
+            CommandInitialize = new AsyncCommand(InitializeAsync, CanExecuteSubmit);
 
             CommandGoWeb = new Command(EventGoWeb);
             CommandHome = new Command(EventHome);
@@ -88,8 +101,33 @@ namespace BeGreen.ViewModels
             isHome = true;
         }
 
+        private async Task InitializeAsync() {
+            var orchard = await App.DataBase.GetOrchardsById(ItemSelectedOrchard.news_id);
+
+            if (orchard.Equals(ItemSelectedOrchard))
+            {
+                isFavorite = true;
+                imgFavorite = ImageSource.FromResource("BeGreen.Images.like.png");
+            }
+            else
+            {
+                isFavorite = false;
+                imgFavorite = ImageSource.FromResource("BeGreen.Images.favorite.png");
+            }
+        }
+
         private async Task EventLikeAsync() {
-            
+            if (isFavorite) {
+                isFavorite = false;
+                await App.DataBase.DeleteOrchar(ItemSelectedOrchard);
+                imgFavorite = ImageSource.FromResource("BeGreen.Images.like.png");
+            }
+            else
+            {
+                isFavorite = true;
+                await App.DataBase.SaveOrchard(ItemSelectedOrchard);
+                imgFavorite = ImageSource.FromResource("BeGreen.Images.favorite.png");
+            }
         }
         
 

@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using BeGreen.Models;
 using BeGreen.Models.Category;
+using BeGreen.Models.Coupon;
 using BeGreen.Models.Orchard;
 using BeGreen.Models.Product;
+using BeGreen.Models.Settings;
+using BeGreen.Models.Terms;
 using BeGreen.Models.User;
 
 namespace BeGreen.Services
@@ -70,6 +71,20 @@ namespace BeGreen.Services
         public Task<List<Coupon>> getAllCoupons()
         {
             return restService.getAllCoupons();
+        }
+
+        #endregion
+
+        #region "Configuration"
+
+        public Task<TermsData> getAllTerms(int languajeId)
+        {
+            return restService.getAllTerms(languajeId);
+        }
+
+        public Task<SettingsData> getSettings()
+        {
+            return restService.getSettings();
         }
 
         #endregion

@@ -1,5 +1,49 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="BeGreen.Views.AboutUsPage">
     <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Orientation="Vertical">
+                <StackLayout>
+                    <Image Source="{Binding imgLogo}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="BeGreen" FontSize="Large" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                    <WebView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                        <WebView.Source>
+                            <HtmlWebViewSource Html="{Binding sourceAbout.description}" />
+                        </WebView.Source>
+                    </WebView>
+                </StackLayout>
+                <StackLayout HorizontalOptions="FillAndExpand" BackgroundColor="Silver" HeightRequest="40" Padding="0">
+                    <Label Text="Sitio Web oficial" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CommandGoWeb}"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                <StackLayout HorizontalOptions="FillAndExpand" BackgroundColor="Silver" IsVisible="{Binding sourcePrivacyVisible}" 
+                             HeightRequest="40" Padding="0">
+                    <Label Text="Politicas de privacidad" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CommandGoPrivacy}"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                <StackLayout HorizontalOptions="FillAndExpand" BackgroundColor="Silver" IsVisible="{Binding sourceRefundVisible}" 
+                             HeightRequest="40" Padding="0">
+                    <Label Text="Politicas de reembolso"  VerticalTextAlignment="Center" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CommandGoRefound}"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                <StackLayout HorizontalOptions="FillAndExpand" BackgroundColor="Silver" IsVisible="{Binding sourceTermsVisible}" 
+                             HeightRequest="40" Padding="0">
+                    <Label Text="Terminos de servicio" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CommandGoTerms}"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

@@ -4,10 +4,12 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using BeGreen.Models;
 using BeGreen.Models.Category;
+using BeGreen.Models.Coupon;
 using BeGreen.Models.Orchard;
 using BeGreen.Models.Product;
+using BeGreen.Models.Settings;
+using BeGreen.Models.Terms;
 using BeGreen.Models.User;
 using BeGreen.Utilities;
 using Newtonsoft.Json;
@@ -289,6 +291,69 @@ namespace BeGreen.Services
             }
 
             return allCoupons;
+        }
+
+        #endregion
+
+        #region "Configuration"
+
+        public async Task<TermsData> getAllTerms(int languajeId)
+        {
+            var uri = new Uri(Constants.urlApi + "getAllPages");
+
+            TermsData allTerms = new TermsData();
+
+            var parameters = new
+            {
+                language_id = languajeId,
+            };
+
+            if (App.CurrentConetion())
+            {
+                try
+                {
+                    var dataPost = JsonConvert.SerializeObject(parameters);
+
+                    var content = new StringContent(dataPost, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = null;
+                    response = await client.PostAsync(uri, content);
+
+                    var request = await response.Content.ReadAsStringAsync();
+                    allTerms = JsonConvert.DeserializeObject<TermsData>(request);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(@"ERROR {0}", ex.Message);
+                }
+            }
+
+            return allTerms;
+        }
+
+        public async Task<SettingsData> getSettings()
+        {
+            var uri = new Uri(Constants.urlApi + "siteSetting");
+
+            SettingsData allSettings = new SettingsData();
+
+            if (App.CurrentConetion())
+            {
+                try
+                {
+                    HttpResponseMessage response = null;
+                    response = await client.GetAsync(uri);
+
+                    var request = await response.Content.ReadAsStringAsync();
+                    allSettings = JsonConvert.DeserializeObject<SettingsData>(request);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(@"ERROR {0}", ex.Message);
+                }
+            }
+
+            return allSettings;
         }
 
         #endregion

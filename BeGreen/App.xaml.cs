@@ -6,12 +6,15 @@ using BeGreen.Helpers;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using BeGreen.Models.Orchard;
+using BeGreen.Dabase;
+using System.IO;
 
 namespace BeGreen
 {
     public partial class App : Application
     {
         public static Services.ServiceManager oServiceManager { get; private set; }
+        static dbLogic database;
         public static Orchard ItemSelectedOrchard { get; set; }
         public static string TxtComment { get; set; }
 
@@ -31,6 +34,25 @@ namespace BeGreen
             else 
                 MainPage = new IntroPage();
 
+        }
+
+        public static dbLogic DataBase
+        {
+            get
+            {
+                if (database == null)
+                {
+                    try
+                    {
+                        database = new dbLogic(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "BeGreen.db3"));
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(@"ERROR {0}", ex.Message);
+                    }
+                }
+                return database;
+            }
         }
 
         protected override void OnStart()
