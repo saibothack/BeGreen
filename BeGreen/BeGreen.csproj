@@ -65,6 +65,8 @@
     <None Remove="Images\map_default.png" />
     <None Remove="Images\clock.png" />
     <None Remove="Images\star.png" />
+    <None Remove="Images\empty_set.png" />
+    <None Remove="Images\add_from_wish_list.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\ic_launcher_foreground_begreen.png" />
@@ -91,6 +93,8 @@
     <EmbeddedResource Include="Images\huertas_boton_prod.png" />
     <EmbeddedResource Include="Images\huertas_home.png" />
     <EmbeddedResource Include="Images\map_default.png" />
+    <EmbeddedResource Include="Images\empty_set.png" />
+    <EmbeddedResource Include="Images\add_from_wish_list.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Android">

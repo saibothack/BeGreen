@@ -1,5 +1,81 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="BeGreen.Views.FavoritesPage">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="BeGreen.Views.FavoritesPage" NavigationPage.HasNavigationBar="false">
     <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+            
+            <StackLayout Orientation="Horizontal" Grid.Row="0" HorizontalOptions="FillAndExpand">
+                <StackLayout WidthRequest="60" HorizontalOptions="StartAndExpand" VerticalOptions="FillAndExpand" >
+                    <ImageButton Source="{Binding imgNavigation}" Command="{Binding CommandNavigation}" Margin="10,0,0,0"  
+                                 VerticalOptions="EndAndExpand" HeightRequest="20"/>
+                </StackLayout>
+                <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="FillAndExpand" >
+                    <Label Text="Tus Favoritos" FontSize="Large" TextColor="{DynamicResource colorPrimary}" VerticalTextAlignment="End" 
+                           VerticalOptions="EndAndExpand"/>
+                </StackLayout>
+            </StackLayout>
+            
+            <StackLayout Grid.Row="1" Grid.RowSpan="2" Orientation="Vertical">
+                <StackLayout HeightRequest="250" VerticalOptions="CenterAndExpand" >
+                    <Image Source="{Binding imgBackground}" HeightRequest="150" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
+                </StackLayout>
+                <StackLayout HeightRequest="200" VerticalOptions="EndAndExpand" >
+                    <Label Text="No tienes favoritos :(" VerticalOptions="StartAndExpand" HorizontalTextAlignment="Center"/>
+                </StackLayout>
+            </StackLayout>
+            
+            <ListView Grid.Row="1" HorizontalOptions="FillAndExpand" ItemsSource="{Binding sourceProducts}" IsVisible="{Binding isProductVisible}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                <StackLayout HeightRequest="80" HorizontalOptions="StartAndExpand">
+                                    <Image Source="{Binding products_image}" Margin="10"/>
+                                </StackLayout>
+                                <StackLayout  HorizontalOptions="FillAndExpand">
+                                    <Label Text="{Binding products_name}" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" Margin="65" 
+                                       FontSize="20" FontAttributes="Bold" />
+                                </StackLayout>
+                                <StackLayout HeightRequest="100" HorizontalOptions="EndAndExpand">
+                                    <ImageButton Source="{Binding imgAddList}"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            
+            <ListView Grid.Row="1" HorizontalOptions="FillAndExpand" ItemsSource="{Binding sourceOrchards}" IsVisible="{Binding isOrchardsVisible}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                <StackLayout HeightRequest="80" HorizontalOptions="StartAndExpand">
+                                    <Image Source="{Binding products_image}" Margin="10"/>
+                                </StackLayout>
+                                <StackLayout  HorizontalOptions="FillAndExpand">
+                                    <Label Text="{Binding products_name}" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" Margin="65" 
+                                       FontSize="20" FontAttributes="Bold" />
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            
+            <StackLayout Grid.Row="2" BackgroundColor="Gray">
+                <StackLayout WidthRequest="300" HeightRequest="50" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                    <Button Text="Productos" WidthRequest="150" BorderColor="Gray" BorderRadius="15" BorderWidth="1" HeightRequest="30" 
+                            Command="{Binding CommandShowProducts}" BackgroundColor="{Binding ColorButtonProducts}" TextColor="White"/>
+                    <Button Text="Huertas" WidthRequest="150" BorderColor="Gray" BorderRadius="15" BorderWidth="1" HeightRequest="30" 
+                            Command="{Binding CommandShowOrchards}" BackgroundColor="{Binding ColorButtonOrchards}" TextColor="White"/>
+                </StackLayout>
+            </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

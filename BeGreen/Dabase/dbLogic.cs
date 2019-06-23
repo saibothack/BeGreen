@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using BeGreen.Models.Orchard;
+using BeGreen.Models.Product;
 using BeGreen.Models.Settings;
 using SQLite;
 
@@ -18,11 +19,14 @@ namespace BeGreen.Dabase
 
             database.CreateTableAsync<Settings>().Wait();
             database.CreateTableAsync<Orchard>().Wait();
+            database.CreateTableAsync<Product>().Wait();
         }
 
         public void dropTables()
         {
             database.ExecuteAsync("DELETE FROM Settings");
+            database.ExecuteAsync("DELETE FROM Orchard");
+            database.ExecuteAsync("DELETE FROM Product");
         }
 
         #region "Estado"
@@ -79,6 +83,30 @@ namespace BeGreen.Dabase
         public Task<int> DeleteOrchar(Orchard orchard)
         {
             return database.DeleteAsync(orchard);
+        }
+
+        #endregion
+
+        #region "Products"
+
+        public Task<int> SaveProducts(Product product)
+        {
+            return database.InsertAsync(product);
+        }
+
+        public Task<List<Product>> GetProducts()
+        {
+            return database.Table<Product>().ToListAsync();
+        }
+
+        public Task<Product> GetProductById(int products_id)
+        {
+            return database.Table<Product>().Where(i => i.products_id == products_id).FirstOrDefaultAsync();
+        }
+
+        public Task<int> DeleteProducts(Product product)
+        {
+            return database.DeleteAsync(product);
         }
 
         #endregion

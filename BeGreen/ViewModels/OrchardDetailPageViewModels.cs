@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using BeGreen.Helpers;
 using BeGreen.Models.Orchard;
 using BeGreen.Utilities;
+using BeGreen.Views;
 using Xamarin.Forms;
 
 namespace BeGreen.ViewModels
@@ -117,16 +119,29 @@ namespace BeGreen.ViewModels
         }
 
         private async Task EventLikeAsync() {
-            if (isFavorite) {
-                isFavorite = false;
-                await App.DataBase.DeleteOrchar(ItemSelectedOrchard);
-                imgFavorite = ImageSource.FromResource("BeGreen.Images.like.png");
-            }
-            else
+            if (Settings.isLogin) {
+                if (isFavorite)
+                {
+                    isFavorite = false;
+                    await App.DataBase.DeleteOrchar(ItemSelectedOrchard);
+                    imgFavorite = ImageSource.FromResource("BeGreen.Images.like.png");
+                }
+                else
+                {
+                    isFavorite = true;
+                    await App.DataBase.SaveOrchard(ItemSelectedOrchard);
+                    imgFavorite = ImageSource.FromResource("BeGreen.Images.favorite.png");
+                }
+            } else
             {
-                isFavorite = true;
-                await App.DataBase.SaveOrchard(ItemSelectedOrchard);
-                imgFavorite = ImageSource.FromResource("BeGreen.Images.favorite.png");
+                bool answer = await Application.Current.MainPage.DisplayAlert("Notificación", "No haz iniciado sesión, ¿deseas ingresar?", "Si", "No");
+
+                if (answer)
+                {
+                    var mdp = (Application.Current.MainPage as MasterDetailPage);
+                    var navPage = mdp.Detail as NavigationPage;
+                    await navPage.PushAsync(new LoginPage(true));
+                }
             }
         }
         

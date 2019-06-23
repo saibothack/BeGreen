@@ -86,6 +86,7 @@ namespace BeGreen.ViewModels
                             break;
 
                         case "5":
+                            navPage.Title = "";
                             navPage.PushAsync(new AboutUsPage() { Title = "" });
                             break;
 

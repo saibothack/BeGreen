@@ -179,8 +179,21 @@ namespace BeGreen.ViewModels
 
         private async Task EventFavorite()
         {
-            if (Settings.isLogin) { 
-
+            if (Settings.isLogin) {
+                if (ProductSelected.isLiked.Equals("0"))
+                {
+                    ProductSelected.isLiked = "1";
+                    await App.oServiceManager.setLikeProducts(ProductSelected.products_id, Settings.IdCustomer);
+                    await App.DataBase.SaveProducts(ProductSelected);
+                    imgFavoriteButton = ImageSource.FromResource("BeGreen.Images.like.png");
+                }
+                else
+                {
+                    ProductSelected.isLiked = "0";
+                    await App.oServiceManager.setUnLikeProducts(ProductSelected.products_id, Settings.IdCustomer);
+                    await App.DataBase.DeleteProducts(ProductSelected);
+                    imgFavoriteButton = ImageSource.FromResource("BeGreen.Images.favorite.png");
+                }
             } else {
                 bool answer = await Application.Current.MainPage.DisplayAlert("Notificación", "No haz iniciado sesión, ¿deseas ingresar?", "Si", "No");
 
@@ -188,15 +201,7 @@ namespace BeGreen.ViewModels
                     var mdp = (Application.Current.MainPage as MasterDetailPage);
                     var navPage = mdp.Detail as NavigationPage;
                     await navPage.PushAsync(new LoginPage(true));
-                } else {
-                    if (ProductSelected.isLiked.Equals("1")) {
-                        await App.oServiceManager.setLikeProducts(ProductSelected.products_id, Settings.IdCustomer);
-                    } else {
-                        await App.oServiceManager.setUnLikeProducts(ProductSelected.products_id, Settings.IdCustomer);
-                    }
-
-                    imgFavoriteButton = ImageSource.FromResource("BeGreen.Images.like.png");
-                }
+                } 
             }
         }
 
