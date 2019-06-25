@@ -5,19 +5,23 @@ using Xamarin.Forms;
 using BeGreen.Utilities;
 using BeGreen.Views;
 using System.Threading.Tasks;
+using BeGreen.Models.Cart;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BeGreen.ViewModels
 {
     public class ProductDetailPageViewModels : ViewModelBase
     {
         public INavigation Navigation { get; internal set; }
-        public ImageSource imgProducBackground { get; set;  }
+        public ImageSource imgProducBackground { get; set; }
         public ImageSource imgBackground { get; set; }
         public ImageSource imgBackButton { get; set; }
 
         public AsyncCommand CommandComments { get; internal set; }
         public AsyncCommand CommandSelectOrchard { get; internal set; }
         public AsyncCommand CommandFavorite { get; internal set; }
+        public AsyncCommand CommandAddToCar { get; internal set; }
 
         public ImageSource imgProduct { get; set; }
 
@@ -26,6 +30,8 @@ namespace BeGreen.ViewModels
         public Command CommandBack { get; internal set; }
         public Command CommandAdd { get; internal set; }
         public Command CommandDelete { get; internal set; }
+
+        public int RowDefinitionHeader { get; set; }
 
         #region "propiedades"
 
@@ -119,9 +125,15 @@ namespace BeGreen.ViewModels
             imgProducBackground = ImageSource.FromResource("BeGreen.Images.producto_fondo.png");
             imgFavoriteButton = ImageSource.FromResource("BeGreen.Images.favorite.png");
 
+            RowDefinitionHeader = Device.RuntimePlatform == Device.Android ? 40 : 80;
+
+            App.ItemSelectedOrchard = new Models.Orchard.Orchard();
+            App.TxtComment = string.Empty;
+
             CommandComments = new AsyncCommand(GoComments, CanExecuteSubmit);
             CommandSelectOrchard = new AsyncCommand(GoSelectOrchard, CanExecuteSubmit);
             CommandFavorite = new AsyncCommand(EventFavorite, CanExecuteSubmit);
+            CommandAddToCar = new AsyncCommand(AddToCar, CanExecuteSubmit);
 
             CommandBack = new Command(EventBack);
             CommandAdd = new Command(EventAddProduct);
@@ -129,42 +141,165 @@ namespace BeGreen.ViewModels
 
             btnCommentBackground = Color.Gray;
             btnOrchardBackground = Color.Gray;
-
         }
 
-        private async Task GoComments() {
+        private async Task AddToCar()
+        {
+            try
+            {
+                if (Settings.isLogin)
+                {
+                    if (NumberProduct > 0)
+                    {
+                        CartProduct cartProduct = new CartProduct();
+
+                        double productBasePrice, productFinalPrice, attributesPrice = 0;
+                        List<CartProductAttributes> selectedAttributesList = new List<CartProductAttributes>();
+                        string discount = Util.checkDiscount(ProductSelected.products_price, ProductSelected.discount_price);
+
+                        // Get Product's Price based on Discount
+                        if (discount != null)
+                        {
+                            ProductSelected.isSale_product = "1";
+                            productBasePrice = double.Parse(ProductSelected.discount_price);
+                        }
+                        else
+                        {
+                            ProductSelected.isSale_product = "0";
+                            productBasePrice = double.Parse(ProductSelected.products_price);
+                        }
+
+                        foreach (var item in ProductSelected.attributes)
+                        {
+                            CartProductAttributes productAttribute = new CartProductAttributes();
+
+                            Option option = new Option
+                            {
+                                id = item.option.id,
+                                name = item.option.name
+                            };
+
+                            Value value = new Value
+                            {
+                                id = item.values[0].id,
+                                value = item.values[0].value,
+                                price = item.values[0].price,
+                                price_prefix = item.values[0].price_prefix
+                            };
+
+                            string attrPrice = value.price_prefix + value.price;
+                            attributesPrice += Double.Parse(attrPrice);
+
+
+                            List<Value> valuesList = new List<Value>();
+                            valuesList.Add(value);
+
+                            productAttribute.option = option;
+                            productAttribute.values = valuesList;
+
+                            selectedAttributesList.Add(productAttribute);
+                        }
+
+                        // Add Attributes Price to Product's Final Price
+                        productFinalPrice = productBasePrice + attributesPrice;
+                        double priceAux = PriceTotalProduct;
+
+                        ProductSelected.customers_basket_quantity = NumberProduct;
+                        ProductSelected.products_price = productBasePrice.ToString();
+                        ProductSelected.attributes_price = attributesPrice.ToString();
+                        ProductSelected.final_price = productFinalPrice.ToString();
+                        ProductSelected.total_price = priceAux.ToString();
+                        ProductSelected.comentProduct = App.TxtComment;
+
+                        cartProduct.customersBasketProduct = ProductSelected;
+                        cartProduct.customersBasketProductAttributes = selectedAttributesList;
+
+                        App.TxtComment = string.Empty;
+                        App.ItemSelectedOrchard = new Models.Orchard.Orchard();
+
+                        await App.DataBase.SaveCartProductAsync(cartProduct);
+
+                        var mdp = (Application.Current.MainPage as MasterDetailPage);
+                        var navPage = mdp.Detail as NavigationPage;
+                        await navPage.PopAsync();
+
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Notificación", "No hay material disponible", "Aceptar");
+                    }
+                }
+                else
+                {
+                    bool answer = await Application.Current.MainPage.DisplayAlert("Notificación", "No haz iniciado sesión, ¿deseas ingresar?", "Si", "No");
+
+                    if (answer)
+                    {
+                        var mdp = (Application.Current.MainPage as MasterDetailPage);
+                        var navPage = mdp.Detail as NavigationPage;
+                        await navPage.PushAsync(new LoginPage(true));
+                    }
+                }
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        private async Task GoComments()
+        {
             var mdp = (Application.Current.MainPage as MasterDetailPage);
             var navPage = mdp.Detail as NavigationPage;
             await navPage.PushAsync(new CommentaryPage());
         }
 
-        private async Task GoSelectOrchard() {
+        private async Task GoSelectOrchard()
+        {
             var mdp = (Application.Current.MainPage as MasterDetailPage);
             var navPage = mdp.Detail as NavigationPage;
             await navPage.PushAsync(new SelectOrchardPage());
         }
 
 
-        public void initPage() {
+        public async Task initPageAsync()
+        {
             EventAddProduct();
 
-            if (ProductSelected.products_weight_unit.Equals("kg")) {
+            if (ProductSelected.products_weight_unit.Equals("kg"))
+            {
                 selectedKilo = Color.FromHex("#8bc540");
                 selectedPieza = Color.Gray;
             }
-            else {
+            else
+            {
                 selectedKilo = Color.Gray;
                 selectedPieza = Color.FromHex("#8bc540");
             }
+
+            var products = await App.DataBase.GetProductsAsync();
+
+            var pdts = (from x in products
+                       .Where (x => x.products_id.Equals(ProductSelected.products_id) && x.isLiked.Equals("1"))
+                       select x).ToList();
+
+            if (pdts.Count < 1)
+                imgFavoriteButton = ImageSource.FromResource("BeGreen.Images.favorite.png");
+            else
+                imgFavoriteButton = ImageSource.FromResource("BeGreen.Images.like.png");
+
         }
 
-        public void EventAddProduct() {
+        public void EventAddProduct()
+        {
             NumberProduct++;
-            PriceTotalProduct = (double.Parse(ProductSelected.products_price) * NumberProduct); 
+            PriceTotalProduct = (double.Parse(ProductSelected.products_price) * NumberProduct);
         }
-
-        void EventDeleteProduct() {
-            if (NumberProduct > 1) {
+        
+        void EventDeleteProduct()
+        {
+            if (NumberProduct > 1)
+            {
                 NumberProduct--;
                 PriceTotalProduct = (double.Parse(ProductSelected.products_price) * NumberProduct);
             }
@@ -179,7 +314,8 @@ namespace BeGreen.ViewModels
 
         private async Task EventFavorite()
         {
-            if (Settings.isLogin) {
+            if (Settings.isLogin)
+            {
                 if (ProductSelected.isLiked.Equals("0"))
                 {
                     ProductSelected.isLiked = "1";
@@ -194,14 +330,17 @@ namespace BeGreen.ViewModels
                     await App.DataBase.DeleteProducts(ProductSelected);
                     imgFavoriteButton = ImageSource.FromResource("BeGreen.Images.favorite.png");
                 }
-            } else {
+            }
+            else
+            {
                 bool answer = await Application.Current.MainPage.DisplayAlert("Notificación", "No haz iniciado sesión, ¿deseas ingresar?", "Si", "No");
 
-                if (answer) {
+                if (answer)
+                {
                     var mdp = (Application.Current.MainPage as MasterDetailPage);
                     var navPage = mdp.Detail as NavigationPage;
                     await navPage.PushAsync(new LoginPage(true));
-                } 
+                }
             }
         }
 

@@ -37,6 +37,7 @@
     <Folder Include="Models\Terms\" />
     <Folder Include="Models\Settings\" />
     <Folder Include="Dabase\" />
+    <Folder Include="Models\Cart\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Images\ic_launcher_foreground_begreen.png" />
@@ -104,5 +105,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Images\clock.png" />
     <EmbeddedResource Include="Images\star.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Models\Cart.cs" />
+    <Compile Remove="Models\Cart\Product.cs" />
   </ItemGroup>
 </Project>

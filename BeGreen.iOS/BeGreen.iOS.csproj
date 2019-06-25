@@ -159,5 +159,6 @@
     <BundleResource Include="Resources\menu_favorites.png" />
     <BundleResource Include="Resources\menu_payments.png" />
     <BundleResource Include="Resources\menu_tutorial.png" />
+    <BundleResource Include="Resources\ic_trash.png" />
   </ItemGroup>
 </Project>

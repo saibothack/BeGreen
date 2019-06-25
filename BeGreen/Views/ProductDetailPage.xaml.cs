@@ -18,7 +18,7 @@ namespace BeGreen.Views
             BindingContext = viewModel = new ProductDetailPageViewModels();
             viewModel.Navigation = this.Navigation;
             viewModel.ProductSelected = product;
-            viewModel.initPage();
+            viewModel.initPageAsync();
         }
 
         void Handle_Clicked_Comments(object sender, System.EventArgs e)
@@ -37,13 +37,19 @@ namespace BeGreen.Views
         {
             base.OnAppearing();
 
-            if (string.IsNullOrEmpty(App.TxtComment)) {
+            if (!string.IsNullOrEmpty(App.TxtComment)) {
                 viewModel.btnCommentBackground = Color.FromHex("#8bc540");
             }
 
-            if (App.ItemSelectedOrchard != null) {
+            if (App.ItemSelectedOrchard.news_id != null) {
                 viewModel.btnOrchardBackground = Color.FromHex("#8bc540");
             }
+        }
+
+        void Handle_Clicked(object sender, System.EventArgs e)
+        {
+            IErrorHandler errorHandler = null;
+            viewModel.CommandAddToCar.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
         }
     }
 }

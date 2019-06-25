@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using BeGreen.Helpers;
 using BeGreen.Models.Orchard;
@@ -134,7 +135,9 @@ namespace BeGreen.ViewModels
         void ShowMenu()
         {
             var mdp = (Application.Current.MainPage as MasterDetailPage);
-            mdp.IsPresented = true;
+            var navPage = mdp.Detail as NavigationPage;
+            navPage.PopAsync();
+
         }
 
         private async Task InitializeAsync() {
@@ -157,10 +160,14 @@ namespace BeGreen.ViewModels
                     isOrchardsVisible = false;
                 }
                 else {
-                    var products = await App.DataBase.GetProducts();
+                    var products = await App.DataBase.GetProductsAsync();
                     var orchards = await App.DataBase.GetOrchards();
 
-                    foreach(var item in products)
+                    var prodcts = from x in products
+                                  .Where(x => x.isLiked.Equals("1"))
+                                  select x;
+
+                    foreach (var item in prodcts)
                     {
                         sourceProducts.Add(item);
                     }

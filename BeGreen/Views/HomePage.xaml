@@ -15,7 +15,7 @@
     </NavigationPage>
     <NavigationPage Title="Compras" IconImageSource="{Binding imgPurchase}">
         <x:Arguments>
-            <local:OrchardsPage />
+            <local:MyCartPage />
         </x:Arguments>
     </NavigationPage>
     <NavigationPage Title="Ofertas" IconImageSource="{Binding imgOffer}">
