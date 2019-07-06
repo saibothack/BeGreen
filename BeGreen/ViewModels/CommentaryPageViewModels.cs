@@ -12,6 +12,8 @@ namespace BeGreen.ViewModels
         public ImageSource imgBackButton { get; set; }
         public AsyncCommand CommandBack { get; internal set; }
         public AsyncCommand CommandSave { get; internal set; }
+        public int RowDefinitionHeader { get; set; }
+        public Color loadBackColor { get; set; }
 
         #region "Properties"
 
@@ -39,6 +41,8 @@ namespace BeGreen.ViewModels
 
         public CommentaryPageViewModels()
         {
+            loadBackColor = Color.FromHsla(0, 0, 0, 0.1);
+            RowDefinitionHeader = Device.RuntimePlatform == Device.Android ? 50 : 80;
             imgProducBackground = ImageSource.FromResource("BeGreen.Images.producto_fondo.png");
             imgBackButton = ImageSource.FromResource("BeGreen.Images.left-arrow.png");
             CommandBack = new AsyncCommand(EventBack, CanExecuteSubmit);

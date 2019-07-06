@@ -99,7 +99,7 @@ namespace BeGreen.ViewModels
 
                             Application.Current.MainPage = new MasterDetailPage()
                             {
-                                Master = new MasterPage() { Title = "" },
+                                Master = new MasterPage() { Title = "Menú" },
                                 Detail = new NavigationPage(new HomePage())
                             };
 

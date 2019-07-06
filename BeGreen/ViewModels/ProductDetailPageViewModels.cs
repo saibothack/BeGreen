@@ -18,6 +18,7 @@ namespace BeGreen.ViewModels
         public ImageSource imgBackground { get; set; }
         public ImageSource imgBackButton { get; set; }
 
+        public AsyncCommand CommandInitialize { get; internal set; }
         public AsyncCommand CommandComments { get; internal set; }
         public AsyncCommand CommandSelectOrchard { get; internal set; }
         public AsyncCommand CommandFavorite { get; internal set; }
@@ -25,7 +26,7 @@ namespace BeGreen.ViewModels
 
         public ImageSource imgProduct { get; set; }
 
-        public Color loadingBackground { get; set; }
+        public Color loadBackColor { get; set; }
 
         public Command CommandBack { get; internal set; }
         public Command CommandAdd { get; internal set; }
@@ -119,13 +120,13 @@ namespace BeGreen.ViewModels
 
         public ProductDetailPageViewModels()
         {
-            loadingBackground = Color.FromHsla(0, 0, 0, 0.1);
+            loadBackColor = Color.FromHsla(0, 0, 0, 0.1);
             imgBackground = ImageSource.FromResource("BeGreen.Images.catalog.png");
             imgBackButton = ImageSource.FromResource("BeGreen.Images.left-arrow.png");
             imgProducBackground = ImageSource.FromResource("BeGreen.Images.producto_fondo.png");
             imgFavoriteButton = ImageSource.FromResource("BeGreen.Images.favorite.png");
 
-            RowDefinitionHeader = Device.RuntimePlatform == Device.Android ? 40 : 80;
+            RowDefinitionHeader = Device.RuntimePlatform == Device.Android ? 50 : 80;
 
             App.ItemSelectedOrchard = new Models.Orchard.Orchard();
             App.TxtComment = string.Empty;
@@ -134,6 +135,7 @@ namespace BeGreen.ViewModels
             CommandSelectOrchard = new AsyncCommand(GoSelectOrchard, CanExecuteSubmit);
             CommandFavorite = new AsyncCommand(EventFavorite, CanExecuteSubmit);
             CommandAddToCar = new AsyncCommand(AddToCar, CanExecuteSubmit);
+            CommandInitialize = new AsyncCommand(InitializeAsync, CanExecuteSubmit);
 
             CommandBack = new Command(EventBack);
             CommandAdd = new Command(EventAddProduct);
@@ -262,7 +264,7 @@ namespace BeGreen.ViewModels
         }
 
 
-        public async Task initPageAsync()
+        public async Task InitializeAsync()
         {
             EventAddProduct();
 
@@ -284,10 +286,14 @@ namespace BeGreen.ViewModels
                        select x).ToList();
 
             if (pdts.Count < 1)
+            {
                 imgFavoriteButton = ImageSource.FromResource("BeGreen.Images.favorite.png");
-            else
+                ProductSelected.isLiked = "0";
+            }
+            else {
                 imgFavoriteButton = ImageSource.FromResource("BeGreen.Images.like.png");
-
+                ProductSelected.isLiked = "1";
+            }
         }
 
         public void EventAddProduct()
@@ -314,33 +320,42 @@ namespace BeGreen.ViewModels
 
         private async Task EventFavorite()
         {
-            if (Settings.isLogin)
+            try
             {
-                if (ProductSelected.isLiked.Equals("0"))
+                if (Settings.isLogin)
                 {
-                    ProductSelected.isLiked = "1";
-                    await App.oServiceManager.setLikeProducts(ProductSelected.products_id, Settings.IdCustomer);
-                    await App.DataBase.SaveProducts(ProductSelected);
-                    imgFavoriteButton = ImageSource.FromResource("BeGreen.Images.like.png");
+                    IsBusy = true;
+
+                    if (ProductSelected.isLiked.Equals("0"))
+                    {
+                        ProductSelected.isLiked = "1";
+                        await App.oServiceManager.setLikeProducts(ProductSelected.products_id, Settings.IdCustomer);
+                        await App.DataBase.SaveProducts(ProductSelected);
+                        imgFavoriteButton = ImageSource.FromResource("BeGreen.Images.like.png");
+                    }
+                    else
+                    {
+                        ProductSelected.isLiked = "0";
+                        await App.oServiceManager.setUnLikeProducts(ProductSelected.products_id, Settings.IdCustomer);
+                        await App.DataBase.DeleteProducts(ProductSelected);
+                        imgFavoriteButton = ImageSource.FromResource("BeGreen.Images.favorite.png");
+                    }
                 }
                 else
                 {
-                    ProductSelected.isLiked = "0";
-                    await App.oServiceManager.setUnLikeProducts(ProductSelected.products_id, Settings.IdCustomer);
-                    await App.DataBase.DeleteProducts(ProductSelected);
-                    imgFavoriteButton = ImageSource.FromResource("BeGreen.Images.favorite.png");
+                    bool answer = await Application.Current.MainPage.DisplayAlert("Notificación", "No haz iniciado sesión, ¿deseas ingresar?", "Si", "No");
+
+                    if (answer)
+                    {
+                        var mdp = (Application.Current.MainPage as MasterDetailPage);
+                        var navPage = mdp.Detail as NavigationPage;
+                        await navPage.PushAsync(new LoginPage(true));
+                    }
                 }
             }
-            else
+            finally
             {
-                bool answer = await Application.Current.MainPage.DisplayAlert("Notificación", "No haz iniciado sesión, ¿deseas ingresar?", "Si", "No");
-
-                if (answer)
-                {
-                    var mdp = (Application.Current.MainPage as MasterDetailPage);
-                    var navPage = mdp.Detail as NavigationPage;
-                    await navPage.PushAsync(new LoginPage(true));
-                }
+                IsBusy = false;
             }
         }
 

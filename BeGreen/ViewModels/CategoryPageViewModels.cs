@@ -13,13 +13,14 @@ namespace BeGreen.ViewModels
     public class CategoryPageViewModels : ViewModelBase
     {
         public INavigation Navigation { get; internal set; }
-        public AsyncCommand CommandInit { get; internal set; }
+        public AsyncCommand CommandInitialize { get; internal set; }
         public AsyncCommand ItemTapped { get; set; }
         public ImageSource imgBackground { get; set; }
         public ImageSource faIcon { get; set; }
-        public Color loadingBackground { get; set; }
+        public Color loadBackColor { get; set; }
         public Command CommandShowMenu { get; set; }
         public List<Category> subCategories { get; set; }
+        public int RowDefinitionHeader { get; set; }
 
         #region "Properties"
 
@@ -57,9 +58,10 @@ namespace BeGreen.ViewModels
 
         public CategoryPageViewModels()
         {
-            CommandInit = new AsyncCommand(InitializeAsync, CanExecuteSubmit);
+            RowDefinitionHeader = Device.RuntimePlatform == Device.Android ? 50 : 80;
+            CommandInitialize = new AsyncCommand(InitializeAsync, CanExecuteSubmit);
             ItemTapped = new AsyncCommand(Selected, CanExecuteSubmit);
-            loadingBackground = Color.FromHsla(0, 0, 0, 0.1);
+            loadBackColor = Color.FromHsla(0, 0, 0, 0.1);
             imgBackground = ImageSource.FromResource("BeGreen.Images.catalog.png");
             faIcon = ImageSource.FromResource("BeGreen.Images.nav_perfil_min.png");
             CommandShowMenu = new Command(showMenu);

@@ -3,7 +3,7 @@
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="385" />
+                <RowDefinition Height="510" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             
@@ -17,20 +17,24 @@
                     </StackLayout>
                     <StackLayout Orientation="Vertical" Margin="50, 0, 50, 10">
                         <StackLayout>
-                            <Entry x:Name="txtEmail" Keyboard="Email" Placeholder="Usuario / Correo" HeightRequest="40" Text="{Binding sEmail, Mode=TwoWay}" ReturnCommand="{Binding ReturnCommandEntry}" ReturnCommandParameter="{x:Reference  txtPassword}" />
+                            <Entry x:Name="txtEmail" Keyboard="Email" Placeholder="Usuario / Correo" HeightRequest="40" 
+                                   Text="{Binding sEmail, Mode=TwoWay}" ReturnCommand="{Binding ReturnCommandEntry}" 
+                                   ReturnCommandParameter="{x:Reference  txtPassword}" TextColor="Black" PlaceholderColor="Black"/>
                             <Label Text="{Binding sEmailError}" IsVisible="{Binding bEmailError}" TextColor="Gray" />
                         </StackLayout>
                         <StackLayout>
-                            <Entry x:Name="txtPassword" IsPassword="true" Keyboard="Text" Placeholder="Contraseña" HeightRequest="40" Text="{Binding sPassword, Mode=TwoWay}" />
+                            <Entry x:Name="txtPassword" IsPassword="true" Keyboard="Text" Placeholder="Contraseña" HeightRequest="40" 
+                                   Text="{Binding sPassword, Mode=TwoWay}" TextColor="Black" PlaceholderColor="Black"/>
                             <Label Text="{Binding sPasswordError}" IsVisible="{Binding bPasswordError}" TextColor="Gray" />
                         </StackLayout>
                     </StackLayout>
                     <StackLayout Margin="50,20,50,50">
-                        <Button Text="Entrar" TextColor="White" BorderWidth="2" BorderColor="White" BorderRadius="25" BackgroundColor="{DynamicResource colorButtonGrey}" WidthRequest="150" HorizontalOptions="EndAndExpand" FontSize="Large" FontAttributes="Bold"
-                            Clicked="Handle_Clicked_Entrar" />
+                        <Button Text="Entrar" TextColor="White" BorderWidth="2" BorderColor="White" BorderRadius="25" BackgroundColor="{DynamicResource colorButtonGrey}" 
+                                WidthRequest="150" HorizontalOptions="EndAndExpand" FontSize="Large" FontAttributes="Bold" Clicked="Handle_Clicked_Entrar" />
                     </StackLayout>
                     <StackLayout Margin="50,0,50,0">
-                        <Button Text="Suscribirse" TextColor="White" BorderRadius="25" BackgroundColor="Orange" WidthRequest="200" HorizontalOptions="Center" FontSize="Large" FontAttributes="Bold" Command="{Binding CommandRegister}" />
+                        <Button Text="Suscribirse" TextColor="White" BorderRadius="25" BackgroundColor="Orange" WidthRequest="200" HorizontalOptions="Center" FontSize="Large" 
+                                FontAttributes="Bold" Command="{Binding CommandRegister}" />
                     </StackLayout>
                     <StackLayout Margin="50">
                         <Button Text="Cancelar" TextColor="Gray" BackgroundColor="Transparent" FontSize="Large" FontAttributes="Bold" Command="{Binding CommandCancel}" />
@@ -38,8 +42,14 @@
                 </StackLayout>
             </ScrollView>
             
-            <StackLayout Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" IsVisible="{Binding IsBusy}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="{Binding loadingBackground}">
+            <!--<StackLayout Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" IsVisible="{Binding IsBusy}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="{Binding loadingBackground}">
                 <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Color="Blue">
+                </ActivityIndicator>
+            </StackLayout>-->
+
+            <StackLayout Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" BackgroundColor="{Binding loadBackColor}" IsVisible="{Binding IsBusy}" >
+                <ActivityIndicator Color="{DynamicResource colorPrimary}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
+                                   IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}">
                 </ActivityIndicator>
             </StackLayout>
         </Grid>

@@ -23,9 +23,11 @@ namespace BeGreen.ViewModels
         public ImageSource imgBackground { get; set; }
         public ImageSource imgBackButton { get; set; }
         public Command CommandBack { get; internal set; }
-        public Color loadingBackground { get; set; }
+        public Color loadBackColor { get; set; }
         public List<Product> AllProducts { get; set; }
         public bool isSearch { get; set; }
+        public int RowDefinitionHeader { get; set; }
+        public Color txtSearchControl { get; set; }
 
         #region "Properties"
 
@@ -73,7 +75,7 @@ namespace BeGreen.ViewModels
 
         public ProductsPageViewModels()
         {
-            loadingBackground = Color.FromHsla(0, 0, 0, 0.1);
+            loadBackColor = Color.FromHsla(0, 0, 0, 0.1);
             CommandInit = new AsyncCommand(InitializeAsync, CanExecuteSubmit);
             CommandSearch = new AsyncCommand(SeachText, CanExecuteSubmit);
             CommandSelected = new AsyncCommand(ItemSelected, CanExecuteSubmit);
@@ -85,6 +87,10 @@ namespace BeGreen.ViewModels
             CommandBack = new Command(back);
 
             isBackVisible = true;
+
+            RowDefinitionHeader = Device.RuntimePlatform == Device.Android ? 50 : 80;
+            txtSearchControl = Device.RuntimePlatform == Device.Android ? Color.White : Color.Black;
+
         }
 
         private async Task ItemSelected() {
@@ -149,8 +155,6 @@ namespace BeGreen.ViewModels
 
                 IsBusy = false;
             }
-
-
         }
 
         private bool CanExecuteSubmit()

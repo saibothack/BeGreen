@@ -15,6 +15,8 @@ namespace BeGreen.ViewModels
         public AsyncCommand CommandInit { get; internal set; }
         public AsyncCommand CommandSelectedOrchard { get; internal set; }
         public AsyncCommand CommandBack { get; internal set; }
+        public int RowDefinitionHeader { get; set; }
+        public Color loadBackColor { get; set; }
 
         private ObservableCollection<Orchard> _dataOrchards;
         public ObservableCollection<Orchard> dataOrchards
@@ -38,6 +40,8 @@ namespace BeGreen.ViewModels
 
         public SelectOrchardPageViewModels()
         {
+            loadBackColor = Color.FromHsla(0, 0, 0, 0.1);
+            RowDefinitionHeader = Device.RuntimePlatform == Device.Android ? 50 : 80;
             dataOrchards = new ObservableCollection<Orchard>();
             imgProducBackground = ImageSource.FromResource("BeGreen.Images.producto_fondo.png");
             imgBackButton = ImageSource.FromResource("BeGreen.Images.left-arrow.png");

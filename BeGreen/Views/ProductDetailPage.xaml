@@ -4,11 +4,36 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="{Binding RowDefinitionHeader}" />
-                <RowDefinition Height="200" />
+                <RowDefinition Height="250" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            
             <Image Grid.Row="0" Grid.RowSpan="2" Aspect="AspectFill" Source="{Binding imgProducBackground}" />
-            <StackLayout Orientation="Horizontal" Grid.Row="0" HorizontalOptions="FillAndExpand">
+
+            <StackLayout Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+
+                <StackLayout WidthRequest="50" HeightRequest="50" >
+                    <ImageButton Source="{Binding imgBackButton}" Command="{Binding CommandBack}" HeightRequest="25" BackgroundColor="Transparent" 
+                                 VerticalOptions="EndAndExpand" HorizontalOptions="EndAndExpand" Margin="10"/>
+                </StackLayout>
+
+                <StackLayout HorizontalOptions="FillAndExpand" >
+                    <Label Text="{Binding ProductSelected.products_name}" FontSize="Large" TextColor="White" VerticalTextAlignment="End" 
+                           VerticalOptions="EndAndExpand" HorizontalOptions="Center"/>
+                </StackLayout>
+
+                <StackLayout WidthRequest="50" HeightRequest="50" >
+                    <ImageButton Source="{Binding imgFavoriteButton}" Command="{Binding CommandFavorite}" HeightRequest="25" BackgroundColor="Transparent" 
+                                 VerticalOptions="EndAndExpand" HorizontalOptions="StartAndExpand" Margin="10"/>
+                </StackLayout>
+
+            </StackLayout>
+
+            <!--<StackLayout Orientation="Horizontal" Grid.Row="0" HorizontalOptions="FillAndExpand">
                 <StackLayout WidthRequest="60" HorizontalOptions="StartAndExpand" VerticalOptions="FillAndExpand">
                     <ImageButton Source="{Binding imgBackButton}" Command="{Binding CommandBack}" Margin="10,0,0,5" VerticalOptions="EndAndExpand" 
                                  HeightRequest="20" BackgroundColor="Transparent" />
@@ -21,47 +46,120 @@
                     <ImageButton Source="{Binding imgFavoriteButton}" Command="{Binding CommandFavorite}" Margin="0,0,10,0" VerticalOptions="EndAndExpand" 
                                  HeightRequest="25" BackgroundColor="Transparent" />
                 </StackLayout>
-            </StackLayout>
+            </StackLayout>-->
+            
             <ScrollView Grid.Row="1" Grid.RowSpan="2">
                 <StackLayout Orientation="Vertical">
+                    
                     <StackLayout HorizontalOptions="StartAndExpand">
-                        <Image Source="{Binding ProductSelected.products_image}" WidthRequest="150" Margin="10" />
+                        <Image Source="{Binding ProductSelected.products_image}" WidthRequest="150" Margin="50" />
                     </StackLayout>
+                    
                     <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
-                        <StackLayout HorizontalOptions="FillAndExpand" Orientation="Vertical">
+                        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackLayout Grid.Column="0" Grid.Row="0" Orientation="Vertical">
+                                <Label Text="Cantidad" TextColor="Black" FontSize="Medium" HorizontalTextAlignment="Center" />
+                                <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+
+                                    <StackLayout HorizontalOptions="StartAndExpand" WidthRequest="60" >
+                                        <Button Text="-" FontSize="Large" TextColor="{DynamicResource colorButtonGrey}" VerticalOptions="Center" 
+                                            HorizontalOptions="Center" Command="{Binding CommandDelete}" WidthRequest="50" BackgroundColor="Transparent"/>
+                                    </StackLayout>
+
+                                    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                                        <Frame CornerRadius="20" Padding="0" HasShadow="false" BackgroundColor="Gray" HeightRequest="40" 
+                                           HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                                            <Label Text="{Binding NumberProduct}" TextColor="White" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" 
+                                               VerticalOptions="Center" WidthRequest="50" Margin="10,0,10,0" />
+                                        </Frame>
+                                    </StackLayout>
+
+                                    <StackLayout HorizontalOptions="EndAndExpand" WidthRequest="60" >
+                                        <Button Text="+" FontSize="Large" TextColor="{DynamicResource colorButtonGrey}" VerticalOptions="Center" 
+                                            HorizontalOptions="Center" Command="{Binding CommandAdd}" WidthRequest="50" BackgroundColor="Transparent"/>
+                                    </StackLayout>
+                                </StackLayout>
+                            </StackLayout>
+
+                            <StackLayout Grid.Column="1" Grid.Row="0" Orientation="Vertical">
+
+                                <Label Text="Unidad" TextColor="Black" FontSize="Medium" HorizontalTextAlignment="Center" />
+
+                                <StackLayout VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                                    <Frame CornerRadius="20" Padding="0" HasShadow="false" BackgroundColor="Gray" HeightRequest="40" 
+                                       HorizontalOptions="FillAndExpand" Margin="20,0,20,0">
+                                        <StackLayout Orientation="Horizontal">
+                                            <StackLayout HorizontalOptions="FillAndExpand">
+                                                <Frame CornerRadius="20" Padding="0" HasShadow="false" BackgroundColor="{Binding selectedKilo}" HeightRequest="40" 
+                                                   HorizontalOptions="FillAndExpand">
+                                                    <Label Text="PZA." TextColor="White" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" 
+                                                       VerticalOptions="Center" />
+                                                </Frame>
+                                            </StackLayout>
+                                            <StackLayout HorizontalOptions="FillAndExpand">
+                                                <Frame CornerRadius="20" Padding="0" HasShadow="false" BackgroundColor="{Binding selectedPieza}" HeightRequest="40" 
+                                                   HorizontalOptions="FillAndExpand">
+                                                    <Label Text="KG" TextColor="White" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" 
+                                                       VerticalOptions="Center" />
+                                                </Frame>
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </Frame>
+                                </StackLayout>
+                            </StackLayout>
+
+                        </Grid>
+
+                        <!--<StackLayout HorizontalOptions="FillAndExpand" Orientation="Vertical">
                             <Label Text="Cantidad" TextColor="Black" FontSize="Medium" HorizontalTextAlignment="Center" />
                             <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
-                                <StackLayout HorizontalOptions="FillAndExpand">
+                                
+                                <StackLayout HorizontalOptions="StartAndExpand" WidthRequest="60" >
                                     <Button Text="-" FontSize="Large" TextColor="{DynamicResource colorButtonGrey}" VerticalOptions="Center" 
                                             HorizontalOptions="Center" Command="{Binding CommandDelete}" WidthRequest="50" BackgroundColor="Transparent"/>
                                 </StackLayout>
-                                <StackLayout VerticalOptions="Center">
-                                    <Frame CornerRadius="15" Padding="0" HasShadow="false" BackgroundColor="Gray" HeightRequest="30" 
-                                           HorizontalOptions="FillAndExpand">
+
+                                <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                                    <Frame CornerRadius="15" Padding="0" HasShadow="false" BackgroundColor="Gray" HeightRequest="40" 
+                                           HorizontalOptions="FillAndExpand" VerticalOptions="Center">
                                         <Label Text="{Binding NumberProduct}" TextColor="White" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" 
-                                               VerticalOptions="Center" WidthRequest="50" />
+                                               VerticalOptions="Center" WidthRequest="50" Margin="10,0,10,0" />
                                     </Frame>
                                 </StackLayout>
-                                <StackLayout HorizontalOptions="FillAndExpand">
+                                
+                                <StackLayout HorizontalOptions="EndAndExpand" WidthRequest="60" >
                                     <Button Text="+" FontSize="Large" TextColor="{DynamicResource colorButtonGrey}" VerticalOptions="Center" 
                                             HorizontalOptions="Center" Command="{Binding CommandAdd}" WidthRequest="50" BackgroundColor="Transparent"/>
                                 </StackLayout>
                             </StackLayout>
                         </StackLayout>
+
                         <StackLayout HorizontalOptions="FillAndExpand" Orientation="Vertical">
+                            
                             <Label Text="Unidad" TextColor="Black" FontSize="Medium" HorizontalTextAlignment="Center" />
+
                             <StackLayout VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,7,15,0">
-                                <Frame CornerRadius="15" Padding="0" HasShadow="false" BackgroundColor="Gray" HeightRequest="30" HorizontalOptions="FillAndExpand">
+                                <Frame CornerRadius="15" Padding="0" HasShadow="false" BackgroundColor="Gray" HeightRequest="40" 
+                                       HorizontalOptions="FillAndExpand">
                                     <StackLayout Orientation="Horizontal">
                                         <StackLayout HorizontalOptions="FillAndExpand">
-                                            <Frame CornerRadius="15" Padding="0" HasShadow="false" BackgroundColor="{Binding selectedKilo}" HeightRequest="30" 
+                                            <Frame CornerRadius="15" Padding="0" HasShadow="false" BackgroundColor="{Binding selectedKilo}" HeightRequest="40" 
                                                    HorizontalOptions="FillAndExpand">
                                                 <Label Text="PZA." TextColor="White" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" 
                                                        VerticalOptions="Center" />
                                             </Frame>
                                         </StackLayout>
                                         <StackLayout HorizontalOptions="FillAndExpand">
-                                            <Frame CornerRadius="15" Padding="0" HasShadow="false" BackgroundColor="{Binding selectedPieza}" HeightRequest="30" 
+                                            <Frame CornerRadius="15" Padding="0" HasShadow="false" BackgroundColor="{Binding selectedPieza}" HeightRequest="40" 
                                                    HorizontalOptions="FillAndExpand">
                                                 <Label Text="KG" TextColor="White" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" 
                                                        VerticalOptions="Center" />
@@ -70,28 +168,36 @@
                                     </StackLayout>
                                 </Frame>
                             </StackLayout>
-                        </StackLayout>
+                        </StackLayout>-->
                     </StackLayout>
+                    
                     <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Margin="20">
+                        
                         <StackLayout HorizontalOptions="FillAndExpand">
-                            <Button Text="Detalles" TextColor="White" CornerRadius="20" BackgroundColor="{Binding btnCommentBackground}" 
-                                    HorizontalOptions="Center" WidthRequest="100" FontSize="Micro" Clicked="Handle_Clicked_Comments" />
+                            <Button x:Name="btnDetalles" Text="Detalles" TextColor="White" CornerRadius="20" BackgroundColor="{Binding btnCommentBackground}" 
+                                    HorizontalOptions="Center" WidthRequest="110" FontSize="15" Clicked="Handle_Clicked_Comments" />
                         </StackLayout>
+                        
                         <StackLayout HorizontalOptions="FillAndExpand">
-                            <Button Text="Huerta" TextColor="White" CornerRadius="20" BackgroundColor="{Binding btnOrchardBackground}" 
-                                    HorizontalOptions="Center" WidthRequest="100" FontSize="Micro" Clicked="Handle_Clicked_Orchard"/>
+                            <Button x:Name="btnHuertas" Text="Huerta" TextColor="White" CornerRadius="20" BackgroundColor="{Binding btnOrchardBackground}" 
+                                    HorizontalOptions="Center" WidthRequest="110" FontSize="15" Clicked="Handle_Clicked_Orchard"/>
                         </StackLayout>
                     </StackLayout>
+                    
                     <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
                         <Label Text="{Binding PriceTotalProduct, StringFormat='{0:C2}'}" TextColor="Gray" FontSize="20" HorizontalTextAlignment="Start"/>
                     </StackLayout>
+                    
                     <StackLayout HorizontalOptions="Center" Margin="20">
-                        <Button Text="Agregar" BackgroundColor="Orange" WidthRequest="250" TextColor="White" CornerRadius="20" FontSize="Large" Clicked="Handle_Clicked"/>
+                        <Button Text="Agregar" BackgroundColor="Orange" WidthRequest="250" TextColor="White" CornerRadius="20" 
+                                FontSize="Large" Clicked="Handle_Clicked"/>
                     </StackLayout>
                 </StackLayout>
             </ScrollView>
-            <StackLayout Grid.Row="0" Grid.RowSpan="3" IsVisible="{Binding IsBusy}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="{Binding loadingBackground}">
-                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Color="Blue">
+
+            <StackLayout Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" BackgroundColor="{Binding loadBackColor}" IsVisible="{Binding IsBusy}" >
+                <ActivityIndicator Color="{DynamicResource colorPrimary}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
+                                   IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}">
                 </ActivityIndicator>
             </StackLayout>
         </Grid>

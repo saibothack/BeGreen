@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CarouselView.FormsPlugin.iOS;
 using Foundation;
+using PanCardView.iOS;
 using UIKit;
 using Xamarin.Forms;
 
@@ -24,9 +25,12 @@ namespace BeGreen.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             Xamarin.Calabash.Start();
-            CarouselViewRenderer.Init();
+            //CarouselViewRenderer.Init();
             Forms.SetFlags("CollectionView_Experimental");
             global::Xamarin.Forms.Forms.Init();
+
+            CardsViewRenderer.Preserve();
+
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

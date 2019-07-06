@@ -17,7 +17,7 @@ namespace BeGreen.ViewModels
         public Command CommandCancel { get; set; }
         public bool isNeedPop { get; set; }
 
-        public Color loadingBackground { get; set; }
+        public Color loadBackColor { get; set; }
 
 
         #region "Properties"
@@ -86,7 +86,7 @@ namespace BeGreen.ViewModels
 
         public LoginPageViewModels()
         {
-            loadingBackground = Color.FromHsla(0, 0, 0, 0.1);
+            loadBackColor = Color.FromHsla(0, 0, 0, 0.1);
             imgBackground = ImageSource.FromResource("BeGreen.Images.login_background.png");
 
             CommandLogin = new AsyncCommand(LoginAsync, CanExecuteSubmit);

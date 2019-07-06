@@ -19,7 +19,7 @@ namespace BeGreen.Views
             viewModel.Navigation = this.Navigation;
 
             IErrorHandler errorHandler = null;
-            viewModel.CommandInit.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
+            viewModel.CommandInitialize.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
         }
 
         void Handle_ItemTapped(object sender, Xamarin.Forms.ItemTappedEventArgs e)

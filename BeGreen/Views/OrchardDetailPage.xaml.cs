@@ -17,7 +17,15 @@ namespace BeGreen.Views
 
             BindingContext = viewModel = new OrchardDetailPageViewModels();
             viewModel.Navigation = this.Navigation;
+
+            orchard.news_description = "<body style='background-color: transparent; '>" +
+                orchard.news_description +
+                "</body>";
+
             viewModel.ItemSelectedOrchard = orchard;
+
+            IErrorHandler errorHandler = null;
+            viewModel.CommandInitialize.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
         }
 
         void Handle_Clicked(object sender, System.EventArgs e)

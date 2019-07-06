@@ -18,7 +18,8 @@ namespace BeGreen.ViewModels
         public ImageSource imgBackground { get; set; }
         public ImageSource imgNavigation { get; set; }
 
-        public Color colorBackgroundLoading { get; set; }
+        public Color loadBackColor { get; set; }
+        public int RowDefinitionHeader { get; set; }
 
 
         #region "Properties"
@@ -57,10 +58,11 @@ namespace BeGreen.ViewModels
 
         public OrchardsPageViewModels()
         {
+            RowDefinitionHeader = Device.RuntimePlatform == Device.Android ? 50 : 80;
             imgBackground = ImageSource.FromResource("BeGreen.Images.catalog.png");
             imgNavigation = ImageSource.FromResource("BeGreen.Images.nav_perfil_min.png");
 
-            colorBackgroundLoading = Color.FromHsla(0, 0, 0, 0.1);
+            loadBackColor = Color.FromHsla(0, 0, 0, 0.1);
 
             sourceOrchards = new ObservableCollection<Orchard>();
 
@@ -72,9 +74,18 @@ namespace BeGreen.ViewModels
         }
 
         private async Task ItemTapped() {
-            var mdp = (Application.Current.MainPage as MasterDetailPage);
-            var navPage = mdp.Detail as NavigationPage;
-            await navPage.PushAsync(new OrchardDetailPage(ItemSelectedOrchard));
+            try
+            {
+                IsBusy = true;
+
+                var mdp = (Application.Current.MainPage as MasterDetailPage);
+                var navPage = mdp.Detail as NavigationPage;
+                await navPage.PushAsync(new OrchardDetailPage(ItemSelectedOrchard));
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
         private async Task InitializeAsync() {

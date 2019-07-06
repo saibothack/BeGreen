@@ -24,7 +24,7 @@ namespace BeGreen
             oServiceManager = new Services.ServiceManager(new Services.RestService());
 
             //MainPage = new LoginPage();
-            Settings.isShowIntro = false;
+            //Settings.isShowIntro = false;
 
             if (Settings.isShowIntro)
                 Current.MainPage = new MasterDetailPage()

@@ -18,7 +18,10 @@ namespace BeGreen.Views
             BindingContext = viewModel = new ProductDetailPageViewModels();
             viewModel.Navigation = this.Navigation;
             viewModel.ProductSelected = product;
-            viewModel.initPageAsync();
+            //viewModel.initPageAsync();
+
+            IErrorHandler errorHandler = null;
+            viewModel.CommandInitialize.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
         }
 
         void Handle_Clicked_Comments(object sender, System.EventArgs e)

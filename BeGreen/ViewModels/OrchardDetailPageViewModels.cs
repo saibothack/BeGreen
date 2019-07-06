@@ -26,7 +26,10 @@ namespace BeGreen.ViewModels
         public ImageSource imgHome { get; set; }
         public ImageSource imgMapLocation { get; set; }
 
+        public Color loadBackColor { get; set; }
+
         public bool isFavorite { get; set; }
+        public int RowDefinitionHeader { get; set; }
 
         #region "Properties"
 
@@ -84,12 +87,14 @@ namespace BeGreen.ViewModels
 
         public OrchardDetailPageViewModels()
         {
+            RowDefinitionHeader = Device.RuntimePlatform == Device.Android ? 50 : 80;
             imgBackground = ImageSource.FromResource("BeGreen.Images.producto_fondo.png");
             imgNavigation = ImageSource.FromResource("BeGreen.Images.left-arrow.png");
             imgFavorite = ImageSource.FromResource("BeGreen.Images.favorite.png");
             imgBackgroundHome = ImageSource.FromResource("BeGreen.Images.huertas_boton_prod.png");
             imgHome = ImageSource.FromResource("BeGreen.Images.huertas_home.png");
             imgMapLocation = ImageSource.FromResource("BeGreen.Images.map_default.png");
+            loadBackColor = Color.FromHsla(0, 0, 0, 0.1);
 
             CommandNavigation = new AsyncCommand(EventBackAsync, CanExecuteSubmit);
             CommandLike = new AsyncCommand(EventLikeAsync, CanExecuteSubmit);
@@ -106,7 +111,7 @@ namespace BeGreen.ViewModels
         private async Task InitializeAsync() {
             var orchard = await App.DataBase.GetOrchardsById(ItemSelectedOrchard.news_id);
 
-            if (orchard.Equals(ItemSelectedOrchard))
+            if (orchard.categories_id.Equals(ItemSelectedOrchard.categories_id))
             {
                 isFavorite = true;
                 imgFavorite = ImageSource.FromResource("BeGreen.Images.like.png");
@@ -119,32 +124,42 @@ namespace BeGreen.ViewModels
         }
 
         private async Task EventLikeAsync() {
-            if (Settings.isLogin) {
-                if (isFavorite)
+            try
+            {
+                if (Settings.isLogin)
                 {
-                    isFavorite = false;
-                    await App.DataBase.DeleteOrchar(ItemSelectedOrchard);
-                    imgFavorite = ImageSource.FromResource("BeGreen.Images.like.png");
+                    IsBusy = true;
+                    if (isFavorite)
+                    {
+
+                        isFavorite = false;
+                        await App.DataBase.DeleteOrchar(ItemSelectedOrchard);
+                        imgFavorite = ImageSource.FromResource("BeGreen.Images.favorite.png");
+                    }
+                    else
+                    {
+                        isFavorite = true;
+                        await App.DataBase.SaveOrchardAsync(ItemSelectedOrchard);
+                        imgFavorite = ImageSource.FromResource("BeGreen.Images.like.png");
+                    }
                 }
                 else
                 {
-                    isFavorite = true;
-                    await App.DataBase.SaveOrchard(ItemSelectedOrchard);
-                    imgFavorite = ImageSource.FromResource("BeGreen.Images.favorite.png");
-                }
-            } else
-            {
-                bool answer = await Application.Current.MainPage.DisplayAlert("Notificación", "No haz iniciado sesión, ¿deseas ingresar?", "Si", "No");
+                    bool answer = await Application.Current.MainPage.DisplayAlert("Notificación", "No haz iniciado sesión, ¿deseas ingresar?", "Si", "No");
 
-                if (answer)
-                {
-                    var mdp = (Application.Current.MainPage as MasterDetailPage);
-                    var navPage = mdp.Detail as NavigationPage;
-                    await navPage.PushAsync(new LoginPage(true));
+                    if (answer)
+                    {
+                        var mdp = (Application.Current.MainPage as MasterDetailPage);
+                        var navPage = mdp.Detail as NavigationPage;
+                        await navPage.PushAsync(new LoginPage(true));
+                    }
                 }
             }
+            finally
+            {
+                IsBusy = false;
+            }
         }
-        
 
         void EventGoWeb() {
             if (!string.IsNullOrEmpty(ItemSelectedOrchard.news_url)) 

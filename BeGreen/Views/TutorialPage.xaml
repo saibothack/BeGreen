@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             xmlns:controls="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
+             xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
+             xmlns:controls="clr-namespace:PanCardView.Controls;assembly=PanCardView"
              x:Class="BeGreen.Views.TutorialPage" NavigationPage.HasNavigationBar="false">
     <ContentPage.Content>
         <Grid>
@@ -13,27 +14,42 @@
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
-            
+
             <AbsoluteLayout Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2">
                 <Image Source="{Binding imgBackground}" Aspect="AspectFill" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" />
             </AbsoluteLayout>
-            
-            <ContentView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-                <controls:CarouselViewControl ItemsSource="{Binding Slides}" ShowIndicators="True" ShowArrows="False" IndicatorsTintColor="White" 
-                                              CurrentPageIndicatorTintColor="Orange">
-                    <controls:CarouselViewControl.ItemTemplate>
-                        <DataTemplate>
-                            <ContentView Padding="60,30,60,0">
-                                <Image Source="{Binding Image}" Aspect="AspectFit" />
-                            </ContentView>
-                        </DataTemplate>
-                    </controls:CarouselViewControl.ItemTemplate>
-                </controls:CarouselViewControl>
-            </ContentView>
-            
+
+            <cards:CarouselView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                <cards:CarouselView.ItemsSource>
+                    <x:Array Type="{x:Type View}">
+                        <ContentView Margin="50">
+                            <Image Source="tuto_01_T.png"/>
+                        </ContentView>
+                        <ContentView Margin="50">
+                            <Image Source="tuto_1.png"/>
+                        </ContentView>
+                        <ContentView Margin="50">
+                            <Image Source="tuto_2.png"/>
+                        </ContentView>
+                        <ContentView Margin="50">
+                            <Image Source="tuto_3.png"/>
+                        </ContentView>
+                        <ContentView Margin="50">
+                            <Image Source="tuto_4.png"/>
+                        </ContentView>
+                    </x:Array>
+                </cards:CarouselView.ItemsSource>
+                <controls:IndicatorsControl/>
+            </cards:CarouselView>
+
             <StackLayout Grid.Row="1" Grid.Column="1">
                 <Button VerticalOptions="Start" HorizontalOptions="Center" Text="Saltar" TextColor="White" FontAttributes="Bold" 
                         FontSize="Medium" Clicked="Handle_Clicked" BackgroundColor="Transparent"/>
+            </StackLayout>
+
+            <StackLayout x:Name="layIndicator" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="2" BackgroundColor="{Binding loadBackColor}" IsVisible="False">
+                <ActivityIndicator x:Name="indLoading" Color="{DynamicResource colorPrimary}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                </ActivityIndicator>
             </StackLayout>
         </Grid>
     </ContentPage.Content>

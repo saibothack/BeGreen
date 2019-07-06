@@ -124,7 +124,10 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.0.0.497661" />
+    <PackageReference Include="CardsView">
+      <Version>2.1.5</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Forms" Version="4.0.0.540366" />
     <PackageReference Include="Xamarin.TestCloud.Agent" Version="0.21.8" />
     <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
     <PackageReference Include="CarouselView.FormsPlugin">
@@ -160,5 +163,26 @@
     <BundleResource Include="Resources\menu_payments.png" />
     <BundleResource Include="Resources\menu_tutorial.png" />
     <BundleResource Include="Resources\ic_trash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\tuto_4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\tuto_01_0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\tuto_01_T.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\tuto_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\tuto_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\tuto_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\add_from_wish_list.png" />
   </ItemGroup>
 </Project>

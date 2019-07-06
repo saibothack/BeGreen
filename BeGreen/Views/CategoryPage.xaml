@@ -4,22 +4,23 @@
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="80" />
+                <RowDefinition Height="{Binding RowDefinitionHeader}" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             
-            <StackLayout Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" HorizontalOptions="FillAndExpand" >
+            <StackLayout Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="FillAndExpand" >
                 <Image Source="{Binding imgBackground}" Aspect="AspectFit" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"
-                   HeightRequest="150" Margin="20"/>
+                   HeightRequest="150" Margin="20" />
             </StackLayout>
             
             <ListView ItemsSource="{Binding dataCategories, Mode=TwoWay}" RowHeight="150" IsVisible="{Binding isCategoryVisible}" 
                       SelectedItem="{Binding CategorySelected}" SelectionMode="Single" ItemTapped="Handle_ItemTapped"
-                      Grid.Row="0" Grid.RowSpan="2" Grid.Column="0">
+                      Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -39,21 +40,17 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            
-            <StackLayout Orientation="Horizontal" Grid.Row="0" HorizontalOptions="FillAndExpand">
-                <StackLayout WidthRequest="60" HorizontalOptions="StartAndExpand" VerticalOptions="FillAndExpand" >
-                    <ImageButton Source="{Binding faIcon}" Command="{Binding CommandShowMenu}" Margin="10,0,0,0"  
-                                 VerticalOptions="EndAndExpand"/>
-                </StackLayout>
+
+            <StackLayout Grid.Row="0" Grid.Column="0" >
+                <ImageButton Source="{Binding faIcon}" Command="{Binding CommandShowMenu}" Margin="10,10,0,0" BackgroundColor="Transparent"/>
             </StackLayout>
-            
-            <StackLayout Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" IsVisible="{Binding IsBusy}" 
-                         HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
-                         BackgroundColor="{Binding loadingBackground}">
-                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Color="Blue">
+
+            <StackLayout Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="{Binding loadBackColor}" IsVisible="{Binding IsBusy}" >
+                <ActivityIndicator Color="{DynamicResource colorPrimary}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
+                                   IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}">
                 </ActivityIndicator>
             </StackLayout>
-            
+
         </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -75,9 +75,17 @@ namespace BeGreen.Dabase
 
         #region "Orchards"
 
-        public Task<int> SaveOrchard(Orchard orchard)
+        public async Task<int> SaveOrchardAsync(Orchard orchard)
         {
-            return database.InsertAsync(orchard);
+
+            var item = await database.Table<Orchard>().Where(i => i.news_id == orchard.news_id).FirstOrDefaultAsync();
+            int idResult = 0;
+
+            if (item == null) {
+                idResult = await database.InsertAsync(orchard);
+            }
+
+            return idResult;
         }
 
         public Task<List<Orchard>> GetOrchards()
@@ -225,9 +233,15 @@ namespace BeGreen.Dabase
             return database.Table<Product>().Where(i => i.products_id == products_id).FirstOrDefaultAsync();
         }
 
-        public Task<int> DeleteProducts(Product product)
+        public async Task<int> DeleteProducts(Product product)
         {
-            return database.DeleteAsync(product);
+            var products = await database.Table<ProductDetails>().Where(i => i.products_id == product.products_id && i.isLiked.Equals("1")).ToListAsync();
+
+            foreach (var item in products) {
+                await database.DeleteAsync(item);
+            }
+
+            return 1;
         }
 
         #endregion

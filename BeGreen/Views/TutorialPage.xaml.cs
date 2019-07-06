@@ -4,6 +4,8 @@ using BeGreen.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using BeGreen.Helpers;
+using System.Threading.Tasks;
+using BeGreen.Utilities;
 
 namespace BeGreen.Views
 {
@@ -21,14 +23,12 @@ namespace BeGreen.Views
 
         void Handle_Clicked(object sender, System.EventArgs e)
         {
-            Settings.isShowIntro = true;
+            layIndicator.IsVisible = true;
+            indLoading.IsVisible = true;
+            indLoading.IsRunning = true;
 
-            //Application.Current.MainPage = new NavigationPage(new HomePage());
-            Application.Current.MainPage = new MasterDetailPage()
-            {
-                Master = new MasterPage() { Title = "Menú" },
-                Detail = new NavigationPage(new HomePage())
-            };
+            IErrorHandler errorHandler = null;
+            viewModel.CommandGoHome.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
         }
     }
 }

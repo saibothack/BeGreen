@@ -13,8 +13,8 @@ namespace BeGreen.ViewModels
     {
         public INavigation Navigation { get; internal set; }
         public AsyncCommand CommandInitializeAsync { get; internal set; }
-
         public ImageSource imgNavigation { get; set; }
+        public Color loadBackColor { get; set; }
 
         public Command CommandShowMenu { get; set; }
 
@@ -34,6 +34,7 @@ namespace BeGreen.ViewModels
 
         public OffersPageViewModels()
         {
+            loadBackColor = Color.FromHsla(0, 0, 0, 0.1);
             imgNavigation = ImageSource.FromResource("BeGreen.Images.nav_perfil_min.png");
             CommandInitializeAsync = new AsyncCommand(InitializeAsync, CanExecuteSubmit);
             CommandShowMenu = new Command(showMenu);

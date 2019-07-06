@@ -21,7 +21,7 @@ namespace BeGreen.ViewModels
         public string sTitle { get; set; }
         public bool isPassword { get; set; }
 
-        public Color loadingBackground { get; set; }
+        public Color loadBackColor { get; set; }
 
         #region "Properties"
 
@@ -179,7 +179,7 @@ namespace BeGreen.ViewModels
 
         public RegisterPageViewModels()
         {
-            loadingBackground = Color.FromHsla(0, 0, 0, 0.1);
+            loadBackColor = Color.FromHsla(0, 0, 0, 0.1);
             imgBackground = ImageSource.FromResource("BeGreen.Images.login_background.png");
             imgMarker = ImageSource.FromResource("BeGreen.Images.ic_marker.png");
 

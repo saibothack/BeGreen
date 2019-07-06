@@ -23,6 +23,7 @@ namespace BeGreen.ViewModels
         public Command CommandNavigation { get; set; }
         public Command CommandShowProducts { get; set; }
         public Command CommandShowOrchards { get; set; }
+        public int RowDefinitionHeader { get; set; }
 
         #region "properties"
 
@@ -65,6 +66,16 @@ namespace BeGreen.ViewModels
             }
         }
 
+        private bool _isEmptyVisible;
+        public bool isEmptyVisible
+        {
+            get { return _isEmptyVisible; }
+            set
+            {
+                SetProperty(ref _isEmptyVisible, value);
+            }
+        }
+
         private Color _ColorButtonProducts;
         public Color ColorButtonProducts
         {
@@ -89,6 +100,7 @@ namespace BeGreen.ViewModels
 
         public FavoritesPageViewModels()
         {
+            RowDefinitionHeader = Device.RuntimePlatform == Device.Android ? 50 : 80;
             imgNavigation = ImageSource.FromResource("BeGreen.Images.left-arrow.png");
             imgBackground = ImageSource.FromResource("BeGreen.Images.empty_set.png");
             imgAddList = ImageSource.FromResource("BeGreen.Images.add_from_wish_list.png");
@@ -104,6 +116,8 @@ namespace BeGreen.ViewModels
             CommandNavigation = new Command(ShowMenu);
             CommandShowProducts = new Command(ShowProducts);
             CommandShowOrchards = new Command(ShowOrchards);
+
+            isEmptyVisible = true;
         }
 
         void ShowProducts()
@@ -111,10 +125,12 @@ namespace BeGreen.ViewModels
             ColorButtonProducts = Color.FromHex("#8bc540");
             ColorButtonOrchards = Color.Gray;
 
-            if (sourceProducts.Count > 0) 
+            if (sourceProducts.Count > 0) {
                 isProductVisible = true;
-            else
+            } else {
                 isProductVisible = false;
+                isEmptyVisible = true;
+            }
 
             isOrchardsVisible = false;
         }
@@ -124,10 +140,15 @@ namespace BeGreen.ViewModels
             ColorButtonProducts = Color.Gray;
             ColorButtonOrchards = Color.FromHex("#8bc540"); 
 
-            if (sourceOrchards.Count > 0)
+            if (sourceProducts.Count > 0)
+            {
                 isOrchardsVisible = true;
+            }
             else
+            {
                 isOrchardsVisible = false;
+                isEmptyVisible = true;
+            }
 
             isProductVisible = false;
         }
@@ -178,7 +199,15 @@ namespace BeGreen.ViewModels
                     }
 
                     if (sourceProducts.Count > 0)
+                    {
+                        isProductVisible = true;
+                        isEmptyVisible = false;
+                    }
+                    else
+                    {
                         isProductVisible = false;
+                        isEmptyVisible = true;
+                    }
 
                     if (sourceOrchards.Count > 0)
                         isOrchardsVisible = false;

@@ -38,9 +38,9 @@ namespace BeGreen.Views
         {
             base.OnAppearing();
             viewModel.ProductSelected = null;
-            CVProducts.SelectedItem = null;
+            /*CVProducts.SelectedItem = null;
             CVProducts.SelectionMode = SelectionMode.None;
-            CVProducts.SelectionMode = SelectionMode.Single;
+            CVProducts.SelectionMode = SelectionMode.Single;*/
 
         }
 
