@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BeGreen.Views.OrderSalesPage"
+             NavigationPage.HasNavigationBar="false">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="{Binding RowDefinitionHeader}" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="220" />
+            </Grid.RowDefinitions>
+
+            <StackLayout Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+
+                <StackLayout WidthRequest="50" HeightRequest="50" >
+                    <ImageButton Source="{Binding imgNavigation}" Command="{Binding CommandNavigation}" Margin="10,10,0,0" BackgroundColor="Transparent"/>
+                </StackLayout>
+
+                <StackLayout HorizontalOptions="FillAndExpand" >
+                    <Label Text="Tu cesta de compra" FontSize="Large" TextColor="{DynamicResource colorPrimary}" VerticalTextAlignment="End" 
+                           VerticalOptions="EndAndExpand" HorizontalOptions="Center"/>
+                </StackLayout>
+
+                <StackLayout WidthRequest="50" HeightRequest="50" >
+
+                </StackLayout>
+
+            </StackLayout>
+
+            <StackLayout Grid.Row="1" HorizontalOptions="FillAndExpand" Orientation="Vertical" Margin="20">
+                <StackLayout Orientation="Vertical">
+                    <Label Text="Dirección de entrega" />
+                    <Entry Text="{Binding sAddress}" HorizontalOptions="FillAndExpand"/>
+                    <Label Text="Por favor ingrese la dirección" IsVisible="{Binding AddressErrorVisible}" HorizontalOptions="FillAndExpand" TextColor="Red"/>
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="Comentario del pedido" />
+                    <Entry Placeholder="No se ha agregado comentario para el pedido" Text="{Binding sComment}" HorizontalOptions="EndAndExpand"/>
+                </StackLayout>
+            </StackLayout>
+
+            <StackLayout Grid.Row="2" HorizontalOptions="FillAndExpand" BackgroundColor="#EAECEE">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Margin="10,6,10,3">
+                    <StackLayout HorizontalOptions="StartAndExpand">
+                        <Label Text="Subtotal" FontSize="Medium" TextColor="Gray" />
+                    </StackLayout>
+                    <StackLayout HorizontalOptions="EndAndExpand">
+                        <Label Text="{Binding subTotal, StringFormat='{0:C2}'}" FontSize="Medium" TextColor="Gray" />
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Margin="10,3,10,3">
+                    <StackLayout HorizontalOptions="StartAndExpand">
+                        <Label Text="Envio" FontSize="Medium" TextColor="Gray" />
+                    </StackLayout>
+                    <StackLayout HorizontalOptions="EndAndExpand">
+                        <Label Text="{Binding dEnvio, StringFormat='{0:C2}'}" FontSize="Medium" TextColor="Gray" />
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Margin="10,3,10,3">
+                    <StackLayout HorizontalOptions="StartAndExpand">
+                        <Label Text="Cupón" FontSize="Medium" TextColor="Gray" />
+                    </StackLayout>
+                    <StackLayout HorizontalOptions="EndAndExpand">
+                        <Label Text="{Binding txtCoupon}" FontSize="Medium" TextColor="Gray" />
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Margin="10,3,10,3">
+                    <StackLayout HorizontalOptions="StartAndExpand">
+                        <Label Text="Total" FontSize="Medium" TextColor="Black" />
+                    </StackLayout>
+                    <StackLayout HorizontalOptions="EndAndExpand">
+                        <Label Text="{Binding dTotal, StringFormat='{0:C2}'}" FontSize="Medium" TextColor="Black" />
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout HorizontalOptions="FillAndExpand" Margin="3">
+                    <Button Text="Pagar" TextColor="White" BackgroundColor="{DynamicResource colorButtonGrey}" 
+                            WidthRequest="150" HorizontalOptions="CenterAndExpand" CornerRadius="25" Clicked="Button_Clicked"/>
+                </StackLayout>
+            </StackLayout>
+
+            <StackLayout Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" BackgroundColor="{Binding loadBackColor}" IsVisible="{Binding IsBusy}" >
+                <ActivityIndicator Color="{DynamicResource colorPrimary}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
+                                   IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}">
+                </ActivityIndicator>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

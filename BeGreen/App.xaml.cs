@@ -13,6 +13,7 @@ namespace BeGreen
 {
     public partial class App : Application
     {
+        private static string tax = "";
         public static Services.ServiceManager oServiceManager { get; private set; }
         static dbLogic database;
         public static Orchard ItemSelectedOrchard { get; set; }
@@ -69,6 +70,11 @@ namespace BeGreen
         protected override void OnResume()
         {
             // Handle when your app resumes
+        }
+
+        public static string getTax()
+        {
+            return tax;
         }
 
         public static bool CurrentConetion()

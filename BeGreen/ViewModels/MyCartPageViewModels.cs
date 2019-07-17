@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using BeGreen.Models.Cart;
 using BeGreen.Utilities;
+using BeGreen.Views;
 using Xamarin.Forms;
 
 namespace BeGreen.ViewModels
@@ -11,11 +12,17 @@ namespace BeGreen.ViewModels
     {
         public INavigation Navigation { get; internal set; }
         public AsyncCommand CommandInitialize { get; internal set; }
+        public AsyncCommand CommandOrderSales { get; internal set; }
+        public AsyncCommand CommandAddProduct { get; internal set; }
+        public AsyncCommand CommandRemoveProduct { get; internal set; }
+        public AsyncCommand CommandDeleteProduct { get; internal set; }
 
         public ImageSource imgNavigation { get; set; }
         public ImageSource imgTrash { get; set; }
 
         public Command CommandNavigation { get; set; }
+
+        public int RowDefinitionHeader { get; set; }
 
         public class sourceCart {
             public int products_id { get; set; }
@@ -97,11 +104,17 @@ namespace BeGreen.ViewModels
             imgNavigation = ImageSource.FromResource("BeGreen.Images.nav_perfil_min.png");
             imgTrash = ImageSource.FromResource("BeGreen.Images.ic_trash.png");
 
+            RowDefinitionHeader = Device.RuntimePlatform == Device.Android ? 50 : 80;
+
             sourceCartProducts = new ObservableCollection<sourceCart>();
 
             CommandNavigation = new Command(ShowMenu);
 
             CommandInitialize = new AsyncCommand(InitializeAsync, CanExecuteSubmit);
+            CommandAddProduct = new AsyncCommand(AddProduct, CanExecuteSubmit);
+            CommandRemoveProduct = new AsyncCommand(RemoveProduct, CanExecuteSubmit);
+            CommandDeleteProduct = new AsyncCommand(DeleteProduct, CanExecuteSubmit);
+            CommandOrderSales = new AsyncCommand(OrderSales, CanExecuteSubmit);
         }
 
         void ShowMenu()
@@ -110,11 +123,29 @@ namespace BeGreen.ViewModels
             mdp.IsPresented = true;
         }
 
+        private async Task OrderSales()
+        {
+            var mdp = (Application.Current.MainPage as MasterDetailPage);
+            var navPage = mdp.Detail as NavigationPage;
+            await navPage.PushAsync(new OrderSalesPage() { Title = "" });
+        }
+
+        private async Task AddProduct() {
+            //var producto = await App.DataBase.GetProductById(products_id);
+        }
+
+        private async Task RemoveProduct() { }
+        private async Task DeleteProduct() { }
+
         private async Task InitializeAsync()
         {
             try
             {
                 IsBusy = true;
+
+                sourceCartProducts = new ObservableCollection<sourceCart>();
+                subTotal = 0;
+                dTotal = 0;
 
                 var cart = await App.DataBase.GetCartProductAsync();
 

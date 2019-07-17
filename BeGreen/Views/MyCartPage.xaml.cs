@@ -25,17 +25,31 @@ namespace BeGreen.Views
 
         void Handle_Clicked(object sender, System.EventArgs e)
         {
-            throw new NotImplementedException();
+
         }
 
         void Handle_Clicked_1(object sender, System.EventArgs e)
         {
-            throw new NotImplementedException();
+            
         }
 
         void Handle_Clicked_2(object sender, System.EventArgs e)
         {
-            throw new NotImplementedException();
+            
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            IErrorHandler errorHandler = null;
+            viewModel.CommandInitialize.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
+        }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            IErrorHandler errorHandler = null;
+            viewModel.CommandOrderSales.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
         }
     }
 }

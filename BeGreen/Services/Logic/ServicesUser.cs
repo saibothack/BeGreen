@@ -4,6 +4,7 @@ using BeGreen.Models.User;
 using BeGreen.Helpers;
 using Xamarin.Forms;
 using BeGreen.Views;
+using BeGreen.Dabase;
 
 namespace BeGreen.Services.Logic
 {
@@ -25,6 +26,27 @@ namespace BeGreen.Services.Logic
             }
             else
             {
+                dbUser dbUser = new dbUser
+                {
+                    customers_id = currentUser.data[0].customers_id,
+                    customers_firstname = currentUser.data[0].customers_firstname,
+                    customers_lastname = currentUser.data[0].customers_lastname,
+                    customers_dob = currentUser.data[0].customers_dob,
+                    customers_gender = currentUser.data[0].customers_gender,
+                    customers_picture = currentUser.data[0].customers_picture,
+                    customers_email_address = currentUser.data[0].customers_email_address,
+                    customers_password = currentUser.data[0].customers_password,
+                    customers_telephone = currentUser.data[0].customers_telephone,
+                    customers_fax = currentUser.data[0].customers_fax,
+                    customers_newsletter = currentUser.data[0].customers_newsletter,
+                    fb_id = currentUser.data[0].fb_id,
+                    google_id = currentUser.data[0].google_id,
+                    isActive = currentUser.data[0].isActive,
+                    customers_default_address_id = currentUser.data[0].customers_default_address_id
+                };
+
+                await App.DataBase.SaveUser(dbUser);
+
                 Settings.isLogin = true;
                 Settings.IdCustomer = currentUser.data[0].customers_id;
                 Settings.UserName = currentUser.data[0].customers_firstname;

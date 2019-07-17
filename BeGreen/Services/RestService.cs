@@ -358,5 +358,33 @@ namespace BeGreen.Services
 
         #endregion
 
+        public async Task<object> addToOrder(Models.Order.PostOrder postOrder)
+        {
+            var uri = new Uri(Constants.urlApi + "addToOrder");
+            var postBody = new object();
+
+            if (App.CurrentConetion())
+            {
+                try
+                {
+                    var dataPost = JsonConvert.SerializeObject(postOrder);
+
+                    var content = new StringContent(dataPost, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = null;
+                    response = await client.PostAsync(uri, content);
+
+                    var request = await response.Content.ReadAsStringAsync();
+                    postBody = JsonConvert.DeserializeObject<object>(request);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(@"ERROR {0}", ex.Message);
+                }
+            }
+
+            return postBody;
+        }
+
     }
 }

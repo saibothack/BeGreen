@@ -9,5 +9,6 @@ namespace BeGreen.Models.Cart
         public string customersBasketDateAdded { get; set; }
         public Product.Product customersBasketProduct { get; set; }
         public List<CartProductAttributes> customersBasketProductAttributes { get; set; }
+        public bool status { get; set; }
     }
 }

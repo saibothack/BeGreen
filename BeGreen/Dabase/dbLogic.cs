@@ -20,6 +20,7 @@ namespace BeGreen.Dabase
             //dropTables();
 
             database.CreateTableAsync<Settings>().Wait();
+            database.CreateTableAsync<dbUser>().Wait();
             database.CreateTableAsync<Orchard>().Wait();
             database.CreateTableAsync<ProductDetails>().Wait();
             database.CreateTableAsync<CartProduct>().Wait();
@@ -31,12 +32,60 @@ namespace BeGreen.Dabase
         public void dropTables()
         {
             database.ExecuteAsync("DELETE FROM Settings");
+            database.ExecuteAsync("DELETE FROM dbUser");
             database.ExecuteAsync("DELETE FROM Orchard");
-            database.ExecuteAsync("DELETE FROM Product");
+            database.ExecuteAsync("DELETE FROM ProductDetails");
             database.ExecuteAsync("DELETE FROM CartProduct");
             database.ExecuteAsync("DELETE FROM CartProductAttributes");
             database.ExecuteAsync("DELETE FROM Option");
             database.ExecuteAsync("DELETE FROM Value");
+        }
+
+        public async Task newOrder() {
+
+            var itemsOption = await database.Table<Option>().ToListAsync();
+
+            foreach (var itm in itemsOption) {
+                await database.DeleteAsync(itm);
+            }
+
+            var itemsValues = await database.Table<Value>().ToListAsync();
+
+            foreach (var itm in itemsValues)
+            {
+                await database.DeleteAsync(itm);
+            }
+
+            var itemsAttributes = await database.Table<CartProductAttributes>().ToListAsync();
+
+            foreach (var itm in itemsAttributes)
+            {
+                await database.DeleteAsync(itm);
+            }
+
+            var itemCart = await database.Table<CartProduct>().ToListAsync();
+
+            foreach (var itm in itemCart)
+            {
+                var itemsProduct = await database.Table<ProductDetails>().Where(i => i.CartProductID.Equals(itm.ID)).ToListAsync();
+
+                foreach (var itmProd in itemsProduct)
+                {
+                    await database.DeleteAsync(itmProd);
+                }
+
+                await database.DeleteAsync(itm);
+            }
+        }
+
+        public Task<int> SaveUser(dbUser user)
+        {
+            return database.InsertAsync(user);
+        }
+
+        public Task<List<dbUser>> GetUser()
+        {
+            return database.Table<dbUser>().ToListAsync();
         }
 
         #region "Estado"
@@ -107,61 +156,83 @@ namespace BeGreen.Dabase
 
         #region "Products"
 
-        public Task<int> SaveProducts(Product product, int CartProductID = 0)
+        public async Task<int> SaveProductsAsync(Product product, int CartProductID = 0)
         {
-            ProductDetails productDetails = new ProductDetails
-            {
-                CartProductID = CartProductID,
-                products_id = product.products_id,
-                products_quantity = product.products_quantity,
-                products_image = product.products_image,
-                products_model = product.products_model,
-                products_price = product.products_price,
-                discount_price = product.discount_price,
-                products_date_added = product.products_date_added,
-                products_last_modified = product.products_last_modified,
-                products_date_available = product.products_date_available,
-                products_weight = product.products_weight,
-                products_weight_unit = product.products_weight_unit,
-                products_status = product.products_status,
-                products_ordered = product.products_ordered,
-                products_liked = product.products_liked,
-                language_id = product.language_id,
-                products_name = product.products_name,
-                products_description = product.products_description,
-                products_url = product.products_url,
-                products_viewed = product.products_viewed,
-                products_tax_class_id = product.products_tax_class_id,
-                tax_rates_id = product.tax_rates_id,
-                tax_zone_id = product.tax_zone_id,
-                tax_class_id = product.tax_class_id,
-                tax_priority = product.tax_priority,
-                tax_rate = product.tax_rate,
-                tax_description = product.tax_description,
-                tax_class_title = product.tax_class_title,
-                tax_class_description = product.tax_class_description,
-                categories_id = product.categories_id,
-                categories_name = product.categories_name,
-                categories_image = product.categories_image,
-                categories_icon = product.categories_icon,
-                parent_id = product.parent_id,
-                sort_order = product.sort_order,
-                isLiked = product.isLiked,
-                manufacturers_id = product.manufacturers_id,
-                manufacturers_name = product.manufacturers_name,
-                manufacturers_image = product.manufacturers_image,
-                manufacturers_url = product.manufacturers_url,
-                date_added = product.date_added,
-                last_modified = product.last_modified,
-                isSale_product = product.isSale_product,
-                attributes_price = product.attributes_price,
-                final_price = product.final_price,
-                total_price = product.total_price,
-                customers_basket_quantity = product.customers_basket_quantity,
-                comentProduct = product.comentProduct
-            };
 
-            return database.InsertAsync(productDetails);
+            ProductDetails productDetails = new ProductDetails();
+            int idProducto = 0;
+            productDetails = await database.Table<ProductDetails>().Where(i => i.CartProductID.Equals(CartProductID) && i.products_id.Equals(product.products_id)).FirstOrDefaultAsync();
+
+            if (productDetails != null) {
+
+                productDetails.customers_basket_quantity = productDetails.customers_basket_quantity + product.customers_basket_quantity;
+                productDetails.products_price = product.products_price;
+                productDetails.attributes_price = product.attributes_price;
+                productDetails.final_price = product.final_price;
+                productDetails.total_price = (double.Parse(productDetails.total_price) + double.Parse(product.total_price)).ToString();
+                productDetails.comentProduct = productDetails.comentProduct + ", "+ product.comentProduct;
+
+                await database.UpdateAsync(productDetails);
+
+                idProducto = productDetails.ID;
+            }
+            else {
+                productDetails = new ProductDetails
+                {
+                    CartProductID = CartProductID,
+                    products_id = product.products_id,
+                    products_quantity = product.products_quantity,
+                    products_image = product.products_image,
+                    products_model = product.products_model,
+                    products_price = product.products_price,
+                    discount_price = product.discount_price,
+                    products_date_added = product.products_date_added,
+                    products_last_modified = product.products_last_modified,
+                    products_date_available = product.products_date_available,
+                    products_weight = product.products_weight,
+                    products_weight_unit = product.products_weight_unit,
+                    products_status = product.products_status,
+                    products_ordered = product.products_ordered,
+                    products_liked = product.products_liked,
+                    language_id = product.language_id,
+                    products_name = product.products_name,
+                    products_description = product.products_description,
+                    products_url = product.products_url,
+                    products_viewed = product.products_viewed,
+                    products_tax_class_id = product.products_tax_class_id,
+                    tax_rates_id = product.tax_rates_id,
+                    tax_zone_id = product.tax_zone_id,
+                    tax_class_id = product.tax_class_id,
+                    tax_priority = product.tax_priority,
+                    tax_rate = product.tax_rate,
+                    tax_description = product.tax_description,
+                    tax_class_title = product.tax_class_title,
+                    tax_class_description = product.tax_class_description,
+                    categories_id = product.categories_id,
+                    categories_name = product.categories_name,
+                    categories_image = product.categories_image,
+                    categories_icon = product.categories_icon,
+                    parent_id = product.parent_id,
+                    sort_order = product.sort_order,
+                    isLiked = product.isLiked,
+                    manufacturers_id = product.manufacturers_id,
+                    manufacturers_name = product.manufacturers_name,
+                    manufacturers_image = product.manufacturers_image,
+                    manufacturers_url = product.manufacturers_url,
+                    date_added = product.date_added,
+                    last_modified = product.last_modified,
+                    isSale_product = product.isSale_product,
+                    attributes_price = product.attributes_price,
+                    final_price = product.final_price,
+                    total_price = product.total_price,
+                    customers_basket_quantity = product.customers_basket_quantity,
+                    comentProduct = product.comentProduct
+                };
+
+                idProducto = await database.InsertAsync(productDetails);
+            }
+
+            return idProducto;
         }
 
         public async Task<List<Product>> GetProductsAsync()
@@ -250,17 +321,21 @@ namespace BeGreen.Dabase
 
         public async Task<int> SaveCartProductAsync(Models.Cart.CartProduct cartProduct)
         {
-            CartProduct cart = new CartProduct
+            CartProduct cart;
+            int idCart = 0;
+
+            cart = new CartProduct
             {
                 customersId = cartProduct.customersId,
                 customersBasketId = cartProduct.customersBasketId,
-                customersBasketDateAdded = cartProduct.customersBasketDateAdded
+                customersBasketDateAdded = cartProduct.customersBasketDateAdded,
+                status = true
             };
 
-            var idCart = await database.InsertAsync(cart);
-
-            await SaveProducts(cartProduct.customersBasketProduct, idCart);
-
+            idCart = await database.InsertAsync(cart);
+            
+            await SaveProductsAsync(cartProduct.customersBasketProduct, idCart);
+            
             await SaveCartProductAttributesAsync(cartProduct.customersBasketProductAttributes, idCart);
 
             return idCart;
@@ -271,69 +346,106 @@ namespace BeGreen.Dabase
             List<Models.Cart.CartProduct> cartProducts = new List<Models.Cart.CartProduct>();
             var sourceCart = await database.Table<CartProduct>().ToListAsync();
 
-            foreach(var item in sourceCart) {
-
-                var itemProduct = await database.Table<ProductDetails>().Where(i => i.CartProductID.Equals(item.ID)).FirstOrDefaultAsync();
-
-                Product productDetails = new Product
-                {
-                    products_id = itemProduct.products_id,
-                    products_quantity = itemProduct.products_quantity,
-                    products_image = itemProduct.products_image,
-                    products_model = itemProduct.products_model,
-                    products_price = itemProduct.products_price,
-                    discount_price = itemProduct.discount_price,
-                    products_date_added = itemProduct.products_date_added,
-                    products_last_modified = itemProduct.products_last_modified,
-                    products_date_available = itemProduct.products_date_available,
-                    products_weight = itemProduct.products_weight,
-                    products_weight_unit = itemProduct.products_weight_unit,
-                    products_status = itemProduct.products_status,
-                    products_ordered = itemProduct.products_ordered,
-                    products_liked = itemProduct.products_liked,
-                    language_id = itemProduct.language_id,
-                    products_name = itemProduct.products_name,
-                    products_description = itemProduct.products_description,
-                    products_url = itemProduct.products_url,
-                    products_viewed = itemProduct.products_viewed,
-                    products_tax_class_id = itemProduct.products_tax_class_id,
-                    tax_rates_id = itemProduct.tax_rates_id,
-                    tax_zone_id = itemProduct.tax_zone_id,
-                    tax_class_id = itemProduct.tax_class_id,
-                    tax_priority = itemProduct.tax_priority,
-                    tax_rate = itemProduct.tax_rate,
-                    tax_description = itemProduct.tax_description,
-                    tax_class_title = itemProduct.tax_class_title,
-                    tax_class_description = itemProduct.tax_class_description,
-                    categories_id = itemProduct.categories_id,
-                    categories_name = itemProduct.categories_name,
-                    categories_image = itemProduct.categories_image,
-                    categories_icon = itemProduct.categories_icon,
-                    parent_id = itemProduct.parent_id,
-                    sort_order = itemProduct.sort_order,
-                    isLiked = itemProduct.isLiked,
-                    manufacturers_id = itemProduct.manufacturers_id,
-                    manufacturers_name = itemProduct.manufacturers_name,
-                    manufacturers_image = itemProduct.manufacturers_image,
-                    manufacturers_url = itemProduct.manufacturers_url,
-                    date_added = itemProduct.date_added,
-                    last_modified = itemProduct.last_modified,
-                    isSale_product = itemProduct.isSale_product,
-                    attributes_price = itemProduct.attributes_price,
-                    final_price = itemProduct.final_price,
-                    total_price = itemProduct.total_price,
-                    customers_basket_quantity = itemProduct.customers_basket_quantity,
-                    comentProduct = itemProduct.comentProduct
-                };
-
+            foreach (var item in sourceCart) {
 
                 Models.Cart.CartProduct cart = new Models.Cart.CartProduct
                 {
                     customersId = item.customersId,
                     customersBasketId = item.customersBasketId,
-                    customersBasketDateAdded = item.customersBasketDateAdded,
-                    customersBasketProduct = productDetails
+                    customersBasketDateAdded = item.customersBasketDateAdded
                 };
+
+                var itemProduct = await database.Table<ProductDetails>().Where(i => i.CartProductID.Equals(item.ID)).ToListAsync();
+                //var itemProductAttribute = await database.Table<CartProductAttributes>().Where(i => i.CartProductID.Equals(item.ID)).ToListAsync();
+
+                var itemProductAttribute = await database.Table<CartProductAttributes>().ToListAsync();
+
+                foreach (var itemAttr in itemProductAttribute) {
+                    Models.Cart.CartProductAttributes cartProductAttributes = new Models.Cart.CartProductAttributes();
+                    cartProductAttributes.customersBasketId = itemAttr.customersBasketId;
+                    cartProductAttributes.productsId= itemAttr.productsId;
+
+                    var itemProductAttributeOption = await database.Table<Option>().Where(i => i.CartProductAttributesID.Equals(itemAttr.ID)).ToListAsync();
+                    var itemProductAttributeValues = await database.Table<Value>().Where(i => i.CartProductAttributesID.Equals(itemAttr.ID)).ToListAsync();
+
+                    Models.Cart.Option option = new Models.Cart.Option();
+
+                    foreach (var itemAttVal in itemProductAttributeValues)
+                    {
+                        Models.Cart.Value value = new Models.Cart.Value {
+                            id = itemAttVal.id,
+                            price = itemAttVal.price,
+                            price_prefix = itemAttVal.price_prefix,
+                            value = itemAttVal.value
+                        };
+
+                        cartProductAttributes.values.Add(value);
+                    }
+
+                    foreach (var itemAttOpt in itemProductAttributeOption) {
+                        option.id = itemAttOpt.id;
+                        option.name = itemAttOpt.name;
+                    }
+
+                    cartProductAttributes.option = option;
+
+                    cart.customersBasketProductAttributes.Add(cartProductAttributes);
+                }
+
+                foreach (var itmP in itemProduct) {
+                    Product productDetails = new Product
+                    {
+                        products_id = itmP.products_id,
+                        products_quantity = itmP.products_quantity,
+                        products_image = itmP.products_image,
+                        products_model = itmP.products_model,
+                        products_price = itmP.products_price,
+                        discount_price = itmP.discount_price,
+                        products_date_added = itmP.products_date_added,
+                        products_last_modified = itmP.products_last_modified,
+                        products_date_available = itmP.products_date_available,
+                        products_weight = itmP.products_weight,
+                        products_weight_unit = itmP.products_weight_unit,
+                        products_status = itmP.products_status,
+                        products_ordered = itmP.products_ordered,
+                        products_liked = itmP.products_liked,
+                        language_id = itmP.language_id,
+                        products_name = itmP.products_name,
+                        products_description = itmP.products_description,
+                        products_url = itmP.products_url,
+                        products_viewed = itmP.products_viewed,
+                        products_tax_class_id = itmP.products_tax_class_id,
+                        tax_rates_id = itmP.tax_rates_id,
+                        tax_zone_id = itmP.tax_zone_id,
+                        tax_class_id = itmP.tax_class_id,
+                        tax_priority = itmP.tax_priority,
+                        tax_rate = itmP.tax_rate,
+                        tax_description = itmP.tax_description,
+                        tax_class_title = itmP.tax_class_title,
+                        tax_class_description = itmP.tax_class_description,
+                        categories_id = itmP.categories_id,
+                        categories_name = itmP.categories_name,
+                        categories_image = itmP.categories_image,
+                        categories_icon = itmP.categories_icon,
+                        parent_id = itmP.parent_id,
+                        sort_order = itmP.sort_order,
+                        isLiked = itmP.isLiked,
+                        manufacturers_id = itmP.manufacturers_id,
+                        manufacturers_name = itmP.manufacturers_name,
+                        manufacturers_image = itmP.manufacturers_image,
+                        manufacturers_url = itmP.manufacturers_url,
+                        date_added = itmP.date_added,
+                        last_modified = itmP.last_modified,
+                        isSale_product = itmP.isSale_product,
+                        attributes_price = itmP.attributes_price,
+                        final_price = itmP.final_price,
+                        total_price = itmP.total_price,
+                        customers_basket_quantity = itmP.customers_basket_quantity,
+                        comentProduct = itmP.comentProduct
+                    };
+
+                    cart.customersBasketProduct = productDetails;
+                }
 
                 cartProducts.Add(cart);
             }

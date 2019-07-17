@@ -153,6 +153,8 @@ namespace BeGreen.ViewModels
                 {
                     if (NumberProduct > 0)
                     {
+                        IsBusy = true;
+
                         CartProduct cartProduct = new CartProduct();
 
                         double productBasePrice, productFinalPrice, attributesPrice = 0;
@@ -330,7 +332,7 @@ namespace BeGreen.ViewModels
                     {
                         ProductSelected.isLiked = "1";
                         await App.oServiceManager.setLikeProducts(ProductSelected.products_id, Settings.IdCustomer);
-                        await App.DataBase.SaveProducts(ProductSelected);
+                        await App.DataBase.SaveProductsAsync(ProductSelected);
                         imgFavoriteButton = ImageSource.FromResource("BeGreen.Images.like.png");
                     }
                     else

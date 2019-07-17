@@ -88,5 +88,10 @@ namespace BeGreen.Services
         }
 
         #endregion
+
+        public Task<object> addToOrder(Models.Order.PostOrder postOrder)
+        {
+            return restService.addToOrder(postOrder);
+        }
     }
 }

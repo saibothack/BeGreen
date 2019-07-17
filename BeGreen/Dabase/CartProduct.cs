@@ -10,5 +10,6 @@ namespace BeGreen.Dabase
         public int customersId { get; set; }
         public int customersBasketId { get; set; }
         public string customersBasketDateAdded { get; set; }
+        public bool status { get; set; }
     }
 }

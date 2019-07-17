@@ -12,24 +12,25 @@ using Xamarin.Forms.Xaml;
 namespace BeGreen.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class HistoryPage : ContentPage
+    public partial class OrderSalesPage : ContentPage
     {
-        private HistoryPageViewModels viewModel;
+        private OrderSalesPageViewModels viewModel;
 
-        public HistoryPage()
+        public OrderSalesPage()
         {
             InitializeComponent();
 
-            BindingContext = viewModel = new HistoryPageViewModels();
+            BindingContext = viewModel = new OrderSalesPageViewModels();
             viewModel.Navigation = this.Navigation;
 
             IErrorHandler errorHandler = null;
             viewModel.CommandInitialize.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
         }
 
-        private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        private void Button_Clicked(object sender, EventArgs e)
         {
-
+            IErrorHandler errorHandler = null;
+            viewModel.CommandPayment.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
         }
     }
 }
