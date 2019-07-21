@@ -19,6 +19,7 @@ namespace BeGreen.ViewModels
 
         public ImageSource imgNavigation { get; set; }
         public ImageSource imgTrash { get; set; }
+        public ImageSource imgBackground { get; set; }
 
         public Command CommandNavigation { get; set; }
 
@@ -97,12 +98,23 @@ namespace BeGreen.ViewModels
             }
         }
 
+        private bool _isEmptyVisible;
+        public bool isEmptyVisible
+        {
+            get { return _isEmptyVisible; }
+            set
+            {
+                SetProperty(ref _isEmptyVisible, value);
+            }
+        }
+
         #endregion
 
         public MyCartPageViewModels()
         {
             imgNavigation = ImageSource.FromResource("BeGreen.Images.nav_perfil_min.png");
             imgTrash = ImageSource.FromResource("BeGreen.Images.ic_trash.png");
+            imgBackground = ImageSource.FromResource("BeGreen.Images.empty_set.png");
 
             RowDefinitionHeader = Device.RuntimePlatform == Device.Android ? 50 : 80;
 
@@ -115,6 +127,8 @@ namespace BeGreen.ViewModels
             CommandRemoveProduct = new AsyncCommand(RemoveProduct, CanExecuteSubmit);
             CommandDeleteProduct = new AsyncCommand(DeleteProduct, CanExecuteSubmit);
             CommandOrderSales = new AsyncCommand(OrderSales, CanExecuteSubmit);
+
+            isEmptyVisible = true;
         }
 
         void ShowMenu()
@@ -125,9 +139,22 @@ namespace BeGreen.ViewModels
 
         private async Task OrderSales()
         {
-            var mdp = (Application.Current.MainPage as MasterDetailPage);
-            var navPage = mdp.Detail as NavigationPage;
-            await navPage.PushAsync(new OrderSalesPage() { Title = "" });
+            try
+            {
+                if (sourceCartProducts.Count > 0)
+                {
+                    var mdp = (Application.Current.MainPage as MasterDetailPage);
+                    var navPage = mdp.Detail as NavigationPage;
+                    await navPage.PushAsync(new OrderSalesPage() { Title = "" });
+                } else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Por favor selecciona algunos productos para continuar con tu compra", "Aceptar");
+                }
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
         private async Task AddProduct() {
@@ -144,6 +171,8 @@ namespace BeGreen.ViewModels
                 IsBusy = true;
 
                 sourceCartProducts = new ObservableCollection<sourceCart>();
+                isEmptyVisible = true;
+
                 subTotal = 0;
                 dTotal = 0;
 
@@ -163,6 +192,7 @@ namespace BeGreen.ViewModels
                     };
 
                     sourceCartProducts.Add(sourceCart);
+                    isEmptyVisible = false;
 
                     subTotal = subTotal + double.Parse(item.customersBasketProduct.total_price);
                     dTotal = dTotal + double.Parse(item.customersBasketProduct.total_price);

@@ -48,8 +48,6 @@
                 <ContentView HeightRequest="1" BackgroundColor="Gray" />
                 <local:NavigationItem Text="Favoritos" Icon="menu_favorites.png" Command="{Binding NavigationCommand}" CommandParameter="2" Margin="5" />
                 <ContentView HeightRequest="1" BackgroundColor="Gray" />
-                <local:NavigationItem Text="Métodos de pago" Icon="menu_payments.png" Command="{Binding NavigationCommand}" CommandParameter="3" Margin="5" />
-                <ContentView HeightRequest="1" BackgroundColor="Gray" />
                 <local:NavigationItem Text="Tutorial" Icon="menu_tutorial.png" Command="{Binding NavigationCommand}" CommandParameter="4" Margin="5" />
                 <ContentView HeightRequest="1" BackgroundColor="Gray" />
                 <local:NavigationItem Text="Acerca de" Icon="menu_about.png" Command="{Binding NavigationCommand}" CommandParameter="5" Margin="5" />
