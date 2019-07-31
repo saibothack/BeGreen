@@ -17,6 +17,7 @@ namespace BeGreen.ViewModels
         public Color loadBackColor { get; set; }
 
         public Command CommandShowMenu { get; set; }
+        public int RowDefinitionHeader { get; set; }
 
         #region "Properties"
 
@@ -34,6 +35,7 @@ namespace BeGreen.ViewModels
 
         public OffersPageViewModels()
         {
+            RowDefinitionHeader = Device.RuntimePlatform == Device.Android ? 50 : 90;
             loadBackColor = Color.FromHsla(0, 0, 0, 0.1);
             imgNavigation = ImageSource.FromResource("BeGreen.Images.nav_perfil_min.png");
             CommandInitializeAsync = new AsyncCommand(InitializeAsync, CanExecuteSubmit);

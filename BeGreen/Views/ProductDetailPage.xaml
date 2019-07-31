@@ -16,10 +16,9 @@
 
             <StackLayout Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
 
-                <StackLayout WidthRequest="50" HeightRequest="50" >
-                    <!--<ImageButton Source="{Binding imgBackButton}" Command="{Binding CommandBack}" HeightRequest="25" BackgroundColor="Transparent" 
-                                 VerticalOptions="EndAndExpand" HorizontalOptions="EndAndExpand" Margin="10"/>-->
-                    <ImageButton Source="{Binding imgBackButton}" Command="{Binding CommandBack}" HorizontalOptions="FillAndExpand" HeightRequest="50" Margin="5" BackgroundColor="Transparent"/>
+                <StackLayout WidthRequest="50" VerticalOptions="EndAndExpand" HeightRequest="50">
+                    <ImageButton Source="{Binding imgBackButton}" Command="{Binding CommandBack}" VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand" HeightRequest="40"
+                                 Margin="5" BackgroundColor="Transparent"/>
                 </StackLayout>
 
                 <StackLayout HorizontalOptions="FillAndExpand" >
@@ -27,28 +26,12 @@
                            VerticalOptions="EndAndExpand" HorizontalOptions="Center"/>
                 </StackLayout>
 
-                <StackLayout WidthRequest="50" HeightRequest="50" >
-                    <!--<ImageButton Source="{Binding imgFavoriteButton}" Command="{Binding CommandFavorite}" HeightRequest="25" BackgroundColor="Transparent" 
-                                 VerticalOptions="EndAndExpand" HorizontalOptions="StartAndExpand" Margin="10"/>-->
-                    <ImageButton Source="{Binding imgFavoriteButton}" Command="{Binding CommandFavorite}" HorizontalOptions="FillAndExpand" HeightRequest="50" Margin="5" BackgroundColor="Transparent"/>
+                <StackLayout WidthRequest="50" HeightRequest="50" VerticalOptions="EndAndExpand">
+                    <ImageButton Source="{Binding imgFavoriteButton}" Command="{Binding CommandFavorite}" VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand" HeightRequest="40"
+                                 Margin="5" BackgroundColor="Transparent"/>
                 </StackLayout>
 
             </StackLayout>
-
-            <!--<StackLayout Orientation="Horizontal" Grid.Row="0" HorizontalOptions="FillAndExpand">
-                <StackLayout WidthRequest="60" HorizontalOptions="StartAndExpand" VerticalOptions="FillAndExpand">
-                    <ImageButton Source="{Binding imgBackButton}" Command="{Binding CommandBack}" Margin="10,0,0,5" VerticalOptions="EndAndExpand" 
-                                 HeightRequest="20" BackgroundColor="Transparent" />
-                </StackLayout>
-                <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="FillAndExpand">
-                    <Label Text="{Binding ProductSelected.products_name}" FontSize="Large" TextColor="White" VerticalTextAlignment="End" 
-                           VerticalOptions="EndAndExpand" />
-                </StackLayout>
-                <StackLayout HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand">
-                    <ImageButton Source="{Binding imgFavoriteButton}" Command="{Binding CommandFavorite}" Margin="0,0,10,0" VerticalOptions="EndAndExpand" 
-                                 HeightRequest="25" BackgroundColor="Transparent" />
-                </StackLayout>
-            </StackLayout>-->
             
             <ScrollView Grid.Row="1" Grid.RowSpan="2">
                 <StackLayout Orientation="Vertical">
@@ -120,57 +103,6 @@
                             </StackLayout>
 
                         </Grid>
-
-                        <!--<StackLayout HorizontalOptions="FillAndExpand" Orientation="Vertical">
-                            <Label Text="Cantidad" TextColor="Black" FontSize="Medium" HorizontalTextAlignment="Center" />
-                            <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
-                                
-                                <StackLayout HorizontalOptions="StartAndExpand" WidthRequest="60" >
-                                    <Button Text="-" FontSize="Large" TextColor="{DynamicResource colorButtonGrey}" VerticalOptions="Center" 
-                                            HorizontalOptions="Center" Command="{Binding CommandDelete}" WidthRequest="50" BackgroundColor="Transparent"/>
-                                </StackLayout>
-
-                                <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="Center">
-                                    <Frame CornerRadius="15" Padding="0" HasShadow="false" BackgroundColor="Gray" HeightRequest="40" 
-                                           HorizontalOptions="FillAndExpand" VerticalOptions="Center">
-                                        <Label Text="{Binding NumberProduct}" TextColor="White" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" 
-                                               VerticalOptions="Center" WidthRequest="50" Margin="10,0,10,0" />
-                                    </Frame>
-                                </StackLayout>
-                                
-                                <StackLayout HorizontalOptions="EndAndExpand" WidthRequest="60" >
-                                    <Button Text="+" FontSize="Large" TextColor="{DynamicResource colorButtonGrey}" VerticalOptions="Center" 
-                                            HorizontalOptions="Center" Command="{Binding CommandAdd}" WidthRequest="50" BackgroundColor="Transparent"/>
-                                </StackLayout>
-                            </StackLayout>
-                        </StackLayout>
-
-                        <StackLayout HorizontalOptions="FillAndExpand" Orientation="Vertical">
-                            
-                            <Label Text="Unidad" TextColor="Black" FontSize="Medium" HorizontalTextAlignment="Center" />
-
-                            <StackLayout VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,7,15,0">
-                                <Frame CornerRadius="15" Padding="0" HasShadow="false" BackgroundColor="Gray" HeightRequest="40" 
-                                       HorizontalOptions="FillAndExpand">
-                                    <StackLayout Orientation="Horizontal">
-                                        <StackLayout HorizontalOptions="FillAndExpand">
-                                            <Frame CornerRadius="15" Padding="0" HasShadow="false" BackgroundColor="{Binding selectedKilo}" HeightRequest="40" 
-                                                   HorizontalOptions="FillAndExpand">
-                                                <Label Text="PZA." TextColor="White" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" 
-                                                       VerticalOptions="Center" />
-                                            </Frame>
-                                        </StackLayout>
-                                        <StackLayout HorizontalOptions="FillAndExpand">
-                                            <Frame CornerRadius="15" Padding="0" HasShadow="false" BackgroundColor="{Binding selectedPieza}" HeightRequest="40" 
-                                                   HorizontalOptions="FillAndExpand">
-                                                <Label Text="KG" TextColor="White" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" 
-                                                       VerticalOptions="Center" />
-                                            </Frame>
-                                        </StackLayout>
-                                    </StackLayout>
-                                </Frame>
-                            </StackLayout>
-                        </StackLayout>-->
                     </StackLayout>
                     
                     <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Margin="20">

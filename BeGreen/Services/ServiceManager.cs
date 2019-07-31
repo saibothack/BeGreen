@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using BeGreen.Models.Category;
 using BeGreen.Models.Coupon;
 using BeGreen.Models.Orchard;
+using BeGreen.Models.Order;
 using BeGreen.Models.Product;
 using BeGreen.Models.Settings;
 using BeGreen.Models.Terms;
@@ -92,6 +93,16 @@ namespace BeGreen.Services
         public Task<object> addToOrder(Models.Order.PostOrder postOrder)
         {
             return restService.addToOrder(postOrder);
+        }
+
+        public Task<List<OrderDetails>> getOrders()
+        {
+            return restService.getOrders(Helpers.Settings.IdCustomer);
+        }
+
+        public Task<bool> setCancel(int orders_id)
+        {
+            return restService.setCancel(orders_id);
         }
     }
 }

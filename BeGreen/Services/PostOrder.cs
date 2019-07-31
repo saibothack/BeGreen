@@ -51,8 +51,8 @@ namespace BeGreen.Services
 
                         // Get current Product Details
                         orderProduct.products_id = itemProducto.products_id;
-                        orderProduct.subtotal = itemProducto.total_price;
-                        orderProduct.total = itemProducto.total_price;
+                        orderProduct.subtotal = itemProducto.total_price.ToString();
+                        orderProduct.total = itemProducto.total_price.ToString();
                         orderProduct.customers_basket_quantity = itemProducto.customers_basket_quantity;
 
                         // Add current Product to orderProductList

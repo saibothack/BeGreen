@@ -11,9 +11,10 @@
 
             <StackLayout Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
 
-                <StackLayout WidthRequest="50" HeightRequest="50" >
+                <StackLayout WidthRequest="50" VerticalOptions="EndAndExpand" HorizontalOptions="StartAndExpand" HeightRequest="50">
                     <!--<ImageButton Source="{Binding imgNavigation}" Command="{Binding CommandNavigation}" Margin="10,10,0,0" BackgroundColor="Transparent"/>-->
-                    <ImageButton Source="{Binding imgNavigation}" Command="{Binding CommandNavigation}" HorizontalOptions="FillAndExpand" HeightRequest="50" Margin="5" BackgroundColor="Transparent"/>
+                    <ImageButton Source="{Binding imgNavigation}" Command="{Binding CommandNavigation}" VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand" HeightRequest="50"
+                                 Margin="5" BackgroundColor="Transparent"/>
                 </StackLayout>
 
                 <StackLayout HorizontalOptions="FillAndExpand" >
@@ -27,24 +28,31 @@
 
             </StackLayout>
 
-            <ListView ItemsSource="{Binding sourceCartProducts}" Grid.Row="1" RowHeight="150" HorizontalOptions="FillAndExpand" 
+            <ListView x:Name="MyCartList" ItemsSource="{Binding sourceCartProducts}" Grid.Row="1" RowHeight="150" HorizontalOptions="FillAndExpand" 
                       SelectedItem="{Binding selectedItem}" SelectionMode="Single">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Orientation="Horizontal">
+                            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Orientation="Horizontal" x:Name="Item">
                                 <StackLayout WidthRequest="50" VerticalOptions="FillAndExpand">
-                                    <ImageButton Source="ic_trash.png" Margin="10" Clicked="Handle_Clicked" VerticalOptions="CenterAndExpand"/>
+                                    <ImageButton Source="ic_trash.png" Margin="10" VerticalOptions="CenterAndExpand"
+                                                 BindingContext="{Binding Source={x:Reference MyCartList}, Path=BindingContext}" Command="{Binding CommandDelete}"
+                                                 CommandParameter="{Binding Source={x:Reference Item}, Path=BindingContext}" BackgroundColor="Transparent"/>
                                 </StackLayout>
                                 <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                                     <StackLayout HorizontalOptions="FillAndExpand">
-                                        <Label Text="{Binding categories_name}" TextColor="Gray" FontSize="Medium" />
+                                        <Label Text="{Binding customersBasketProduct.categories_name, Mode=TwoWay}" TextColor="Gray" FontSize="Medium" />
                                     </StackLayout>
                                     <StackLayout HorizontalOptions="FillAndExpand">
-                                        <Label Text="{Binding products_name}" TextColor="Black" FontSize="Medium" />
+                                        <Label Text="{Binding customersBasketProduct.products_name, Mode=TwoWay}" TextColor="Black" FontSize="Medium" />
                                     </StackLayout>
                                     <StackLayout HorizontalOptions="FillAndExpand">
-                                        <Image Source="{Binding products_image}" Margin="2" WidthRequest="50"/>
+                                        <!--<Image Source="{Binding customersBasketProduct.products_image, Mode=TwoWay}" Margin="2" WidthRequest="50" />-->
+                                        <Image Margin="2" WidthRequest="50">
+                                            <Image.Source>
+                                                <UriImageSource Uri="{Binding customersBasketProduct.products_image, Mode=TwoWay}" CachingEnabled="True"/>
+                                            </Image.Source>
+                                        </Image>
                                     </StackLayout>
                                 </StackLayout>
                                 <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
@@ -53,7 +61,7 @@
                                             <Label Text="Costo pieza" FontSize="Micro" TextColor="Gray" />
                                         </StackLayout>
                                         <StackLayout>
-                                            <Label Text="{Binding products_price, StringFormat='{0:C2}'}" FontSize="Micro" 
+                                            <Label Text="{Binding customersBasketProduct.products_price, StringFormat='{0:C2}', Mode=TwoWay}" FontSize="Micro" 
                                                    TextColor="Gray" />
                                         </StackLayout>
                                     </StackLayout>
@@ -61,19 +69,23 @@
                                         <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
                                             <StackLayout HorizontalOptions="FillAndExpand">
                                                 <Button Text="-" FontSize="Large" TextColor="{DynamicResource colorButtonGrey}" VerticalOptions="Center" 
-                                                        HorizontalOptions="Center" Clicked="Handle_Clicked_1" BackgroundColor="Transparent"/>
+                                                        HorizontalOptions="Center" BackgroundColor="Transparent"
+                                                        BindingContext="{Binding Source={x:Reference MyCartList}, Path=BindingContext}" Command="{Binding CommandRemove}"
+                                                        CommandParameter="{Binding Source={x:Reference Item}, Path=BindingContext}"/>
                                             </StackLayout>
                                             <StackLayout VerticalOptions="Center">
                                                 <Frame CornerRadius="15" Padding="0" HasShadow="false" BackgroundColor="Gray" HeightRequest="30" 
                                                        HorizontalOptions="FillAndExpand">
-                                                    <Label Text="{Binding customers_basket_quantity}" TextColor="White" 
+                                                    <Label Text="{Binding customersBasketProduct.customers_basket_quantity, Mode=TwoWay}" TextColor="White" 
                                                            HorizontalTextAlignment="Center"  VerticalTextAlignment="Center" VerticalOptions="Center" 
                                                            WidthRequest="50" />
                                                 </Frame>
                                             </StackLayout>
                                             <StackLayout HorizontalOptions="FillAndExpand">
                                                 <Button Text="+" FontSize="Large" TextColor="{DynamicResource colorButtonGrey}" VerticalOptions="Center" 
-                                                        HorizontalOptions="Center" Clicked="Handle_Clicked_2" BackgroundColor="Transparent"/>
+                                                        HorizontalOptions="Center" BackgroundColor="Transparent"
+                                                        BindingContext="{Binding Source={x:Reference MyCartList}, Path=BindingContext}" Command="{Binding CommandAdd}"
+                                                        CommandParameter="{Binding Source={x:Reference Item}, Path=BindingContext}"/>
                                             </StackLayout>
                                         </StackLayout>
                                     </StackLayout>
@@ -82,7 +94,7 @@
                                             <Label Text="Total" FontSize="Large" TextColor="Gray" />
                                         </StackLayout>
                                         <StackLayout>
-                                            <Label Text="{Binding total_price, StringFormat='{0:C2}'}" FontSize="Large" TextColor="Black" />
+                                            <Label Text="{Binding customersBasketProduct.total_price, StringFormat='{0:C2}', Mode=TwoWay}" FontSize="Large" TextColor="Black" />
                                         </StackLayout>
                                     </StackLayout>
                                 </StackLayout>

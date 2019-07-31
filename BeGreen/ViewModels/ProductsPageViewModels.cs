@@ -88,7 +88,7 @@ namespace BeGreen.ViewModels
 
             isBackVisible = true;
 
-            RowDefinitionHeader = Device.RuntimePlatform == Device.Android ? 50 : 80;
+            RowDefinitionHeader = Device.RuntimePlatform == Device.Android ? 50 : 90;
             txtSearchControl = Device.RuntimePlatform == Device.Android ? Color.White : Color.Black;
 
         }

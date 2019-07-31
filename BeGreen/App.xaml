@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="BeGreen.App">
     <Application.Resources>
         <ResourceDictionary>
-            <Color x:Key="colorPrimary">#00c853</Color>
+            <Color x:Key="colorPrimary">#8bc540</Color>
             <Color x:Key="colorPrimaryDark">#009624</Color>
             <Color x:Key="colorAccent">#5efc82</Color>
             <Color x:Key="colorButtonGrey">#8bc540</Color>

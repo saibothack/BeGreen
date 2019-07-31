@@ -24,6 +24,8 @@ namespace BeGreen.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            Rg.Plugins.Popup.Popup.Init();
+
             Xamarin.Calabash.Start();
             //CarouselViewRenderer.Init();
             Forms.SetFlags("CollectionView_Experimental");

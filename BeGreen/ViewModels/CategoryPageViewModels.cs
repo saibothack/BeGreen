@@ -58,7 +58,7 @@ namespace BeGreen.ViewModels
 
         public CategoryPageViewModels()
         {
-            RowDefinitionHeader = Device.RuntimePlatform == Device.Android ? 50 : 80;
+            RowDefinitionHeader = Device.RuntimePlatform == Device.Android ? 50 : 90;
             CommandInitialize = new AsyncCommand(InitializeAsync, CanExecuteSubmit);
             ItemTapped = new AsyncCommand(Selected, CanExecuteSubmit);
             loadBackColor = Color.FromHsla(0, 0, 0, 0.1);

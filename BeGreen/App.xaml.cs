@@ -18,6 +18,7 @@ namespace BeGreen
         static dbLogic database;
         public static Orchard ItemSelectedOrchard { get; set; }
         public static string TxtComment { get; set; }
+        public static bool isBack { get; set; }
 
         public App()
         {

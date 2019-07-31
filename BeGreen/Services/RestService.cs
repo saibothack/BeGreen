@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using BeGreen.Models.Category;
 using BeGreen.Models.Coupon;
 using BeGreen.Models.Orchard;
+using BeGreen.Models.Order;
 using BeGreen.Models.Product;
 using BeGreen.Models.Settings;
 using BeGreen.Models.Terms;
@@ -386,5 +387,74 @@ namespace BeGreen.Services
             return postBody;
         }
 
+
+        public async Task<List<OrderDetails>> getOrders(string idCustomer)
+        {
+            var uri = new Uri(Constants.urlApi + "getOrders");
+
+            var allOrders = new List<OrderDetails>();
+
+            var likeParams = new
+            {
+                customers_id = idCustomer
+            };
+
+            if (App.CurrentConetion())
+            {
+                try
+                {
+                    var dataPost = JsonConvert.SerializeObject(likeParams);
+
+                    var content = new StringContent(dataPost, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = null;
+                    response = await client.PostAsync(uri, content);
+
+                    var request = await response.Content.ReadAsStringAsync();
+                    allOrders = JsonConvert.DeserializeObject<List<OrderDetails>>(request);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(@"ERROR {0}", ex.Message);
+                }
+            }
+
+            return allOrders;
+        }
+
+
+        public async Task<bool> setCancel(int orders_id)
+        {
+            var uri = new Uri(Constants.urlApi + "cancelOrder");
+
+            bool cancelOrder = false;
+
+            var likeParams = new
+            {
+                orders_id = orders_id
+            };
+
+            /*if (App.CurrentConetion())
+            {
+                try
+                {
+                    var dataPost = JsonConvert.SerializeObject(likeParams);
+
+                    var content = new StringContent(dataPost, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = null;
+                    response = await client.PostAsync(uri, content);
+
+                    var request = await response.Content.ReadAsStringAsync();
+                    allOrders = JsonConvert.DeserializeObject<bool>(request);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(@"ERROR {0}", ex.Message);
+                }
+            }*/
+
+            return cancelOrder;
+        }
     }
 }

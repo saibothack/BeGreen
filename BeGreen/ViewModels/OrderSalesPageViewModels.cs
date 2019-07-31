@@ -25,8 +25,8 @@ namespace BeGreen.ViewModels
         public int RowDefinitionHeader { get; set; }
         public Color loadBackColor { get; set; }
 
-        private double _subTotal;
-        public double subTotal
+        private double? _subTotal;
+        public double? subTotal
         {
             get { return _subTotal; }
             set
@@ -65,8 +65,8 @@ namespace BeGreen.ViewModels
             }
         }
 
-        private double _dTotal;
-        public double dTotal
+        private double? _dTotal;
+        public double? dTotal
         {
             get { return _dTotal; }
             set
@@ -77,7 +77,7 @@ namespace BeGreen.ViewModels
 
         public OrderSalesPageViewModels() {
             imgNavigation = ImageSource.FromResource("BeGreen.Images.nav_perfil_min.png");
-            RowDefinitionHeader = Device.RuntimePlatform == Device.Android ? 50 : 80;
+            RowDefinitionHeader = Device.RuntimePlatform == Device.Android ? 50 : 90;
             loadBackColor = Color.FromHsla(0, 0, 0, 0.1);
 
             CommandNavigation = new Command(ShowMenu);
@@ -153,8 +153,8 @@ namespace BeGreen.ViewModels
 
                 foreach (var item in cart)
                 {
-                    subTotal = subTotal + double.Parse(item.customersBasketProduct.total_price);
-                    dTotal = dTotal + double.Parse(item.customersBasketProduct.total_price);
+                    subTotal = subTotal + item.customersBasketProduct.total_price;
+                    dTotal = dTotal + item.customersBasketProduct.total_price;
                 }
 
             }

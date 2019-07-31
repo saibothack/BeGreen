@@ -11,60 +11,92 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="{Binding RowDefinitionHeader}" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="50" />
-            </Grid.RowDefinitions>
+                <RowDefinition Height="45" />
+            </Grid.RowDefinitions>  
 
             <StackLayout Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
-                <StackLayout WidthRequest="50" HeightRequest="50" >
-                    <ImageButton Source="{Binding imgNavigation}" Command="{Binding CommandNavigation}" Margin="10,10,0,0" />
+                <StackLayout WidthRequest="50" VerticalOptions="EndAndExpand" HeightRequest="50">
+                    <ImageButton Source="{Binding imgBackButton}" Clicked="Handle_Clicked" VerticalOptions="Center" HorizontalOptions="FillAndExpand" HeightRequest="40"
+                                 Margin="5" BackgroundColor="Transparent"/>
                 </StackLayout>
                 <StackLayout HorizontalOptions="FillAndExpand" >
-                    <Label Text="Historial de pedidos" FontSize="Large" TextColor="{DynamicResource colorPrimary}" VerticalTextAlignment="End" 
-                           VerticalOptions="EndAndExpand" HorizontalOptions="Center"/>
+                    <Label Text="Historial de pedidos" FontSize="Large" TextColor="{DynamicResource colorButtonGrey}" VerticalTextAlignment="End" 
+                           VerticalOptions="EndAndExpand" HorizontalOptions="Center" FontAttributes="Bold"/>
                 </StackLayout>
                 <StackLayout WidthRequest="50" HeightRequest="50" >
                 </StackLayout>
             </StackLayout>
 
             <StackLayout Grid.Row="1" HorizontalOptions="FillAndExpand" >
-                <StackLayout Orientation="Horizontal">
-                    <StackLayout WidthRequest="60" HorizontalOptions="Start" >
-                        <Button Text="/" BackgroundColor="Transparent"></Button>
-                    </StackLayout>
-                    <StackLayout HorizontalOptions="FillAndExpand" >
-                        <Label Text="{Binding txtMonth}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
-                               FontSize="Medium"></Label>
-                    </StackLayout>
-                    <StackLayout WidthRequest="60" HorizontalOptions="End" >
-                        <Button Text=">" BackgroundColor="Transparent"></Button>
-                    </StackLayout>
-                </StackLayout>
-                
-                <BoxView HeightRequest="1" Color="Gray" HorizontalOptions="FillAndExpand" />
 
-                <ListView ItemsSource="{Binding sourceHistory, Mode=TwoWay}" RowHeight="100" 
-                          SelectedItem="{Binding ItemSelected}" SelectionMode="Single" ItemTapped="ListView_ItemTapped"
-                      Grid.Row="1" Grid.Column="0" >
+                <ListView ItemsSource="{Binding dataOrder}" RowHeight="100" Margin="0,10,0,0"  SelectedItem="{Binding selectedItem, Mode=TwoWay}"
+                          SelectionMode="Single" ItemTapped="ListView_ItemTapped"
+                      Grid.Row="1" HorizontalOptions="FillAndExpand" SeparatorColor="Gray">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <StackLayout Orientation="Horizontal">
-                                    <StackLayout WidthRequest="60">
-                                        
-                                    </StackLayout>
-                                    <StackLayout HorizontalOptions="FillAndExpand" Orientation="Vertical">
-                                        <Label Text="{Binding name}" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" Margin="65" 
-                                           FontSize="20" FontAttributes="Bold" />
-                                        <Label Text="{Binding name}" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" Margin="65" 
-                                           FontSize="20" FontAttributes="Bold" />
-                                        <Label Text="{Binding name}" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" Margin="65" 
-                                           FontSize="20" FontAttributes="Bold" />
-                                    </StackLayout>
-                                </StackLayout>
+                                
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="100"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    
+                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding productsTotal, StringFormat='{0:C2}'}" FontSize="Medium" Margin="0,10,0,0" TextColor="Black"/>
+                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding delivery_street_address}" FontSize="Medium" TextColor="Black"/>
+                                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding created_at, StringFormat='{0:dd/MM/yyyy h:mm tt}'}" FontSize="Micro" TextColor="Gray" />
+
+                                    <Image Source="btn_options.png" Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Margin="0,30,30,30"/>
+                                </Grid>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+            </StackLayout>
+            
+            <StackLayout Grid.Row="2" >
+                <Grid HorizontalOptions="EndAndExpand">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Image Source="{Binding imgPendientes}" Grid.Column="0" VerticalOptions="End"/>
+                    <Label Text="Pendiente" Grid.Column="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                           HorizontalTextAlignment="Center" VerticalTextAlignment="End" Margin="0,0,0,5"
+                           TextColor="{Binding txtColorPendiente}" FontSize="Medium">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CommandShowPendiente}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                    <Image Source="{Binding imgRealizados}"  Grid.Column="1" VerticalOptions="End"/>
+                    <Label Text="Realizada" Grid.Column="1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                           HorizontalTextAlignment="Center" VerticalTextAlignment="End" Margin="0,0,0,5"
+                           TextColor="{Binding txtColorRealizados}" FontSize="Medium">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CommandShowRealizadas}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                    <Image Source="{Binding imgCancelados}"  Grid.Column="2" VerticalOptions="End"/>
+                    <Label Text="Cancelada" Grid.Column="2" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                           HorizontalTextAlignment="Center" VerticalTextAlignment="End" Margin="0,0,0,5"
+                           TextColor="{Binding txtColorCancelados}" FontSize="Medium">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CommandShowCanceladas}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
             </StackLayout>
 
             <StackLayout Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" BackgroundColor="{Binding loadBackColor}" IsVisible="{Binding IsBusy}" >

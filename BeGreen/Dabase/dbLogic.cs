@@ -147,9 +147,18 @@ namespace BeGreen.Dabase
             return database.Table<Orchard>().Where(i => i.news_id == news_id).FirstOrDefaultAsync();
         }
 
-        public Task<int> DeleteOrchar(Orchard orchard)
+        public async Task<int> DeleteOrchar(Orchard orchard)
         {
-            return database.DeleteAsync(orchard);
+            var orch = await database.Table<Orchard>().Where(i => i.news_id == orchard.news_id).ToListAsync();
+
+            if (orch != null) {
+                foreach(var item in orch)
+                {   
+                    var id = await database.DeleteAsync(item);
+                }
+            }
+
+            return 0;
         }
 
         #endregion
@@ -169,7 +178,7 @@ namespace BeGreen.Dabase
                 productDetails.products_price = product.products_price;
                 productDetails.attributes_price = product.attributes_price;
                 productDetails.final_price = product.final_price;
-                productDetails.total_price = (double.Parse(productDetails.total_price) + double.Parse(product.total_price)).ToString();
+                productDetails.total_price = (productDetails.total_price + product.total_price);
                 productDetails.comentProduct = productDetails.comentProduct + ", "+ product.comentProduct;
 
                 await database.UpdateAsync(productDetails);
@@ -304,6 +313,19 @@ namespace BeGreen.Dabase
             return database.Table<Product>().Where(i => i.products_id == products_id).FirstOrDefaultAsync();
         }
 
+        public async Task<int> UpdateProducts(Product product)
+        {
+            var products = await database.Table<ProductDetails>().Where(i => i.ID.Equals(product.ID)).FirstOrDefaultAsync();
+
+            products.products_price = product.products_price;
+            products.customers_basket_quantity = product.customers_basket_quantity;
+            products.total_price = product.total_price;
+
+            await database.UpdateAsync(products);
+
+            return 1;
+        }
+
         public async Task<int> DeleteProducts(Product product)
         {
             var products = await database.Table<ProductDetails>().Where(i => i.products_id == product.products_id && i.isLiked.Equals("1")).ToListAsync();
@@ -332,8 +354,10 @@ namespace BeGreen.Dabase
                 status = true
             };
 
-            idCart = await database.InsertAsync(cart);
-            
+            await database.InsertAsync(cart);
+
+            idCart = cart.ID;
+
             await SaveProductsAsync(cartProduct.customersBasketProduct, idCart);
             
             await SaveCartProductAttributesAsync(cartProduct.customersBasketProductAttributes, idCart);
@@ -350,6 +374,7 @@ namespace BeGreen.Dabase
 
                 Models.Cart.CartProduct cart = new Models.Cart.CartProduct
                 {
+                    ID = item.ID,
                     customersId = item.customersId,
                     customersBasketId = item.customersBasketId,
                     customersBasketDateAdded = item.customersBasketDateAdded
@@ -395,6 +420,8 @@ namespace BeGreen.Dabase
                 foreach (var itmP in itemProduct) {
                     Product productDetails = new Product
                     {
+                        ID = itmP.ID,
+                        CartProductID = itmP.CartProductID,
                         products_id = itmP.products_id,
                         products_quantity = itmP.products_quantity,
                         products_image = itmP.products_image,
@@ -454,9 +481,46 @@ namespace BeGreen.Dabase
 
         }
 
-        public Task<int> DeleteCartProduct(CartProduct cartProduct)
+        public async Task<int> DeleteCartProduct(int id)
         {
-            return database.DeleteAsync(cartProduct);
+
+            var items = await database.Table<CartProduct>().Where(i => i.ID.Equals(id)).ToListAsync();
+
+            foreach (var item in items) {
+                var itemsProducts = await database.Table<ProductDetails>().Where(i => i.CartProductID.Equals(item.ID)).ToListAsync();
+
+                foreach(var itemProduc in itemsProducts)
+                {
+                    await database.DeleteAsync(itemProduc);
+                }
+
+                var itemsCartProductAttributes = await database.Table<CartProductAttributes>().Where(i => i.CartProductID.Equals(item.ID)).ToListAsync();
+
+                foreach(var itemCartProductAttributes in itemsCartProductAttributes)
+                {
+
+                    var itemsValue = await database.Table<Value>().Where(i => i.CartProductAttributesID.Equals(itemCartProductAttributes.ID)).ToListAsync();
+
+                    foreach (var itemValue in itemsValue)
+                    {
+                        await database.DeleteAsync(itemValue);
+                    }
+
+                    var itemsOption = await database.Table<Option>().Where(i => i.CartProductAttributesID.Equals(itemCartProductAttributes.ID)).ToListAsync();
+
+                    foreach (var itemOption in itemsOption)
+                    {
+                        await database.DeleteAsync(itemOption);
+                    }
+
+                    await database.DeleteAsync(itemCartProductAttributes);
+
+                }
+
+                await database.DeleteAsync(item);
+            }
+
+            return 0;
         }
 
         public async Task<int> SaveCartProductAttributesAsync(List<Models.Cart.CartProductAttributes> cartProduct, int CartProductID = 0)

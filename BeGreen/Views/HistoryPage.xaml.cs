@@ -1,11 +1,5 @@
 ﻿using BeGreen.Utilities;
 using BeGreen.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -29,7 +23,21 @@ namespace BeGreen.Views
 
         private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
+            IErrorHandler errorHandler = null;
+            viewModel.CommandDetail.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
+        }
 
+        void Handle_Clicked(object sender, System.EventArgs e)
+        {
+            IErrorHandler errorHandler = null;
+            viewModel.CommandBack.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            viewModel.selectedItem = null;
         }
     }
 }

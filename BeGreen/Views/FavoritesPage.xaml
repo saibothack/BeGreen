@@ -8,7 +8,7 @@
                 <RowDefinition Height="{Binding RowDefinitionHeader}" />
                 <RowDefinition Height="250" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="50" />
+                <RowDefinition Height="45" />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -16,11 +16,9 @@
             </Grid.ColumnDefinitions>
 
             <StackLayout Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
-
-                <StackLayout WidthRequest="50" HeightRequest="50" >
-                    <!--<ImageButton Source="{Binding imgNavigation}" Command="{Binding CommandNavigation}" HeightRequest="25" BackgroundColor="Transparent" 
-                                 VerticalOptions="EndAndExpand" HorizontalOptions="EndAndExpand" Margin="10"/>-->
-                    <ImageButton Source="{Binding imgNavigation}" Command="{Binding CommandNavigation}" HorizontalOptions="FillAndExpand" HeightRequest="50" Margin="5" BackgroundColor="Transparent"/>
+                <StackLayout WidthRequest="50" VerticalOptions="EndAndExpand" HeightRequest="50">
+                    <ImageButton Source="{Binding imgNavigation}" Command="{Binding CommandNavigation}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" HeightRequest="40"
+                                 Margin="5" BackgroundColor="Transparent"/>
                 </StackLayout>
 
                 <StackLayout HorizontalOptions="FillAndExpand" >
@@ -34,17 +32,6 @@
 
             </StackLayout>
 
-            <!--<StackLayout Orientation="Horizontal" Grid.Row="0" HorizontalOptions="FillAndExpand">
-                <StackLayout WidthRequest="60" HorizontalOptions="StartAndExpand" VerticalOptions="FillAndExpand" >
-                    <ImageButton Source="{Binding imgNavigation}" Command="{Binding CommandNavigation}" Margin="10,0,0,0"  
-                                 VerticalOptions="EndAndExpand" HeightRequest="20"/>
-                </StackLayout>
-                <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="FillAndExpand" >
-                    <Label Text="Tus Favoritos" FontSize="Large" TextColor="{DynamicResource colorPrimary}" VerticalTextAlignment="End" 
-                           VerticalOptions="EndAndExpand"/>
-                </StackLayout>
-            </StackLayout>-->
-
             <StackLayout Grid.Row="1" Grid.RowSpan="2" Orientation="Vertical" IsVisible="{Binding isEmptyVisible}">
                 <StackLayout HeightRequest="250" VerticalOptions="CenterAndExpand" >
                     <Image Source="{Binding imgBackground}" HeightRequest="150" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
@@ -54,12 +41,17 @@
                 </StackLayout>
             </StackLayout>
 
-            <ListView Grid.Row="1" Grid.RowSpan="2" HorizontalOptions="FillAndExpand" ItemsSource="{Binding sourceProducts}" IsVisible="{Binding isProductVisible}"
-                      RowHeight="60" SelectionMode="None">
+            <ListView x:Name="ListProducts" Grid.Row="1" Grid.RowSpan="2" HorizontalOptions="FillAndExpand" ItemsSource="{Binding sourceProducts}" IsVisible="{Binding isProductVisible}"
+                      RowHeight="60" SelectionMode="None" Margin="0,20,0,0">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" x:Name="Item">
+                                <StackLayout HeightRequest="50" HorizontalOptions="StartAndExpand">
+                                    <ImageButton Source="ic_trash.png" Margin="10" VerticalOptions="CenterAndExpand" HeightRequest="50"
+                                                 BindingContext="{Binding Source={x:Reference ListProducts}, Path=BindingContext}" Command="{Binding CommandDeleteProduc}"
+                                                 CommandParameter="{Binding Source={x:Reference Item}, Path=BindingContext}" BackgroundColor="Transparent"/>
+                                </StackLayout>
                                 <StackLayout HeightRequest="60" HorizontalOptions="StartAndExpand">
                                     <Image HeightRequest="55" Source="{Binding products_image}" Margin="5"/>
                                 </StackLayout>
@@ -68,7 +60,9 @@
                                        FontSize="20" VerticalTextAlignment="Center" HorizontalOptions="FillAndExpand"/>
                                 </StackLayout>
                                 <StackLayout HeightRequest="100" HorizontalOptions="EndAndExpand">
-                                    <ImageButton Source="add_from_wish_list.png" BackgroundColor="Transparent" HeightRequest="50" Margin="5"/>
+                                    <ImageButton Source="add_from_wish_list.png" Margin="10" VerticalOptions="CenterAndExpand" HeightRequest="50"
+                                                 BindingContext="{Binding Source={x:Reference ListProducts}, Path=BindingContext}" Command="{Binding CommandAddProduct}"
+                                                 CommandParameter="{Binding Source={x:Reference Item}, Path=BindingContext}" BackgroundColor="Transparent"/>
                                 </StackLayout>
                             </StackLayout>
                         </ViewCell>
@@ -76,48 +70,44 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <!--<ListView Grid.Row="1" Grid.RowSpan="2" HorizontalOptions="FillAndExpand" ItemsSource="{Binding sourceOrchards}" IsVisible="{Binding isOrchardsVisible}">
+            <ListView x:Name="ListOrchards" Grid.Row="1" Grid.RowSpan="2" ItemsSource="{Binding sourceOrchards}" RowHeight="100"
+                          SelectionMode="None" IsVisible="{Binding isOrchardsVisible}" Margin="0,20,0,0">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                                <StackLayout HeightRequest="80" HorizontalOptions="StartAndExpand">
-                                    <Image Source="{Binding products_image}" Margin="10"/>
-                                </StackLayout>
-                                <StackLayout  HorizontalOptions="FillAndExpand">
-                                    <Label Text="{Binding products_name}" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" Margin="65" 
-                                       FontSize="20" FontAttributes="Bold" />
-                                </StackLayout>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>-->
-
-            <ListView Grid.Row="1" Grid.RowSpan="2" ItemsSource="{Binding sourceOrchards}" RowHeight="100"
-                          SelectionMode="None" IsVisible="{Binding isOrchardsVisible}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Grid>
+                            <Grid x:Name="Item">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50" />
                                     <ColumnDefinition Width="100" />
                                     <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="50" />
                                 </Grid.ColumnDefinitions>
 
                                 <StackLayout Grid.Row="0" Grid.Column="0">
+                                    <ImageButton Source="ic_trash.png" Margin="10" VerticalOptions="CenterAndExpand" HeightRequest="50"
+                                                 BindingContext="{Binding Source={x:Reference ListOrchards}, Path=BindingContext}" Command="{Binding CommandDeleteOrchard}"
+                                                 CommandParameter="{Binding Source={x:Reference Item}, Path=BindingContext}" BackgroundColor="Transparent"/>
+                                </StackLayout>
+
+                                <StackLayout Grid.Row="0" Grid.Column="1">
                                     <Frame Margin="10" HasShadow="false" CornerRadius="15" Padding="0" HorizontalOptions="FillAndExpand" 
                                            VerticalOptions="FillAndExpand" IsClippedToBounds="true">
                                         <Image Source="{Binding news_image}" Aspect="AspectFill"/>
                                     </Frame>
                                 </StackLayout>
 
-                                <StackLayout Grid.Row="0" Grid.Column="1">
+                                <StackLayout Grid.Row="0" Grid.Column="2">
                                     <Label Text="{Binding news_name}" TextColor="Gray" VerticalTextAlignment="Center" FontSize="20" FontAttributes="Bold"
                                            VerticalOptions="FillAndExpand" Margin="50,0,0,0"/>
+                                </StackLayout>
+
+                                <StackLayout Grid.Row="0" Grid.Column="3">
+                                    <ImageButton Source="btn_options.png" Margin="10" VerticalOptions="CenterAndExpand" HeightRequest="50"
+                                                 BindingContext="{Binding Source={x:Reference ListOrchards}, Path=BindingContext}" Command="{Binding CommandDetail}"
+                                                 CommandParameter="{Binding Source={x:Reference Item}, Path=BindingContext}" BackgroundColor="Transparent"/>
                                 </StackLayout>
                             </Grid>
 
@@ -126,13 +116,31 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <StackLayout Grid.Row="3" BackgroundColor="Gray">
-                <StackLayout WidthRequest="300" HeightRequest="50" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
-                    <Button Text="Productos" WidthRequest="150" BorderColor="Gray" BorderRadius="15" BorderWidth="1" HeightRequest="30" 
-                            Command="{Binding CommandShowProducts}" BackgroundColor="{Binding ColorButtonProducts}" TextColor="White"/>
-                    <Button Text="Huertas" WidthRequest="150" BorderColor="Gray" BorderRadius="15" BorderWidth="1" HeightRequest="30" 
-                            Command="{Binding CommandShowOrchards}" BackgroundColor="{Binding ColorButtonOrchards}" TextColor="White"/>
-                </StackLayout>
+            <StackLayout Grid.Row="3" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Column="0">
+                <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Image Source="{Binding imgProductos}" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+                    <Label Text="Productos" Grid.Column="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                           HorizontalTextAlignment="Center" VerticalTextAlignment="End" Margin="0,0,0,10"
+                           TextColor="{Binding ColorButtonProducts}" FontSize="Medium">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CommandShowProducts}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                    <Image Source="{Binding imtHuertas}"  Grid.Column="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+                    <Label Text="Huertas" Grid.Column="1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                           HorizontalTextAlignment="Center" VerticalTextAlignment="End" Margin="0,0,0,10"
+                           TextColor="{Binding ColorButtonOrchards}" FontSize="Medium">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CommandShowOrchards}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
             </StackLayout>
         </Grid>
     </ContentPage.Content>

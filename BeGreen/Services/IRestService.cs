@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using BeGreen.Models.Category;
 using BeGreen.Models.Coupon;
 using BeGreen.Models.Orchard;
+using BeGreen.Models.Order;
 using BeGreen.Models.Product;
 using BeGreen.Models.Settings;
 using BeGreen.Models.Terms;
@@ -48,6 +49,9 @@ namespace BeGreen.Services
         #endregion
 
         Task<object> addToOrder(Models.Order.PostOrder postOrder);
+        Task<List<OrderDetails>> getOrders(string idCustomer);
+
+        Task<bool> setCancel(int orders_id);
 
     }
 }

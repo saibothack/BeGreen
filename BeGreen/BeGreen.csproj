@@ -21,6 +21,7 @@
     <PackageReference Include="Xam.Plugin.Iconize" Version="3.5.0.129" />
     <PackageReference Include="sqlite-net-pcl" Version="1.5.231" />
     <PackageReference Include="PayPal.Forms" Version="2.18.5" />
+    <PackageReference Include="Rg.Plugins.Popup" Version="1.1.5.188" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
@@ -40,6 +41,8 @@
     <Folder Include="Models\Settings\" />
     <Folder Include="Dabase\" />
     <Folder Include="Models\Cart\" />
+    <Folder Include="Views\popup\" />
+    <Folder Include="ViewModels\Popup\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Images\ic_launcher_foreground_begreen.png" />
@@ -70,6 +73,12 @@
     <None Remove="Images\star.png" />
     <None Remove="Images\empty_set.png" />
     <None Remove="Images\add_from_wish_list.png" />
+    <None Remove="Images\arrow-right.png" />
+    <None Remove="Images\arrow-left.png" />
+    <None Remove="Images\btn_gray.png" />
+    <None Remove="Images\btn_green.png" />
+    <None Remove="Images\btn_options.png" />
+    <None Remove="Images\btn_aceptar.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\ic_launcher_foreground_begreen.png" />
@@ -98,6 +107,12 @@
     <EmbeddedResource Include="Images\map_default.png" />
     <EmbeddedResource Include="Images\empty_set.png" />
     <EmbeddedResource Include="Images\add_from_wish_list.png" />
+    <EmbeddedResource Include="Images\arrow-right.png" />
+    <EmbeddedResource Include="Images\arrow-left.png" />
+    <EmbeddedResource Include="Images\btn_gray.png" />
+    <EmbeddedResource Include="Images\btn_green.png" />
+    <EmbeddedResource Include="Images\btn_options.png" />
+    <EmbeddedResource Include="Images\btn_aceptar.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Android">

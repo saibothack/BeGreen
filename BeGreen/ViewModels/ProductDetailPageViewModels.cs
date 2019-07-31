@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using BeGreen.Models.Cart;
 using System.Collections.Generic;
 using System.Linq;
+using Rg.Plugins.Popup.Services;
+using BeGreen.Views.popup;
 
 namespace BeGreen.ViewModels
 {
@@ -76,8 +78,8 @@ namespace BeGreen.ViewModels
             }
         }
 
-        private double _PriceTotalProduct;
-        public double PriceTotalProduct
+        private double? _PriceTotalProduct;
+        public double? PriceTotalProduct
         {
             get { return _PriceTotalProduct; }
             set
@@ -118,6 +120,7 @@ namespace BeGreen.ViewModels
 
         #endregion
 
+        [Obsolete]
         public ProductDetailPageViewModels()
         {
             loadBackColor = Color.FromHsla(0, 0, 0, 0.1);
@@ -126,7 +129,7 @@ namespace BeGreen.ViewModels
             imgProducBackground = ImageSource.FromResource("BeGreen.Images.producto_fondo.png");
             imgFavoriteButton = ImageSource.FromResource("BeGreen.Images.favorite.png");
 
-            RowDefinitionHeader = Device.RuntimePlatform == Device.Android ? 50 : 80;
+            RowDefinitionHeader = Device.RuntimePlatform == Device.Android ? 50 : 90;
 
             App.ItemSelectedOrchard = new Models.Orchard.Orchard();
             App.TxtComment = string.Empty;
@@ -157,9 +160,9 @@ namespace BeGreen.ViewModels
 
                         CartProduct cartProduct = new CartProduct();
 
-                        double productBasePrice, productFinalPrice, attributesPrice = 0;
+                        double? productBasePrice, productFinalPrice, attributesPrice = 0;
                         List<CartProductAttributes> selectedAttributesList = new List<CartProductAttributes>();
-                        string discount = Util.checkDiscount(ProductSelected.products_price, ProductSelected.discount_price);
+                        string discount = Util.checkDiscount(ProductSelected.products_price.ToString(), ProductSelected.discount_price);
 
                         // Get Product's Price based on Discount
                         if (discount != null)
@@ -170,7 +173,7 @@ namespace BeGreen.ViewModels
                         else
                         {
                             ProductSelected.isSale_product = "0";
-                            productBasePrice = double.Parse(ProductSelected.products_price);
+                            productBasePrice = ProductSelected.products_price;
                         }
 
                         foreach (var item in ProductSelected.attributes)
@@ -206,13 +209,13 @@ namespace BeGreen.ViewModels
 
                         // Add Attributes Price to Product's Final Price
                         productFinalPrice = productBasePrice + attributesPrice;
-                        double priceAux = PriceTotalProduct;
+                        double? priceAux = PriceTotalProduct;
 
                         ProductSelected.customers_basket_quantity = NumberProduct;
-                        ProductSelected.products_price = productBasePrice.ToString();
+                        ProductSelected.products_price = productBasePrice;
                         ProductSelected.attributes_price = attributesPrice.ToString();
                         ProductSelected.final_price = productFinalPrice.ToString();
-                        ProductSelected.total_price = priceAux.ToString();
+                        ProductSelected.total_price = priceAux;
                         ProductSelected.comentProduct = App.TxtComment;
 
                         cartProduct.customersBasketProduct = ProductSelected;
@@ -251,18 +254,23 @@ namespace BeGreen.ViewModels
             }
         }
 
+        [Obsolete]
         private async Task GoComments()
         {
-            var mdp = (Application.Current.MainPage as MasterDetailPage);
+            /*var mdp = (Application.Current.MainPage as MasterDetailPage);
             var navPage = mdp.Detail as NavigationPage;
-            await navPage.PushAsync(new CommentaryPage());
+            await navPage.PushAsync(new CommentaryPage());*/
+            await PopupNavigation.PushAsync(new ProductCommentPage());
         }
 
+        [Obsolete]
         private async Task GoSelectOrchard()
         {
-            var mdp = (Application.Current.MainPage as MasterDetailPage);
+            await PopupNavigation.PushAsync(new OrchardSelectPage());
+            
+            /*var mdp = (Application.Current.MainPage as MasterDetailPage);
             var navPage = mdp.Detail as NavigationPage;
-            await navPage.PushAsync(new SelectOrchardPage());
+            await navPage.PushAsync(new SelectOrchardPage());*/
         }
 
 
@@ -301,7 +309,7 @@ namespace BeGreen.ViewModels
         public void EventAddProduct()
         {
             NumberProduct++;
-            PriceTotalProduct = (double.Parse(ProductSelected.products_price) * NumberProduct);
+            PriceTotalProduct = (ProductSelected.products_price * NumberProduct);
         }
         
         void EventDeleteProduct()
@@ -309,7 +317,7 @@ namespace BeGreen.ViewModels
             if (NumberProduct > 1)
             {
                 NumberProduct--;
-                PriceTotalProduct = (double.Parse(ProductSelected.products_price) * NumberProduct);
+                PriceTotalProduct = (ProductSelected.products_price * NumberProduct);
             }
         }
 

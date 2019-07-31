@@ -78,16 +78,10 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon1024.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon180.png">
-      <Visible>false</Visible>
-    </ImageAsset>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon167.png">
       <Visible>false</Visible>
     </ImageAsset>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon152.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon120.png">
       <Visible>false</Visible>
     </ImageAsset>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon87.png">
@@ -114,6 +108,8 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
       <Visible>false</Visible>
     </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\ico120.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\ico180.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -151,6 +147,9 @@
     <PackageReference Include="PayPal.Forms">
       <Version>2.18.5</Version>
     </PackageReference>
+    <PackageReference Include="Rg.Plugins.Popup">
+      <Version>1.1.5.188</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -166,6 +165,10 @@
     <BundleResource Include="Resources\menu_payments.png" />
     <BundleResource Include="Resources\menu_tutorial.png" />
     <BundleResource Include="Resources\ic_trash.png" />
+    <BundleResource Include="Resources\ic_producto_detalles_add.png" />
+    <BundleResource Include="Resources\ic_truck.png" />
+    <BundleResource Include="Resources\marcador.png" />
+    <BundleResource Include="Resources\btn_options.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\tuto_4.png" />

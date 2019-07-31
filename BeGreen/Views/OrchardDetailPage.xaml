@@ -17,19 +17,19 @@
             <Image Grid.Row="0" Grid.RowSpan="2" Aspect="AspectFill" Source="{Binding imgBackground}" />
 
             <StackLayout Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
-                <StackLayout WidthRequest="50" HeightRequest="50" >
-                    <!--<ImageButton Source="{Binding imgNavigation}" Clicked="Handle_Clicked" HeightRequest="25" BackgroundColor="Transparent" 
-                                 VerticalOptions="EndAndExpand" HorizontalOptions="EndAndExpand" Margin="10"/>-->
-                    <ImageButton Source="{Binding imgNavigation}" Clicked="Handle_Clicked" HorizontalOptions="FillAndExpand" HeightRequest="50" Margin="5" BackgroundColor="Transparent"/>
+                <StackLayout WidthRequest="50" VerticalOptions="EndAndExpand" HeightRequest="50">
+                    <ImageButton Source="{Binding imgNavigation}" Clicked="Handle_Clicked" VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand" HeightRequest="40"
+                                 Margin="5" BackgroundColor="Transparent"/>
                 </StackLayout>
+
                 <StackLayout HorizontalOptions="FillAndExpand" >
                     <Label Text="{Binding ItemSelectedOrchard.news_name}" FontSize="Large" TextColor="White" VerticalTextAlignment="End" 
                            VerticalOptions="EndAndExpand" HorizontalOptions="Center"/>
                 </StackLayout>
-                <StackLayout WidthRequest="50" HeightRequest="50" >
-                    <!--<ImageButton Source="{Binding imgFavorite}" Clicked="Handle_Clicked_1" HeightRequest="25" BackgroundColor="Transparent" 
-                                 VerticalOptions="EndAndExpand" HorizontalOptions="StartAndExpand" Margin="10"/>-->
-                    <ImageButton Source="{Binding imgFavorite}" Clicked="Handle_Clicked_1" HorizontalOptions="FillAndExpand" HeightRequest="50" Margin="5" BackgroundColor="Transparent"/>
+
+                <StackLayout WidthRequest="50" HeightRequest="50" VerticalOptions="EndAndExpand">
+                    <ImageButton Source="{Binding imgFavorite}" Clicked="Handle_Clicked_1" VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand" HeightRequest="40"
+                                 Margin="5" BackgroundColor="Transparent"/>
                 </StackLayout>
             </StackLayout>
 
@@ -93,89 +93,6 @@
                     </StackLayout>
                 </Grid>
             </StackLayout>
-
-            <!--
-            <StackLayout Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Orientation="Vertical" IsVisible="{Binding isHome}" 
-                         VerticalOptions="FillAndExpand">
-                <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                    <WebView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="Transparent" Margin="20">
-                        <WebView.Source>
-                            <HtmlWebViewSource Html="{Binding ItemSelectedOrchard.news_description}" />
-                        </WebView.Source>
-                    </WebView>
-                </StackLayout>
-                <StackLayout>
-                    <Frame Margin="10" HasShadow="false" CornerRadius="20" Padding="0" HorizontalOptions="FillAndExpand" 
-                                           VerticalOptions="FillAndExpand" IsClippedToBounds="true">
-                        <Image Source="{Binding ItemSelectedOrchard.news_image}" Aspect="AspectFill"/>
-                    </Frame>
-                </StackLayout>
-            </StackLayout>
-            
-            <StackLayout Grid.Row="0" Grid.RowSpan="2" Orientation="Vertical">
-                <StackLayout Margin="0,50,0,0" Orientation="Horizontal">
-                    <StackLayout HorizontalOptions="FillAndExpand">
-                        <ImageButton Source="{Binding imgNavigation}" Clicked="Handle_Clicked" HeightRequest="30" WidthRequest="10" Margin="10,0,0,0" />
-                    </StackLayout>
-                    <StackLayout HorizontalOptions="FillAndExpand">
-                        <Label Text="{Binding ItemSelectedOrchard.news_name}" TextColor="White" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="5" />
-                    </StackLayout>
-                    <StackLayout HorizontalOptions="FillAndExpand">
-                        <ImageButton Source="{Binding imgFavorite}" Clicked="Handle_Clicked_1" HeightRequest="30" WidthRequest="25" Margin="0,0,10,0"/>
-                    </StackLayout>
-                </StackLayout>
-            
-                <StackLayout Orientation="Vertical" IsVisible="{Binding isHome}" VerticalOptions="FillAndExpand">
-                    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                        <WebView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="Transparent" Margin="20">
-                            <WebView.Source>
-                                <HtmlWebViewSource Html="{Binding ItemSelectedOrchard.news_description}" />
-                            </WebView.Source>
-                        </WebView>
-                    </StackLayout>
-                    <StackLayout>
-                        <ImageButton Source="{Binding ItemSelectedOrchard.news_image}" Aspect="AspectFill" Command="{Binding CommandGoWeb}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" CornerRadius="30" Margin="10" />
-                    </StackLayout>
-                </StackLayout>
-            
-                <StackLayout Orientation="Vertical" IsVisible="{Binding isProducts}" VerticalOptions="FillAndExpand" >
-                </StackLayout>
-                <StackLayout Orientation="Vertical" IsVisible="{Binding isLocation}" VerticalOptions="FillAndExpand" >
-                    <Image Source="{Binding imgMapLocation}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
-                </StackLayout>
-                <Grid HorizontalOptions="FillAndExpand" HeightRequest="80">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="1*" />
-                    </Grid.ColumnDefinitions>
-                    <StackLayout Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
-                        <Frame Margin="10" CornerRadius="25" HeightRequest="20" HorizontalOptions="FillAndExpand" BackgroundColor="LightGray" VerticalOptions="EndAndExpand">
-                            <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
-                                <StackLayout HorizontalOptions="FillAndExpand">
-                                    <Label Text="Productos" HorizontalTextAlignment="Start" FontSize="Large" FontAttributes="Bold" />
-                                    <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding CommandOrchardProducts}" />
-                                    </StackLayout.GestureRecognizers>
-                                </StackLayout>
-                                <StackLayout HorizontalOptions="FillAndExpand">
-                                    <Label Text="Ubicación" HorizontalTextAlignment="End" FontSize="Large" FontAttributes="Bold" />
-                                    <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding CommandOrchardLocation}" />
-                                    </StackLayout.GestureRecognizers>
-                                </StackLayout>
-                            </StackLayout>
-                        </Frame>
-                    </StackLayout>
-                    <StackLayout Grid.Row="0" Grid.Column="1">
-                        <controls:CircleImage BorderColor="Orange" BorderThickness="2" Source="{Binding imgHome}" BackgroundColor="White" HorizontalOptions="CenterAndExpand" WidthRequest="80" HeightRequest="80">
-                            <controls:CircleImage.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding CommandHome}" />
-                            </controls:CircleImage.GestureRecognizers>
-                        </controls:CircleImage>
-                    </StackLayout>
-                </Grid>
-            </StackLayout>-->
         </Grid>
     </ContentPage.Content>
 </ContentPage>

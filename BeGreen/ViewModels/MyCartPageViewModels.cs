@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using BeGreen.Models.Cart;
 using BeGreen.Utilities;
 using BeGreen.Views;
@@ -23,9 +25,48 @@ namespace BeGreen.ViewModels
 
         public Command CommandNavigation { get; set; }
 
+        public ICommand CommandDelete
+        {
+            get
+            {
+                return new Command((e) =>
+                {
+                    selectedItem = (e as CartProduct);
+                    IErrorHandler errorHandler = null;
+                    CommandDeleteProduct.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
+                });
+            }
+        }
+
+        public ICommand CommandAdd
+        {
+            get
+            {
+                return new Command((e) =>
+                {
+                    selectedItem = (e as CartProduct);
+                    IErrorHandler errorHandler = null;
+                    CommandAddProduct.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
+                });
+            }
+        }
+
+        public ICommand CommandRemove
+        {
+            get
+            {
+                return new Command((e) =>
+                {
+                    selectedItem = (e as CartProduct);
+                    IErrorHandler errorHandler = null;
+                    CommandRemoveProduct.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
+                });
+            }
+        }
+
         public int RowDefinitionHeader { get; set; }
 
-        public class sourceCart {
+        /*public class sourceCart {
             public int products_id { get; set; }
             public string categories_name { get; set; }
             public string products_name { get; set; }
@@ -34,12 +75,12 @@ namespace BeGreen.ViewModels
             public double total_price { get; set; }
             public int customers_basket_quantity { get; set; }
 
-        }
+        }*/
 
         #region "Properties"
 
-        private ObservableCollection<sourceCart> _sourceCartProducts;
-        public ObservableCollection<sourceCart> sourceCartProducts
+        private ObservableCollection<CartProduct> _sourceCartProducts;
+        public ObservableCollection<CartProduct> sourceCartProducts
         {
             get { return _sourceCartProducts; }
             set
@@ -48,8 +89,8 @@ namespace BeGreen.ViewModels
             }
         }
 
-        private double _subTotal;
-        public double subTotal
+        private double? _subTotal;
+        public double? subTotal
         {
             get { return _subTotal; }
             set
@@ -78,8 +119,8 @@ namespace BeGreen.ViewModels
             }
         }
 
-        private double _dTotal;
-        public double dTotal
+        private double? _dTotal;
+        public double? dTotal
         {
             get { return _dTotal; }
             set
@@ -88,8 +129,8 @@ namespace BeGreen.ViewModels
             }
         }
 
-        private sourceCart _selectedItem;
-        public sourceCart selectedItem
+        private CartProduct _selectedItem;
+        public CartProduct selectedItem
         {
             get { return _selectedItem; }
             set
@@ -118,15 +159,15 @@ namespace BeGreen.ViewModels
 
             RowDefinitionHeader = Device.RuntimePlatform == Device.Android ? 50 : 80;
 
-            sourceCartProducts = new ObservableCollection<sourceCart>();
+            sourceCartProducts = new ObservableCollection<CartProduct>();
 
             CommandNavigation = new Command(ShowMenu);
 
             CommandInitialize = new AsyncCommand(InitializeAsync, CanExecuteSubmit);
-            CommandAddProduct = new AsyncCommand(AddProduct, CanExecuteSubmit);
-            CommandRemoveProduct = new AsyncCommand(RemoveProduct, CanExecuteSubmit);
-            CommandDeleteProduct = new AsyncCommand(DeleteProduct, CanExecuteSubmit);
             CommandOrderSales = new AsyncCommand(OrderSales, CanExecuteSubmit);
+            CommandDeleteProduct = new AsyncCommand(DeleteProductAsync, CanExecuteSubmit);
+            CommandAddProduct = new AsyncCommand(AddProduct, CanExecuteSubmit);
+            CommandRemoveProduct = new AsyncCommand(RemoveProductAsync, CanExecuteSubmit);
 
             isEmptyVisible = true;
         }
@@ -158,11 +199,133 @@ namespace BeGreen.ViewModels
         }
 
         private async Task AddProduct() {
-            //var producto = await App.DataBase.GetProductById(products_id);
+            try
+            {
+                IsBusy = true;
+
+                var item = sourceCartProducts.FirstOrDefault(i => i.ID.Equals(selectedItem.ID));
+
+                if (item != null)
+                {
+                    var price = item.customersBasketProduct.products_price;
+
+                    item.customersBasketProduct.customers_basket_quantity++;
+                    item.customersBasketProduct.total_price = (item.customersBasketProduct.total_price + price);
+
+                    await App.DataBase.UpdateProducts(item.customersBasketProduct);
+
+                    sourceCartProducts = new ObservableCollection<Models.Cart.CartProduct>();
+                    //isEmptyVisible = true;
+
+                    subTotal = 0;
+                    dTotal = 0;
+
+                    var cart = await App.DataBase.GetCartProductAsync();
+
+                    foreach (var itemCard in cart)
+                    {
+                        sourceCartProducts.Add(itemCard);
+                        isEmptyVisible = false;
+
+                        subTotal = subTotal + itemCard.customersBasketProduct.total_price;
+                        dTotal = dTotal + itemCard.customersBasketProduct.total_price;
+                    }
+                }
+
+                IsBusy = false;
+
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
-        private async Task RemoveProduct() { }
-        private async Task DeleteProduct() { }
+        private async Task RemoveProductAsync() {
+
+            try
+            {
+                IsBusy = true;
+
+                var item = sourceCartProducts.FirstOrDefault(i => i.ID.Equals(selectedItem.ID));
+
+                if (item != null)
+                {
+                    var price = item.customersBasketProduct.products_price;
+
+                    if (item.customersBasketProduct.customers_basket_quantity > 1)
+                    {
+                        item.customersBasketProduct.customers_basket_quantity--;
+                        item.customersBasketProduct.total_price = (item.customersBasketProduct.total_price - price);
+
+                        await App.DataBase.UpdateProducts(item.customersBasketProduct);
+
+                        sourceCartProducts = new ObservableCollection<Models.Cart.CartProduct>();
+                        //isEmptyVisible = true;
+
+                        subTotal = 0;
+                        dTotal = 0;
+
+                        var cart = await App.DataBase.GetCartProductAsync();
+
+                        foreach (var itemCard in cart)
+                        {
+                            sourceCartProducts.Add(itemCard);
+                            isEmptyVisible = false;
+
+                            subTotal = subTotal + itemCard.customersBasketProduct.total_price;
+                            dTotal = dTotal + itemCard.customersBasketProduct.total_price;
+                        }
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Notificación", "¿No es posible quitar cantidad por favor elimine el producto de la cesta?", "Aceptar");
+                    }
+                }
+
+                IsBusy = false;
+
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        private async Task DeleteProductAsync() {
+
+            try
+            {
+                IsBusy = true;
+
+                bool answer = await Application.Current.MainPage.DisplayAlert("Notificación", "¿Seguro que desea eliminar el producto?", "Si", "No");
+
+                if (answer)
+                {
+                    sourceCartProducts.Remove(selectedItem);
+                    await App.DataBase.DeleteCartProduct(selectedItem.ID);
+
+                    subTotal = 0;
+                    dTotal = 0;
+
+                    foreach (var item in sourceCartProducts)
+                    {
+                        subTotal = subTotal + item.customersBasketProduct.total_price;
+                        dTotal = dTotal + item.customersBasketProduct.total_price;
+                    }
+
+                    if (sourceCartProducts.Count == 0)
+                        isEmptyVisible = true;
+                }
+
+                IsBusy = false;
+
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
 
         private async Task InitializeAsync()
         {
@@ -170,7 +333,7 @@ namespace BeGreen.ViewModels
             {
                 IsBusy = true;
 
-                sourceCartProducts = new ObservableCollection<sourceCart>();
+                sourceCartProducts = new ObservableCollection<Models.Cart.CartProduct>();
                 isEmptyVisible = true;
 
                 subTotal = 0;
@@ -180,22 +343,11 @@ namespace BeGreen.ViewModels
 
                 foreach (var item in cart)
                 {
-                    sourceCart sourceCart = new sourceCart
-                    {
-                        products_id = item.customersBasketProduct.products_id,
-                        categories_name = item.customersBasketProduct.categories_name,
-                        products_name = item.customersBasketProduct.products_name,
-                        products_image = item.customersBasketProduct.products_image,
-                        products_price = double.Parse(item.customersBasketProduct.products_price),
-                        total_price = double.Parse(item.customersBasketProduct.total_price),
-                        customers_basket_quantity = item.customersBasketProduct.customers_basket_quantity
-                    };
-
-                    sourceCartProducts.Add(sourceCart);
+                    sourceCartProducts.Add(item);
                     isEmptyVisible = false;
 
-                    subTotal = subTotal + double.Parse(item.customersBasketProduct.total_price);
-                    dTotal = dTotal + double.Parse(item.customersBasketProduct.total_price);
+                    subTotal = subTotal + item.customersBasketProduct.total_price;
+                    dTotal = dTotal + item.customersBasketProduct.total_price;
                 }
 
             }

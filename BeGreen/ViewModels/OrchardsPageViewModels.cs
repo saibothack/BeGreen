@@ -58,7 +58,7 @@ namespace BeGreen.ViewModels
 
         public OrchardsPageViewModels()
         {
-            RowDefinitionHeader = Device.RuntimePlatform == Device.Android ? 50 : 80;
+            RowDefinitionHeader = Device.RuntimePlatform == Device.Android ? 50 : 90;
             imgBackground = ImageSource.FromResource("BeGreen.Images.catalog.png");
             imgNavigation = ImageSource.FromResource("BeGreen.Images.nav_perfil_min.png");
 

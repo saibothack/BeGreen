@@ -12,7 +12,7 @@ namespace BeGreen.Dabase
         public int products_quantity { get; set; }
         public string products_image { get; set; }
         public string products_model { get; set; }
-        public string products_price { get; set; }
+        public double? products_price { get; set; }
         public string discount_price { get; set; }
         public string products_date_added { get; set; }
         public string products_last_modified { get; set; }
@@ -52,7 +52,7 @@ namespace BeGreen.Dabase
         public string isSale_product { get; set; }
         public string attributes_price { get; set; }
         public string final_price { get; set; }
-        public string total_price { get; set; }
+        public double? total_price { get; set; }
         public int customers_basket_quantity { get; set; }
         public string comentProduct { get; set; }
 

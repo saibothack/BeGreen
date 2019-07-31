@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<popup:PopupPage
+    xmlns:popup="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="BeGreen.Views.popup.CancelErrorPage">
+    <StackLayout>
+        <Frame Margin="50" WidthRequest="500" HeightRequest="400" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" BackgroundColor="White" CornerRadius="25" BorderColor="Black">
+            <StackLayout>
+                <Label Text="LO SENTIMOS :(" TextColor="Orange" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" FontSize="Large" FontAttributes="Bold"/>
+
+                <Image Source="ic_truck.png" Margin="10" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="200"/>
+
+                <Label Text="El pedido ya esta en camino y no puede ser cancelado" TextColor="Black" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" FontSize="Large" Margin="20,0,20,5"/>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="45" />
+                    </Grid.RowDefinitions>
+
+                    <Image Grid.Column="0" Grid.Row="0" Source="ic_producto_detalles_add.png" WidthRequest="400"/>
+                    <Label Grid.Column="0" Grid.Row="0" Text="Aceptar" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" TextColor="White" Margin="0,0,0,10"
+                           VerticalOptions="EndAndExpand"/>
+
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CommandConfirm}" />
+                    </Grid.GestureRecognizers>
+                </Grid>
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</popup:PopupPage>

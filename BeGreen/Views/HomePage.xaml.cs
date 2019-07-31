@@ -17,5 +17,12 @@ namespace BeGreen.Views
             BindingContext = viewModel = new HomePageViewModels();
             viewModel.Navigation = this.Navigation;
         }
+
+        protected override void OnCurrentPageChanged()
+        {
+            base.OnCurrentPageChanged();
+
+            myCartPage.Refresh();
+        }
     }
 }

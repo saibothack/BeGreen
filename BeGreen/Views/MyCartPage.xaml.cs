@@ -23,25 +23,16 @@ namespace BeGreen.Views
             viewModel.CommandInitialize.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
         }
 
-        void Handle_Clicked(object sender, System.EventArgs e)
-        {
-
-        }
-
-        void Handle_Clicked_1(object sender, System.EventArgs e)
-        {
-            
-        }
-
-        void Handle_Clicked_2(object sender, System.EventArgs e)
-        {
-            
-        }
-
         protected override void OnAppearing()
         {
             base.OnAppearing();
 
+            IErrorHandler errorHandler = null;
+            viewModel.CommandInitialize.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
+        }
+
+        public void Refresh()
+        {
             IErrorHandler errorHandler = null;
             viewModel.CommandInitialize.ExecuteAsync().FireAndForgetSafeAsync(errorHandler);
         }

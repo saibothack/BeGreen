@@ -11,6 +11,7 @@ namespace BeGreen.Views
     {
         private ProductDetailPageViewModels viewModel;
 
+        [System.Obsolete]
         public ProductDetailPage(Product product)
         {
             InitializeComponent();
